@@ -1,0 +1,7 @@
+[ 2015-07-18T15:34:31+08:00 ] ::1 /diamond/index.php?g=portal&m=AdminTerm&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\TermsModel
+
+[ 2015-07-18T15:52:06+08:00 ] ::1 /diamond/index.php?g=Portal&m=AdminTerm&a=index&menuid=18
+NOTIC: D方法实例化没找到模型类Common\Model\TermsModel
+ERR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'diamond.sp_terms' doesn't exist
+

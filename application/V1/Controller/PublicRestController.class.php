@@ -5,14 +5,15 @@ use Org\OAuth\ThinkOAuth2;
 Class PublicRestController extends RestController {
     protected $allowMethod    = array('get','post','put','delete'); // REST允许的请求类型列表
     protected $allowType      = array('html','xml','json'); // REST允许请求的资源类型列表
+    public $config;
     public function __construct(){
 		parent::__construct();
-		$oauth = new ThinkOAuth2();
-		$ac = I('request.access_token');
-		if(empty($ac)) $this->response(array('info'=> C('errorcode.2001'), 'code'=>2001) , 'json');
-		$access_token = $oauth->getAccessToken($ac);
-		if(empty($access_token)) $this->response(array('info'=>C('errorcode.2002') , 'code'=>2002) , 'json');
-		if( time()-$access_token['expires'] < 0 ) $this->response(array('info'=>C('errorcode.2003') , 'code'=>2003) , 'json');
+//		$oauth = new ThinkOAuth2();
+//		$ac = I('request.access_token');
+//		if(empty($ac)) $this->response(array('info'=> C('errorcode.2001'), 'code'=>2001) , 'json');
+//		$access_token = $oauth->getAccessToken($ac);
+//		if(empty($access_token)) $this->response(array('info'=>C('errorcode.2002') , 'code'=>2002) , 'json');
+//		if( time()-$access_token['expires'] < 0 ) $this->response(array('info'=>C('errorcode.2003') , 'code'=>2003) , 'json');
 	}
     Public function read_get_html(){
         $arr = array("name"=>'Foxcon', 'age'=>'12');
@@ -49,6 +50,17 @@ Class PublicRestController extends RestController {
     	}
     	$Page = new \Page($Total_Size, $Page_Size, $Current_Page, $listRows, $PageParam, $PageLink, $Static);
     	return $Page;
+    }
+
+    //读取网站配置
+    function get_config($name=''){
+        $config = M("Config");
+        if($name=='') {
+            $data = $config->select();
+        }else{
+            $data = $config->where("name='{$name}'")->select();
+        }
+        return $data;
     }
     
 }

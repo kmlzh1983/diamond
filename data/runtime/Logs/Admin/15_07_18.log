@@ -1,3 +1,285 @@
 [ 2015-07-18T11:01:07+08:00 ] 127.0.0.1 /diamond/index.php?g=Admin&m=Setting&a=clearcache&menuid=131
 NOTIC: D方法实例化没找到模型类Common\Model\OptionsModel
 
+[ 2015-07-18T15:29:38+08:00 ] ::1 /diamond/index.php?g=Admin&m=public&a=dologin
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000313s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000419s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000987s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0036s ]
+SQL: SELECT * FROM `sp_users` WHERE `user_login` = 'admin' LIMIT 1   [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `sp_role_user` [ RunTime:0.0025s ]
+SQL: SELECT `role_id` FROM sp_role_user a INNER JOIN sp_role as b on a.role_id =b.id  WHERE `user_id` = '1' AND `status` = 1  [ RunTime:0.0022s ]
+SQL: UPDATE `sp_users` SET `user_login`='admin',`user_pass`='c535018ee9467fef6171469e80d32c0559f88b37724589af',`user_nicename`='hhh',`user_email`='',`user_phone`='',`user_url`='www.badu.xm',`avatar`=NULL,`sex`='0',`birthday`='0000-00-00',`signature`='ddd',`last_login_ip`='0.0.0.0',`last_login_time`='2015-07-18 15:29:38',`create_time`='0000-00-00 00:00:00',`user_activation_key`='',`user_status`='1',`score`='0' WHERE `id` = '1' [ RunTime:0.0003s ]
+
+[ 2015-07-18T15:31:22+08:00 ] ::1 /diamond/index.php?g=Admin&m=slidecat&a=edit_post
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000368s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000504s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001166s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0018s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `sp_slide_cat` [ RunTime:0.0015s ]
+SQL: UPDATE `sp_slide_cat` SET `cat_name`='app banner',`cat_idname`='app_banner',`cat_remark`='app_banner' WHERE `cid` = '1' [ RunTime:0.0018s ]
+
+[ 2015-07-18T15:32:13+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:32:15+08:00 ] ::1 /diamond/index.php?g=Admin&m=menu&a=lists
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:32:20+08:00 ] ::1 /diamond/index.php?g=Admin&m=menu&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:32:21+08:00 ] ::1 /diamond/index.php?g=Admin&m=menu&a=add
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:32:23+08:00 ] ::1 /diamond/index.php?g=Admin&m=menu&a=index
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:32:55+08:00 ] ::1 /diamond/index.php?g=Admin&m=Setting&a=site&menuid=115
+NOTIC: D方法实例化没找到模型类Common\Model\OptionsModel
+
+[ 2015-07-18T15:33:08+08:00 ] ::1 /diamond/index.php?g=Admin&m=Coupon&a=index&menuid=169
+NOTIC: D方法实例化没找到模型类Common\Model\CouponModel
+
+[ 2015-07-18T15:33:57+08:00 ] ::1 /diamond/index.php?g=Admin&m=menu&a=add
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:33:57+08:00 ] ::1 /diamond/index.php?g=Admin&m=menu&a=add
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:39:37+08:00 ] ::1 /diamond/index.php?g=Admin&m=Main&a=index
+ERR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'shipping_status' in 'field list'
+
+[ 2015-07-18T15:39:43+08:00 ] ::1 /diamond/index.php?g=Admin&m=Main&a=index
+ERR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'shipping_status' in 'field list'
+
+[ 2015-07-18T15:39:55+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:40:02+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=196&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000589s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000685s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001722s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0017s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0011s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 196 LIMIT 1   [ RunTime:0.0004s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 196 [ RunTime:0.0008s ]
+
+[ 2015-07-18T15:40:02+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:40:05+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=195&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000525s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000631s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001576s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0018s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0014s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0014s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 195 LIMIT 1   [ RunTime:0.0002s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 195 [ RunTime:0.0002s ]
+
+[ 2015-07-18T15:40:05+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:40:15+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=159&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000417s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000474s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001218s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0033s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0011s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 159 LIMIT 1   [ RunTime:0.0002s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 159 [ RunTime:0.0002s ]
+
+[ 2015-07-18T15:40:15+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:40:20+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=160&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000353s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000545s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001210s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0027s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0011s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0014s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 160 LIMIT 1   [ RunTime:0.0004s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 160 [ RunTime:0.0003s ]
+
+[ 2015-07-18T15:40:21+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:40:27+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=161&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000358s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000455s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001082s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0029s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0012s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0011s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 161 LIMIT 1   [ RunTime:0.0002s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 161 [ RunTime:0.0002s ]
+
+[ 2015-07-18T15:40:28+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:40:34+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=162&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000412s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000466s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001143s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0012s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0002s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0012s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 162 LIMIT 1   [ RunTime:0.0002s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 162 [ RunTime:0.0002s ]
+
+[ 2015-07-18T15:40:34+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:40:40+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=173&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000308s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000476s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001030s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0029s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0011s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0014s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 173 LIMIT 1   [ RunTime:0.0003s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 173 [ RunTime:0.0002s ]
+
+[ 2015-07-18T15:40:40+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:40:46+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=166&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000306s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000369s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000910s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0034s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0012s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 166 LIMIT 1   [ RunTime:0.0003s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 166 [ RunTime:0.0002s ]
+
+[ 2015-07-18T15:40:46+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:40:50+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=158&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000304s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000364s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000905s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0031s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0011s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0010s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 158 LIMIT 1   [ RunTime:0.0003s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 158 [ RunTime:0.0002s ]
+
+[ 2015-07-18T15:40:50+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:40:57+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=164&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000359s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000426s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001065s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0031s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0011s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 164 LIMIT 1   [ RunTime:0.0002s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 164 [ RunTime:0.0002s ]
+
+[ 2015-07-18T15:40:57+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:41:05+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=165&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000365s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000465s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001182s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0031s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0011s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0012s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 165 LIMIT 1   [ RunTime:0.0003s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 165 [ RunTime:0.0002s ]
+
+[ 2015-07-18T15:41:05+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:41:14+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=delete&id=163&menuid=100
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000372s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000448s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001314s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0031s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `sp_menu` [ RunTime:0.0015s ]
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+SQL: SHOW COLUMNS FROM `sp_auth_rule` [ RunTime:0.0013s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `sp_menu` WHERE `parentid` = 163 LIMIT 1   [ RunTime:0.0003s ]
+SQL: DELETE FROM `sp_menu` WHERE `id` = 163 [ RunTime:0.0002s ]
+
+[ 2015-07-18T15:41:14+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:41:16+08:00 ] ::1 /diamond/index.php?g=Admin&m=Main&a=index
+ERR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'shipping_status' in 'field list'
+
+[ 2015-07-18T15:48:12+08:00 ] ::1 /diamond/index.php?g=Admin&m=slidecat&a=edit_post
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000358s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000584s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001276s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0029s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `sp_slide_cat` [ RunTime:0.0013s ]
+SQL: UPDATE `sp_slide_cat` SET `cat_name`='app 首页banner',`cat_idname`='app_banner',`cat_remark`='首页banner' WHERE `cid` = '1' [ RunTime:0.0010s ]
+
+[ 2015-07-18T15:49:34+08:00 ] ::1 /diamond/index.php?g=Admin&m=Menu&a=index&menuid=100
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T15:49:35+08:00 ] ::1 /diamond/index.php?g=Admin&m=menu&a=add
+NOTIC: D方法实例化没找到模型类Common\Model\AuthRuleModel
+
+[ 2015-07-18T17:00:51+08:00 ] ::1 /diamond/index.php?g=Admin&m=public&a=dologin
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000379s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000441s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001104s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0032s ]
+SQL: SELECT * FROM `sp_users` WHERE `user_login` = 'admin' LIMIT 1   [ RunTime:0.0014s ]
+SQL: SHOW COLUMNS FROM `sp_role_user` [ RunTime:0.0027s ]
+SQL: SELECT `role_id` FROM sp_role_user a INNER JOIN sp_role as b on a.role_id =b.id  WHERE `user_id` = '1' AND `status` = 1  [ RunTime:0.0023s ]
+SQL: UPDATE `sp_users` SET `user_login`='admin',`user_pass`='c535018ee9467fef6171469e80d32c0559f88b37724589af',`user_nicename`='',`user_email`='',`user_phone`='',`user_url`='',`avatar`=NULL,`sex`='0',`birthday`=NULL,`signature`=NULL,`last_login_ip`='0.0.0.0',`last_login_time`='2015-07-18 17:00:51',`create_time`='0000-00-00 00:00:00',`user_activation_key`='',`user_status`='1',`score`='0' WHERE `id` = '1' [ RunTime:0.0008s ]
+
+[ 2015-07-18T17:00:51+08:00 ] ::1 /diamond/index.php?g=Admin&m=Main&a=index
+ERR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'shipping_status' in 'field list'
+
