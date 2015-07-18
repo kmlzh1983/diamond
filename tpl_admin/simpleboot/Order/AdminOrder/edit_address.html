@@ -1,0 +1,190 @@
+<admintpl file="header"/>
+<style type="text/css">
+.col-auto {
+	overflow: hidden;
+	_zoom: 1;
+	_float: left;
+	border: 1px solid #c2d1d8;
+}
+.col-right {
+	float: right;
+	width: 210px;
+	overflow: hidden;
+	margin-left: 6px;
+	border: 1px solid #c2d1d8;
+}
+
+body fieldset {
+	border: 1px solid #D8D8D8;
+	padding: 10px;
+	background-color: #FFF;
+}
+body fieldset legend {
+    background-color: #F9F9F9;
+    border: 1px solid #D8D8D8;
+    font-weight: 700;
+    padding: 3px 8px;
+}
+.list-dot{ padding-bottom:10px}
+.list-dot li,.list-dot-othors li{padding:5px 0; border-bottom:1px dotted #c6dde0; font-family:"宋体"; color:#bbb; position:relative;_height:22px}
+.list-dot li span,.list-dot-othors li span{color:#004499}
+.list-dot li a.close span,.list-dot-othors li a.close span{display:none}
+.list-dot li a.close,.list-dot-othors li a.close{ background: url("__ROOT__/statics/images/cross.png") no-repeat left 3px; display:block; width:16px; height:16px;position: absolute;outline:none;right:5px; bottom:5px}
+.list-dot li a.close:hover,.list-dot-othors li a.close:hover{background-position: left -46px}
+.list-dot-othors li{float:left;width:24%;overflow:hidden;}
+</style>
+<link href="__ROOT__/statics/simpleboot/css/main.css" rel="stylesheet">
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <!--<ul class="nav nav-tabs">-->
+	 <!--<li><a href="{:U('AdminOrder/index',array('term'=>empty($term['term_id'])?'':$term['term_id']))}"  target="_self">所有订单</a></li>-->
+     <!--<li class="active"><a href="#">订单详情</a></li>-->
+  <!--</ul>-->
+  <form name="myform" id="myform" action="{:u('AdminOrder/do_edit_address')}" method="post" class="form-horizontal J_ajaxForms" enctype="multipart/form-data">
+  <input type='hidden' name='order_id' value='{$detail.order_id}'>
+    <div class="table_full">
+      <table width="100%" class="table table-J table-bordered" cellpadding="2" cellspacing="2">
+          <thead>
+              <tr>
+                  <th width="30%">
+                      从已有收获地址中选择
+                  </th>
+                  <td>
+                      <select name='addrsssss'>
+                          <option value='111'>北京猫耳胡同1号</option>
+                      </select>
+                  </td>
+              </tr>
+          </thead>
+		<tbody>
+
+			<tr>
+				<th>收货人</th>
+				<td>
+					<input type='text' value='{$detail.consignee}' name='consignee'>
+				</td>
+			</tr>
+			<tr>
+				<th>所在地区</th>
+				<td>
+					<select name='country' id="selCountries" onchange="loadRegion('selCountries',1,'selProvinces','{:U('AdminShipping/getRegion')}');" >
+						<volist name='country' id='vo'>
+						<option value="{$vo.id}" <if condition='$vo["id"] eq $detail["country"]'>selected</if>>{$vo.name}</option>
+						</volist>
+					</select>
+					<select name='province' id="selProvinces" onchange="loadRegion('selProvinces',2,'selCities','{:U('AdminShipping/getRegion')}');" >
+						<volist name='province' id='vo'>
+						<option <if condition='$vo["id"] eq $detail["province"]'>selected</if>>{$vo.name}</option>
+						</volist>
+					</select>
+					<select name='city'  id="selCities" onchange="loadRegion('selCities',3,'selDistrict','{:U('AdminShipping/getRegion')}');">
+						<volist name='city' id='vo'>
+						<option <if condition='$vo["id"] eq $detail["city"]'>selected</if>>{$vo.name}</option>
+						</volist>
+					</select>
+					<select name='district' id='selDistrict'>
+						<volist name='district' id='vo'>
+						<option <if condition='$vo["id"] eq $detail["district"]'>selected</if>>{$vo.name}</option>
+						</volist>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					电子邮件
+				</th>
+				<td>
+					<input type='text' name='email' value='{$detail.email}'>
+				</td>
+			</tr>
+
+			<tr>
+				<th>
+					地址
+				</th>
+				<td>
+					<input type='text' name='address' value='{$detail.address}'>
+				</td>
+			</tr>
+
+			<tr>
+				<th>
+					邮编
+				</th>
+				<td>
+					<input type='text' name='zipcode' value='{$detail.zipcode}'>
+				</td>
+			</tr>
+
+			<tr>
+				<th>
+					电话
+				</th>
+				<td>
+					<input type='text' name='tel' value='{$detail.tel}'>
+				</td>
+			</tr>
+
+			<tr>
+				<th>
+					手机
+				</th>
+				<td>
+					<input type='text' name='mobile' value='{$detail.mobile}'>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>
+					最佳送货时间
+				</th>
+				<td>
+					<input type='text' name='best_time' value='{$detail.best_time}'>
+				</td>
+			</tr>
+			
+		</tbody>
+	  </table>
+    </div>
+      <div class="form-actions" style="position: absolute;top: -10000px">
+          <button class="btn btn-primary btn_submit J_ajax_submit_btn"type="submit">提交</button>
+          <!--<a class="btn" href="{:U('AdminOrder/edit',array('id'=>$_GET['id']))}">返回</a>-->
+      </div>
+ </form>
+</div>
+<script type="text/javascript" src="__ROOT__/statics/js/common.js"></script>
+<script type="text/javascript" src="__ROOT__/statics/js/content_addtop.js"></script>
+<script type="text/javascript"> 
+function loadRegion(sel,type_id,selName,url){
+	//alert(jQuery("#"+sel).val());
+	jQuery("#"+selName+" option").each(function(){
+		jQuery(this).remove();
+	});
+	jQuery("<option value=0>-please select-</option>").appendTo(jQuery("#"+selName));
+	if(jQuery("#"+sel).val()==0){
+		return;
+	}
+	jQuery.getJSON(url,{pid:jQuery("#"+sel).val(),type:type_id},
+	function(data){
+		if(data){
+			jQuery.each(data,function(idx,item){
+				if(idx==0){
+					return true;//同countinue，返回false同break
+				}
+
+				//jQuery(new Option(item.name,item.id)).appendTo(jQuery("#"+selName));
+				jQuery("<option value="+item.id+">"+item.name+"</option>").appendTo(jQuery("#"+selName));
+
+			});
+		}else{
+			jQuery("<option value='0'>All Province</option>").appendTo(jQuery("#"+selName));
+		}
+
+	}
+
+	);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<nav class="nav-main">
+			<div class="head-block">
+				<div class="category">
+					<div class="category-hd">
+						全部商品分類
+					</div>
+					<div class="category-bd">						
+						<div class="category-bd-bg">							
+						</div>
+						<div class="category-cont">
+							<php>$sub=getCate();</php>
+						</div>
+						
+						<div class="category-layer">
+							<div class="layer-bg">								
+							</div>
+							<php>echo $sub;</php>
+						</div>
+					</div>
+				</div>
+				<ul class="nav-link clearfix">
+					<tc_include file='Public:nav'/>
+				</ul>
+			</div>
+</nav>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>我的订单</title>
+	<tc_include file='Public:head'/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+		
+	<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/lib/html5.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/placeholder.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="theme foot-white-bg">	
+	<tc_include file='Public:header'/>
+	
+	<div class="wrapper order-wrap">
+		<div class="wrap">
+			<div class="grid">
+				<tc_include file='User:My:leftside'/>
+				<div class="grid-r">
+					<div class="order-main">
+						<form action='{:U("Order/index/index")}' method='post'>
+						<div class="hd">
+							<div class="fliter-box">
+								<select name="time">
+									<option value="-1">全部</option>
+									<option <if condition="$where['time'] eq '3m'">selected</if> value="3m">最近三个月订单</option>
+									<option <if condition="$where['time'] eq '1w'">selected</if> value="1w">最近一周</option>
+									<option <if condition="$where['time'] eq '3d'">selected</if> value="3d">三天</option>
+									<option <if condition="$where['time'] eq '1d'">selected</if> value="1d">今天</option>
+								</select>
+								<select name="pay_status">
+									<option value="">所有状态</option>
+									<option <if condition="$where['pay_status'] eq '1'">selected</if> value="1">已支付</option>
+									<option <if condition="$where['pay_status'] eq '0'">selected</if> value="0">待支付</option>
+								</select>
+							</div>							
+							<div class="bd-search fl">
+								<input type="text" />
+								<button class="btn btn-sm">查找</button>
+							</div>
+						</div>
+						</form>
+						<div class="bd">
+							
+							<div class="order-hd">
+								<table class="order-table" border="0" cellspacing="" cellpadding="">
+									<colgroup>
+										<col class="order-num">
+										<col class="order-info">
+										<col class="order-count">
+										<col class="order-price">
+										<col class="order-time">
+										<col class="order-status">
+										<col class="order-operate">
+									</colgroup>
+									<php>
+										$order_status=array("0"=>"未确认","1"=>'已确认','2'=>'<font color="red">取消</font>','3'=>'<font color="red">无效</font>','4'=>'<font color="red">退货</font>','5'=>'已分单','6'=>'部分分单');
+									</php>
+									<volist name='order["list"]' id='vo'>
+									<tbody>
+										<tr class="order-header">
+											<th class="order-num">订单编号：{$vo['order_sn']}</th>
+											<th>商品信息</th>
+											<th>数量</th>
+											<th>实付款</th>
+											<th>订单时间</th>
+											<th>订单状态</th>
+											<th>交易操作</th>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<a class="pic" href="">
+													<img src="{$vo['order_goods'][0]['pic']}"/>
+												</a>
+												<div class="info">
+													<div class="info-hd">
+														{$vo['order_goods'][0]['name']}
+													</div>
+													<div class="">
+														{$vo['order_goods'][0]['goods_attr']}
+													</div>
+												</div>
+											</td>
+											<td class="">{$vo['order_goods'][0]['goods_num']}</td>
+											<td class="order-price" rowspan="<php>echo count($vo['order_goods'])</php>">
+												HK${$vo['money_total']}
+												<p>(含运费：{$vo['shipping_fee']})</p>
+											</td>
+											<td class="order-time" rowspan="<php>echo count($vo['order_goods'])</php>">
+												{$vo['add_time']|date='Y-m-d',###}
+												<p>{$vo['add_time']|date='H:i:s',###}</p>
+											</td>
+											<td class="order-status" rowspan="<php>echo count($vo['order_goods'])</php>">
+												<if condition="$vo['receive_time'] neq 0">已收货<elseif condition="$vo['shipping_status'] eq 2"/>已发货<elseif condition="$vo['order_status'] eq 5 or $vo['order_status'] eq 6"/>{$order_status[$vo[order_status]]}<elseif condition="$vo['pay_status'] eq 1" />已支付<else />{$order_status[$vo[order_status]]}</if>
+												<a>评价商品</a>
+											</td>
+											<td class="order-operate" rowspan="<php>echo count($vo['order_goods'])</php>">
+												<a href="{:U('order/index/delete',array('id'=>$vo['order_id']))}">删除订单</a>
+												<if condition="$vo.pay_status eq 0">{$vo['order_id']|getPayForm=###}</if>
+											</td>
+										</tr>
+										<volist name="vo.order_goods" offset='1' id='subvo'>
+										<tr>
+											<td colspan="2">
+												<a class="pic" href="">
+													<img src="{$subvo.pic}"/>
+												</a>
+												<div class="info">
+													<div class="info-hd">
+														{$subvo.name}
+													</div>
+													<div class="">
+														{$subvo.goods_attr}
+													</div>
+												</div>
+											</td>
+											<td class="">{$subvo.goods_num}</td>
+											
+										</tr>
+										</volist>
+									</tbody>
+									
+									<tbody class="row-sep">
+										<tr>
+											<td colspan="7"></td>
+										</tr>
+									</tbody>	
+									</volist>
+									
+								</table>
+								<div class="item-page">							
+									{$order.page}
+								</div>
+							</div>				
+						</div>
+					</div>
+					<div class="order-main">
+						<div class="hd">
+							根据您的浏览历史为您推荐
+						</div>
+						<div class="bd">							
+							<div class="order-hd">								
+								<div class="item-list">
+									<div class="item-grid">
+										<div class="clearfix">
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+										</div>						
+									</div>
+									<div class="item-page">							
+										<ul class="pagination">
+											<li class="prev disabled"><a><</a></li>
+											<li class="active"><a>1</a></li>
+											<li><a>2</a></li>
+											<li><a>3</a></li>
+											<li><a>4</a></li>
+											<li><a>5</a></li>
+											<li><a>></a></li>
+									 	</ul>
+									 	<div class="form">
+									 		<span class="txt">到第</span>
+									 		<input class="input" type="text" name="" id="" value="" />
+									 		<span class="txt">页</span>
+									 		<span class="btn btn-sm submit">确定</span>
+									 	</div>
+									</div>
+								</div>
+							</div>				
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>		
+	</div>
+	
+	<tc_include file='Public:footer'/>
+</body>
+</html>

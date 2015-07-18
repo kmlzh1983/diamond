@@ -1,0 +1,56 @@
+<admintpl file="header"/>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+  	 <li><a href="{:U('AdminType/index')}">商品类型</a></li>
+     <li class="active"><a href="{:U('AdminTypeAttr/index',array('id'=>$id))}">属性列表</a></li>
+     <li><a href="{:U('AdminTypeAttr/add',array('type_id'=>$id))}">添加属性</a></li>
+  </ul>
+  <div class="common-form">
+    <form method="post" class="J_ajaxForm" action="{:U('AdminTypeAttr/listorders')}">
+      <div class="table_list">
+      	<php>
+        		$status=array("1"=>"显示","0"=>"隐藏");
+        </php>
+	    <table width="100%" class="table table-hover">
+	        <thead>
+	          <tr>
+	          	<th width="16"><label><input type="checkbox" class="J_check_all" data-direction="x" data-checklist="J_check_x"></label></th>
+	            <th width="50">排序</th>
+	            <th width="50">ID</th>
+	            <th>名称</th>
+	            <th width="80">状态</th>
+	            <th width="200">操作</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	        	<foreach name="lists" item="vo">
+		        	<tr>
+		        		<td><input type="checkbox" class="J_check" data-yid="J_check_y" data-xid="J_check_x" name="ids[]" value="{$vo.id}"></td>
+			            <td><input name='listorders[{$vo.id}]' class="input input-order"  type='text' size='3' value='{$vo.listorder}'></td>
+			            <td>{$vo.id}</td>
+			            <td>{$vo.name}</td>
+			            <td>{$status[$vo['status']]}</td>
+			            <td>
+			            	<a href="{:U('AdminTypeAttr/edit',array('id'=>$vo['id'],type_id=>$id))}" >修改</a> |
+				            <a href="{:U('AdminTypeAttr/delete',array('id'=>$vo['id']))}" class="J_ajax_del" >删除</a>
+				        </td>
+		          	</tr>
+	          	</foreach>
+	          	<tr>
+	          		<td colspan="7">
+	          			<label class="checkbox inline" for="check_all"><input type="checkbox" class="J_check_all" data-direction="y" data-checklist="J_check_y" id="check_all">全选</label>  
+			    		<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminTypeAttr/listorders')}">排序</button>
+			    		<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminTypeAttr/toggle',array('display'=>1))}" data-subcheck="true" >显示</button>
+			        	<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminTypeAttr/toggle',array('hide'=>1))}" data-subcheck="true" >隐藏</button>
+	          		</td>
+	          	</tr>
+			</tbody>
+	      </table>
+  </div>
+    </form>
+  </div>
+</div>
+<script src="__ROOT__/statics/js/common.js?"></script>
+</body>
+</html>

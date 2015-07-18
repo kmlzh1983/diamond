@@ -1,0 +1,214 @@
+<admintpl file="header"/>
+<style type="text/css">
+.col-auto {
+	overflow: hidden;
+	_zoom: 1;
+	_float: left;
+	border: 1px solid #c2d1d8;
+}
+.col-right {
+	float: right;
+	width: 210px;
+	overflow: hidden;
+	margin-left: 6px;
+	border: 1px solid #c2d1d8;
+}
+
+body fieldset {
+	border: 1px solid #D8D8D8;
+	padding: 10px;
+	background-color: #FFF;
+}
+body fieldset legend {
+    background-color: #F9F9F9;
+    border: 1px solid #D8D8D8;
+    font-weight: 700;
+    padding: 3px 8px;
+}
+.list-dot{ padding-bottom:10px}
+.list-dot li,.list-dot-othors li{padding:5px 0; border-bottom:1px dotted #c6dde0; font-family:"宋体"; color:#bbb; position:relative;_height:22px}
+.list-dot li span,.list-dot-othors li span{color:#004499}
+.list-dot li a.close span,.list-dot-othors li a.close span{display:none}
+.list-dot li a.close,.list-dot-othors li a.close{ background: url("__ROOT__/statics/images/cross.png") no-repeat left 3px; display:block; width:16px; height:16px;position: absolute;outline:none;right:5px; bottom:5px}
+.list-dot li a.close:hover,.list-dot-othors li a.close:hover{background-position: left -46px}
+.list-dot-othors li{float:left;width:24%;overflow:hidden;}
+.table td>select{margin-bottom:4px}
+</style>
+<link href="__ROOT__/statics/simpleboot/css/main.css" rel="stylesheet">
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+     <li><a href="{:U('AdminOrder/index',array('term'=>empty($term['term_id'])?'':$term['term_id']))}"  target="_self">所有订单</a></li>
+     <li class="active"><a href="#">订单查询</a></li>
+  </ul>
+  <form name="myform" id="myform" action="{:u('AdminOrder/index')}" method="post" class="form-horizontal J_ajaxForms" enctype="multipart/form-data">
+  <php>
+	$order_status=array("0"=>"未确认","1"=>'已确认','2'=>'<font color="red">取消</font>','3'=>'<font color="red">无效</font>','4'=>'<font color="red">退货</font>','5'=>'已分单','6'=>'部分分单');
+	$pay_status=array("0"=>"未付款","1"=>"已付款");
+	$shipping_status=array("0"=>"未发货","1"=>"已发货");
+  </php>
+    <div class="table_full">
+      <table class="table table-J table-bordered" width="100%"  cellpadding="2" cellspacing="2">
+		<tbody>
+            <tr>
+              <th width="20%">订单号 </th>
+              <td width="30%">
+              	<input type="text" name="order_sn">
+              </td>
+			  <th width="20%"></th>
+              <td width="30%"></td>
+            </tr>
+			<tr>
+              <th>邮箱 </th>
+              <td>
+              	<input type="text" name="email">
+              </td>
+			  <th></th>
+              <td></td>
+            </tr>
+			<tr>
+              <th>购货人 </th>
+              <td>
+              	<input type="text" name="buy_user">
+              </td>
+			  <th>收货人</th>
+              <td>
+				<input type='text' name='consignee'>
+			  </td>
+            </tr>
+			<tr>
+              <th>地址 </th>
+              <td>
+					<select name='country' id="selCountries" onchange="loadRegion('selCountries',1,'selProvinces','{:U('AdminShipping/getRegion')}');" >
+						<option value='0'></option>
+						<volist name='country' id='vo'>
+						<option value="{$vo.id}">{$vo.name}</option>
+						</volist>
+					</select>
+					<select name='province' id="selProvinces" onchange="loadRegion('selProvinces',2,'selCities','{:U('AdminShipping/getRegion')}');" >
+					</select>
+					<select name='city'  id="selCities" onchange="loadRegion('selCities',3,'selDistrict','{:U('AdminShipping/getRegion')}');">
+					</select>
+					<select name='district' id='selDistrict'>
+					</select>
+				</td>
+			  <th>邮编</th>
+              <td>
+				<input type='text' name='zipcode'>
+			  </td>
+            </tr>
+			<tr>
+              <th>电话 </th>
+              <td>
+              	<input type="text" name="tel">
+              </td>
+			  <th>手机</th>
+              <td>
+				<input type='text' name='mobile'>
+			  </td>
+            </tr>
+			<tr>
+              <th>所在地区 </th>
+              <td>
+              	<input type="text" name="aaaaa">
+              </td>
+			  <th></th>
+              <td></td>
+            </tr>
+			<tr>
+              <th>配送方式 </th>
+              <td>
+              	<input type="text" name="shipping_id">
+              </td>
+			  <th>支付方式</th>
+              <td>
+				<input type='text' name='pay_id'>
+			  </td>
+            </tr>
+			<tr>
+              <th>下单时间 </th>
+              <td>
+              	<input type="text" name="start_time" class="input length_2 J_date" value="{$where.start_time|default=''}" style="width:80px;" autocomplete="off">-<input type="text" class="input length_2 J_date" name="end_time" value="{$where.end_time}" style="width:80px;" autocomplete="off">
+              </td>
+			  <th></th>
+              <td></td>
+            </tr>
+			<tr>
+              <th>状态 </th>
+              <td colspan='4'>
+              	订单状态:
+				<select class="select_2" name="order_status">
+					<option value='-1'>全部</option>
+					<option value='0'>未确认</option>
+					<option value='1'>已确认</option>
+					<option value='2'>取消</option>
+					<option value='3'>无效</option>
+					<option value='4'>退货</option>
+					<option value='5'>已分单</option>
+					<option value='6'>部分分单</option>
+				</select>
+				付款状态
+				<select class="select_2" name="pay_status">
+					<option value='-1'>全部</option>
+					<option value='0'>未付款</option>
+					<option value='1'>已付款</option>
+				</select>
+				发货状态
+				<select class="select_2" name="shipping_status">
+					<option value='-1'>全部</option>
+					<option value='0'>未发货</option>
+					<option value='1'>已发货</option>
+				</select>
+              </td>
+            </tr>
+			<tr>
+				<td colspan='4' style='text-align:center'>
+					<input type="submit" class="btn btn-primary" value="搜索"/>
+					<input type="reset" class="btn btn-primary" value="重置"/>
+				</td>
+			</tr>
+		</tbody>
+	  </table>
+    </div>
+  <div class="form-actions">
+        <a class="btn" href="{:U('AdminOrder/index')}">返回</a>
+  </div>
+ </form>
+</div>
+<script type="text/javascript" src="__ROOT__/statics/js/common.js"></script>
+<script type="text/javascript" src="__ROOT__/statics/js/content_addtop.js"></script>
+<script type="text/javascript"> 
+function loadRegion(sel,type_id,selName,url){
+	//alert(jQuery("#"+sel).val());
+	jQuery("#"+selName+" option").each(function(){
+		jQuery(this).remove();
+	});
+	jQuery("<option value=0>-please select-</option>").appendTo(jQuery("#"+selName));
+	if(jQuery("#"+sel).val()==0){
+		return;
+	}
+	jQuery.getJSON(url,{pid:jQuery("#"+sel).val(),type:type_id},
+	function(data){
+		if(data){
+			jQuery.each(data,function(idx,item){
+				if(idx==0){
+					return true;//同countinue，返回false同break
+				}
+
+				//jQuery(new Option(item.name,item.id)).appendTo(jQuery("#"+selName));
+				jQuery("<option value="+item.id+">"+item.name+"</option>").appendTo(jQuery("#"+selName));
+
+			});
+		}else{
+			jQuery("<option value='0'>All Province</option>").appendTo(jQuery("#"+selName));
+		}
+
+	}
+
+	);
+}
+</script>
+</script>
+</body>
+</html>

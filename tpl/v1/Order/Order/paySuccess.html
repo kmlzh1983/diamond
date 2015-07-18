@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>首頁</title>
+	<tc_include file='Public:head'/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+		
+
+</head>
+<body class="theme">	
+	<tc_include file='Public:header'/>
+	
+	<div class="wrapper">
+		<div class="wrap">
+			<div class="order-main order-process">
+				<ul class="process-04">
+					<li>我的购物车</li>
+					<li>确认订单</li>
+					<li>付款</li>
+					<li>支付成功</li>
+				</ul>
+			</div>
+			<div class="border-top3 bg-white">
+				<div class="order-main pay-process">					
+					<div class="bd">
+						<div class="success-cont">
+							<i></i>
+							<h3 class="text-center">
+								恭喜您，訂單支付成功！
+							</h3>
+							<p>
+								<a href="{:U('goods/index/index')}" class="btn btn-lg fl">
+									繼續購物
+								</a>
+								<a href="{:U('order/order/detail')}" class="btn btn-lg fr">
+									查看交易詳情
+								</a>
+							</p>
+						</div>						
+					</div>
+				</div>	
+			</div>
+		</div>		
+	</div>
+	
+	<tc_include file='Public:footer'/>
+</body>
+	<script type="text/javascript">
+		$('.select-all').change(function(){
+			if($(this).prop('checked')){
+				$('.car-table input[type=checkbox]').prop('checked',true);
+			}else{
+				$('.car-table input[type=checkbox]').prop('checked',false);
+			}
+		});
+		$('.car-table tbody input[type=checkbox]').change(function(){
+			var arg=true;
+			$('.car-table tbody input[type=checkbox]').each(function(){
+				arg=arg && $(this).prop('checked');
+			});
+			$('.select-all').prop('checked',arg);
+		});
+	</script>
+</html>

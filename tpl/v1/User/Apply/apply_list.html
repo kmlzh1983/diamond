@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <title>申请记录</title>
+
+    <tc_include file='Public:head'/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/js/skin/layer.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/js/skin/layer.ext.css"/>
+
+    <script src="__TMPL__Public/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+
+
+</head>
+<body class="theme foot-white-bg">
+<tc_include file='Public:header'/>
+
+<div class="wrapper order-wrap">
+    <div class="wrap">
+        <div class="grid address-page">
+            <tc_include file='User:My:leftside'/>
+            <div class="grid-r">
+                <div class="order-main">
+                    <div class="hd">
+                        <div class="tips">
+                            申请记录
+                        </div>
+                    </div>
+                    <div class="bd">
+                        <div class="margin-out">
+
+                            <table class="f-table">
+                                <thead>
+                                <tr>
+                                    <td width="14%">申请日期</td>
+                                    <td width="10%">岗位名称</td>
+                                    <td>对方名称</td>
+                                    <td>投递状态</td>
+                                    <td width="16%">查看</td>
+                                </tr>
+                                </thead>
+                                <tbody class="dot-line">
+                                <tr>
+                                    <td colspan="6"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6"></td>
+                                </tr>
+                                </tbody>
+                                <volist name='list' id='vo'>
+                                    <tbody>
+                                    <tr>
+                                        <td>{$vo.apply_time|date="Y-m-d H:i:s",###}</td>
+                                        <td>
+                                            <p>{$vo.job_name}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <if condition="$vo['user_realname']">
+
+                                            {$vo.user_realname}
+                                                <else />
+                                                {$vo.user_login}
+                                                </if>
+                                        </td>
+                                        <td>
+                                            <if condition="$vo['status'] eq 0 ">
+                                                未查看
+                                                <elseif condition="$vo['status'] eq 1" />
+                                                已查看
+
+                                            </if>
+                                        </td>
+                                        <td>
+                                            <a data-id='{$vo.id}'  href="{:U('Portal/jobs/detail?id=')}{$vo.job_id}" class="viewJob">查看此职位</a>
+
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                    <tbody class="dot-line">
+                                    <tr>
+                                        <td colspan="6"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"></td>
+                                    </tr>
+                                    </tbody>
+                                </volist>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="bd">
+                        {$show}
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<tc_include file='Public:footer'/>
+<script>
+
+    //编辑工作
+    $(".editJob").click(function () {
+        var rid = $(this).attr("data-id");
+        var url = "{:U('user/jobs/aejobs?jid=')}"+rid;
+        location.href = url;
+    })
+
+
+    //下架
+    $(".offline_job").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"{:U('user/jobs/offline_job')}",
+            dataType:'json',
+            data:{id:$(this).attr('data-id')},
+            success:function(data){
+                alert(data.msg);
+                if(data.r==0){
+                    location.reload();
+                }
+            }
+
+        });
+    });
+
+    $(".refreshJob").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"{:U('user/jobs/refreshJob')}",
+            dataType:'json',
+            data:{id:$(this).attr('data-id')},
+            success:function(data){
+
+                alert(data.msg);
+                if(data.r==0)
+                    location.reload();
+            }
+
+        });
+    });
+
+    //调用layer
+    $(".recommendJob").click(function () {
+        layer.open({
+            type: 1,
+            title:'置顶职位',
+            shade:['0.1'],
+            move:false,
+            skin: 'layui-layer-rim',
+            area: ['900px', '460px'],
+            shadeClose: true, //点击遮罩关闭
+            content: $('#jobPos')
+        });
+    });
+
+
+</script>
+</body>
+</html>

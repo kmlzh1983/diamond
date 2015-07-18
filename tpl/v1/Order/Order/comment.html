@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>我的订单</title>
+	<tc_include file='Public:head'/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+		
+	<script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/lib/html5.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/placeholder.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="theme foot-white-bg">	
+	<tc_include file='Public:header'/>
+	
+	<div class="wrapper order-wrap">
+		<div class="wrap">
+			<div class="grid">
+				<tc_include file='User:My:leftside'/>
+				<div class="grid-r">
+					<div class="order-main order-comment">
+						
+						<div class="hd">
+							<span class="order-time">
+								下单时间：{$order.add_time|date='Y-m-d H:i:s',###}
+							</span>
+							<span class="order-No">
+								订单编号: {$order.order_sn}
+							</span>
+							<span class="order-ok">
+								订单已经完成，感谢您在HMV购物，欢迎您对本次交易及所购商品进行评价。
+							</span>
+						</div>
+						<div class="bd">
+						<form action='' method="post" enctype="multipart/form-data" id="commentForm">				
+							<volist name="order_comments" id="vo">	
+							<empty name="vo.comments">				
+							<div class="comment-bd">
+								<div class="pro-info">
+									<a href="" class="imgbox">
+										<img src="{$vo.goods.g_img_url}"/>
+									</a>
+									<div class="pro-intr">{$vo.goods.name}</div>
+								</div>
+								<if condition="$order.time lt 180">
+								<div class="comment-box">
+									<div class="comment-area">
+										<div class="title">
+											评价商品
+											<div class="text-limit">
+												10-500字
+											</div>
+											<i class="icon"></i>
+										</div>
+										<div class="com-bd">
+											<textarea name="content[{$vo.goods.goods_id}]" rows="" class="{$rs.type}" cols="" placeholder="请在这填写评论内容"></textarea>
+										</div>
+										<div class="com-foot">
+											<span class="show-pic-btn">
+												<span class="show-pic"></span>
+												晒照片</span><span class="pic-num"><span>0</span>/5</span>											
+										</div>
+										<div class="pic-list">
+											<ul>												
+												<li class="add-btn">													
+												</li>
+											</ul>
+											<div class="file-input">
+												<input class="file" type="file" name="file" id="{$vo.goods.goods_id}" value="" />
+											</div>
+										</div>
+									</div>
+									<div class="com-score">
+										评分：
+										<span class="com-star star{$vo.goods_id}" data-score="">
+											<input type="hidden" name="score[{$vo.goods.goods_id}]" class="score" value=""/>
+											<a href="javascript:void(0)" class="star1"></a>
+											<a href="javascript:void(0)" class="star2"></a>
+											<a href="javascript:void(0)" class="star3"></a>
+											<a href="javascript:void(0)" class="star4"></a>
+											<a href="javascript:void(0)" class="star5"></a>
+										</span>
+									</div>
+									
+								</div>	
+								</if>							
+							</div>
+							<else/>
+								<div class="comment-bd">
+									<div class="pro-info">
+										<a href="" class="imgbox">
+											<img src="{$vo.goods.g_img_url}"/>
+										</a>
+										<div class="pro-intr">{$vo.goods.name}</div>
+									</div>
+									<volist name="vo.comments" id="rs">
+										<div class="comment-box">
+											<div class="comment-area">
+
+												<div class="com-bd">
+													{$rs.content}
+												</div>
+												<if condition="$rs.type eq 1">
+													<notempty name='rs.thumb_url'>	
+														<div class="pic-list">
+															<ul>														
+																<volist name='rs.thumb_url' id='tu'>
+																	<li>
+																		<img src="{$tu}" class="img"/>
+																	</li>
+																</volist>													
+															</ul>
+														</div>
+													</notempty>	
+													<div class="com-score">
+													评分：
+														<span class="com-star" data-score="">
+															<for start='0' end='$rs.score'>
+																<a href="javascript:void(0)" class="status"></a>
+															</for>
+															<for start='$rs.score' end='5'>
+																<a href="javascript:void(0)" class="default"></a>
+															</for>
+														</span>
+													</div>	
+												</if>	
+											</div>																			
+										</div>	
+									</volist>
+									<if condition="$order.time lt 180">
+										<div class="comment-area">
+											<div class="title">
+													追加评价
+													<div class="text-limit">
+														10-500字
+													</div>
+													<i class="icon"></i>
+												</div>
+												<div class="com-bd">
+													<textarea name="content[{$vo.goods.goods_id}]" rows="" class="{$rs.type}" cols="" placeholder="请在这填写评论内容"></textarea>
+											</div>	
+										</div>
+									</if>						
+								</div>
+							</empty>
+							</volist>
+							<if condition="$order.time lt 180">
+							<div class="com-submit">
+								<input type="hidden" name="order_id" value="{$order.order_id}"/>
+								<input class="btn btn-lg" type="button" name="" id="" value="发表评论" />
+							</div>
+							</if>
+							</form>
+						</div>
+					</div>
+					
+				</div>
+			</div>			
+		</div>		
+	</div>
+	
+	<tc_include file='Public:footer'/>
+</body>
+<script type="text/javascript" src="/statics/js/ajaxForm.js"></script>
+<script type="text/javascript"><!--
+	
+	$('.pic-list li.add-btn').click(function(){
+		$(this).parents('.pic-list').find('.file-input .file').click();	
+	});
+	$('.pic-list .file-input .file').change(function(){
+		/*  *ajax Upload IMG 
+			*@author zhangzhiqiang
+			*@contact zhangzhiqiang@vsoyou.com
+			*@time 2015-6-18
+			*/
+		var $this=$(this);
+		if($this.parents('.pic-list').find('ul li').length-1 >= 5){
+			alert('最多上传5张图片');
+			return false;
+		}
+		$("#commentForm").ajaxSubmit({
+            type:'post',
+            url: "{:U('Order/Upload/upload')}",   
+            beforeSubmit: function(){
+             //   alert("图片上传中...");
+            },
+            success: function(data){   
+            	if(data.error == 0){
+                	var new_li = '<li><img src="'+data.smallimg+'" class="img"/>'+
+   				 				 '<i class="close-icon"></i>'+
+   				 				 '<input type="hidden" name="thumb_url['+$this.attr("id")+'][]" value="'+data.smallimg+'">'+
+   				 				 '</li>';
+   					$this.parents('.pic-list').find('ul .add-btn').before(new_li);
+   					$this.parents('.comment-area').find('.pic-num>span').text($this.parents('.pic-list').find('ul li').length-1);
+            	}else{
+            		alert(data.msg);
+            		return false;
+            	}
+            },
+            resetForm: false,
+            clearForm: false
+    	});
+		/*-----  end  ------*/
+	});
+	$('.pic-list').on('click','.close-icon',function(){
+		$(this).parent().remove();
+		// del img ajax		
+	});
+	
+	
+	$('.com-star a').hover(function(){
+		$(this).prevAll().addClass('hover');
+	},function(){
+		$(this).prevAll().removeClass('hover');
+	});
+	$('.com-star a').click(function(){
+		if($(this).hasClass('active')){
+			$(this).nextAll().removeClass('active');
+		}else{
+			$(this).addClass('active').prevAll().addClass('active');
+		}
+		//$(this).parent().attr('data-score',$(this).index());
+		//星级评价  @author zhangzhiqiang
+		$(this).parent('.com-star').find('input').val($(this).index());
+	});
+	
+	//提交  @author zhangzhiqiang
+	$('input[type="button"]').click(function(){
+		var $submit = true;
+		$('textarea').each(function() { 		
+			if($(this).val() != '' && ($(this).val().length < 10 || $(this).val().length > 500)){
+				alert('商品评价在10个字到500个字之间');
+				$submit = false;
+				return false;
+			}
+			if($(this).val() != '' && $(this).attr('class') == 1 && $(this).closest('.comment-box').find('.score').val() == ''){			
+				alert('请对'+$(this).closest('.comment-bd').find('.pro-intr').html()+'商品评分');
+				$submit = false;
+				return false;
+			}
+		}); 
+		$('.score').each(function(){
+			if($(this).val() != '' && $(this).closest('.comment-box').find('textarea').val() == ''){			
+				alert('请对'+$(this).closest('.comment-bd').find('.pro-intr').html()+'商品进行评价');
+				$submit = false;
+				return false;
+			}
+		});
+		if($submit){
+			$("#commentForm").ajaxSubmit({
+	            type:'post',
+	            url: "{:U('Order/Order/comment')}",   
+	            beforeSubmit: function(){
+	             //   alert("图片上传中...");
+	            },
+	            success: function(data){  
+	            	if(data.error == 1){
+		            	alert(data.msg);
+	            	}else{
+		            	location.reload(true);
+	            	}
+	            },
+	            resetForm: true,
+	            clearForm: true
+	    	});
+		}
+	});
+	
+	
+--></script>
+</html>

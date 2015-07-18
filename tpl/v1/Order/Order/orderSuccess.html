@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>首頁</title>
+	
+	<tc_include file='Public:head'/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+		
+	<script src="__TMPL__Public/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__TMPL__Public/js/adress.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="theme">	
+	<tc_include file='Public:header'/>
+	
+	<div class="wrapper">
+		<div class="wrap">
+			<div class="order-main order-process">
+				<ul class="process-02">
+					<li>我的购物车</li>
+					<li>确认订单</li>
+					<li>付款</li>
+					<li>支付成功</li>
+				</ul>
+			</div>
+			<div class="border-top3 bg-white">
+				<div class="order-main pay-process">
+					<div class="hd">
+						订单确认成功
+					</div>
+					<div class="bd">
+					{$form};
+					</div>
+					<!--</form>-->
+				</div>	
+			</div>
+		</div>		
+	</div>
+	<tc_include file='Public:footer'/>
+</body>
+<script type="text/javascript">
+</script>	
+</html>

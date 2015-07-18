@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>首頁</title>
+	<tc_include file='Public:head'/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+
+</head>
+<body class="theme">	
+	<tc_include file='Public:header'/>
+	<div class="wrapper">
+		<div class="wrap">
+			<div class="order-main order-process">
+				<ul class="process-01">
+					<li>我的购物车</li>
+					<li>确认订单</li>
+					<li>付款</li>
+					<li>支付成功</li>
+				</ul>
+			</div>
+			<div class="border-top3 bg-white">
+				<div class="order-main pay-process">
+					<table class="car-table">
+						<thead>
+							<tr>
+								<th class="select">
+									<input class="select-all" type="checkbox" />
+									全选
+								</th>
+								<th>
+									货品描述
+								</th>
+								<th class="format">
+									格式
+								</th>
+								<th class="price">
+									单价
+								</th>
+								<th class="couts">
+									数量
+								</th>
+								<th class="all">
+									合计
+								</th>
+								<th class="operate"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<!--分割线-->
+							<tr class="bottom-line-t">
+								<td colspan="7"></td>
+							</tr>
+							<tr class="bottom-line">
+								<td colspan="7"></td>
+							</tr>
+							<!--分割线-->
+							<notempty name='cart["cart"]'>
+							<form action='{:U("Order/cart/confirm")}' method='post'>
+							<volist name='cart["cart"]' id='vo'>							
+							<tr>
+								<td>
+									<input name='id[]' class="select-tr" value='{$vo.id}' type="checkbox" data-id="{$vo.id}" />
+								</td>
+								<td>
+									<div class="">
+										<a class="pic" target='_blank' href="{:U('goods/index/detail',array('id'=>$vo['id']))}">
+											<img src="{$vo.smallimage}"/>
+										</a>
+										<div class="info">
+											<div class="info-hd">
+												{$vo.name}
+											</div>
+											<div class="">
+												{$vo.description}
+												<volist name='vo.attrinfo' id='attr_vo'>
+												<span class='hide attr_ids' data="{$attr_vo.id}" ></span>{$attr_vo.attr_value}:{$attr_vo.attr_price}&nbsp;&nbsp;&nbsp;
+												</volist>
+											</div>
+										</div>
+									</div>								
+								</td>
+								<td>
+									CD
+								</td>
+								<td>
+									HK${$vo.price_real}
+								</td>
+								<td>
+									<div class="count-box">
+										<span class="down" data-id="0" onselectstart="return false">-</span>
+										<input class="buy_count" type="" name="" id="" value="{$vo.num}" />
+										<span class="up" data-id="1" onselectstart="return false">+</span>
+									</div>
+								</td>
+								<td>
+									HK${$vo['price_real']*$vo['num']|number_format=2}
+								</td>
+								<td class="operate">
+									<a class='moveFav' href="{:U('user/my/addFav' , array('id'=>$vo['id'],'type'=>'cart'))}">
+										移入收藏夹
+									</a>
+									<a class='delCart' href="{:U('Order/cart/delcart' , array('id'=>$vo['id']))}">
+										刪除
+									</a>
+								</td>
+							</tr>
+							<!--分割线-->
+							<tr class="bottom-line-t">
+								<td colspan="7"></td>
+							</tr>
+							<tr class="bottom-line">
+								<td colspan="7"></td>
+							</tr>
+							<!--分割线-->
+							</volist>
+							<else/>
+							<tr>
+								<td colspan='6'><br><br><br><br><br><br>购物车还没有商品的啦~~~~~~~~~~~~~~~~赶紧<a href="{:U('Goods/index/index')}">点击这里</a>去加入购物车吧<br><br><br><br><br><br></td>
+							</tr>
+							<!--分割线-->
+							<tr class="bottom-line-t">
+								<td colspan="7"></td>
+							</tr>
+							<tr class="bottom-line">
+								<td colspan="7"></td>
+							</tr>
+							<!--分割线-->
+							</notempty>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="7">
+									<input type='submit' class="btn btn-lg submit" value='确认结算'>
+									<div class="sum-all">
+										合计：<span class="color">HK${$cart.total_price}</span>
+									</div>
+									<input class="select-all" type="checkbox"/>
+									全选
+									<a href="javascript:void(0)" class="del color">批量删除</a>
+								</td>
+							</tr>
+						</tfoot>
+						</form>
+					</table>
+				</div>	
+			</div>
+			<div class="tuijian tuijian-full">
+				<div class="tj-hd">
+					<h4>
+						猜你喜歡
+					</h4>
+				</div>
+				<div class="tj-bd">
+					<div class="scrollLeft">									
+						<ul class="clearfix">
+							<li>
+								<a href=""><img src="__TMPL__Public/images/page/floor_7_02.jpg"/></a>
+								<h5>BJORK VULNICURA</h5>
+								<p class="tips">HK$119.00</p>
+							</li>
+							<li>
+								<a href=""><img src="__TMPL__Public/images/page/floor_7_03.jpg"/></a>
+								<h5>BJORK VULNICURA</h5>
+								<p class="tips">HK$119.00</p>
+							</li>
+							<li>
+								<a href=""><img src="__TMPL__Public/images/page/floor_7_04.jpg"/></a>
+								<h5>BJORK VULNICURA</h5>
+								<p class="tips">HK$119.00</p>
+							</li>
+							<li>
+								<a href=""><img src="__TMPL__Public/images/page/floor_7_05.jpg"/></a>
+								<h5>BJORK VULNICURA</h5>
+								<p class="tips">HK$119.00</p>
+							</li>
+							<li>
+								<a href=""><img src="__TMPL__Public/images/page/floor_7_06.jpg"/></a>
+								<h5>BJORK VULNICURA</h5>
+								<p class="tips">HK$119.00</p>
+							</li>
+							<li>
+								<a href=""><img src="__TMPL__Public/images/page/floor_7_07.jpg"/></a>
+								<h5>BJORK VULNICURA</h5>
+								<p class="tips">HK$119.00</p>
+							</li>
+						</ul>
+					</div>
+					<!--<div class="scroll-btn">
+						<div class="l-btn">
+							<
+						</div>
+						<div class="r-btn">
+							>
+						</div>
+					</div>-->
+				</div>
+			</div>
+		</div>		
+	</div>
+	
+	<tc_include file='Public:footer'/>
+</body>
+	<script type="text/javascript">
+		$('.select-all').change(function(){
+			if($(this).prop('checked')){
+				$('.car-table input[type=checkbox]').prop('checked',true);
+			}else{
+				$('.car-table input[type=checkbox]').prop('checked',false);
+			}
+		});
+		$('.car-table tbody input[type=checkbox]').change(function(){
+			var arg=true;
+			$('.car-table tbody input[type=checkbox]').each(function(){
+				arg=arg && $(this).prop('checked');
+			});
+			$('.select-all').prop('checked',arg);
+		});
+		
+		$('.count-box .buy_count').change(function(){
+			var tr_id=$(this).parents('tr').find('.select-tr').data('id');
+			var attr_ids=[];
+			$(this).parents('tr').find('.attr_ids').each(function(){
+				attr_ids.push($(this).attr('data'));
+			});
+			$.ajax({
+				url: "{:U('Order/cart/addCart')}",
+				data: {id:tr_id,num:$(this).val(),attr_ids:attr_ids},
+				success: function(data){
+					location.reload();
+				}
+			});
+		});
+		$('.del').click(function(){
+			var selectedAttr=[];
+			$('.select-tr').each(function(){
+				if($(this).prop('checked')){
+					selectedAttr.push($(this).data('id'));
+				}
+			});
+			if(selectedAttr.length==0){
+				alert('请至少选择一项')
+				return false
+			}
+			$.ajax({
+				url:'{:U('order/cart/delcart')}',
+				data:{ids:selectedAttr},
+				success:function(data){
+					if(data.status==1){
+						alert(data.info);
+						location.reload();
+					}else{
+						alert(data.info);
+					}
+				}
+			})
+		});
+		$("a.moveFav").click(function(){
+			var url = $(this).attr('href');
+			$.ajax({
+				url:url,
+				success:function(data){
+					if(typeof(data.status)=='undefined'){
+						alert("请您先登陆");
+						return false;
+					}
+					if(data.status==1){
+						alert(data.info);
+					}else{
+						alert(data.info);
+					}
+					location.reload();
+				}
+			});
+			return false;
+		});
+		$("a.delCart").click(function(){
+			var url = $(this).attr('href');
+			$.ajax({
+				url:url,
+				success:function(data){
+					if(data.status==1){
+						alert(data.info);
+					}else{
+						alert(data.info);
+					}
+					location.reload();
+				}
+			});
+			return false;
+		});
+		$("input.submit").click(function(){
+			var selectedAttr=[];
+			$('.select-tr').each(function(){
+				if($(this).prop('checked')){
+					selectedAttr.push($(this).data('id'));
+				}
+			});
+			if(selectedAttr.length==0){
+				//alert('至少需要购买一件商品')
+				//return false
+			}
+			return true;
+		})
+	</script>
+</html>

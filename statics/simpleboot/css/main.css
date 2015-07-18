@@ -1,0 +1,30 @@
+.table th{
+    text-align: left;
+}
+.table td{
+    text-align: left;
+}
+.table td.select{
+    width: 20px;
+    text-align: center;
+}
+.table tr th,.table thead tr th,.table tr td{
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+}
+.table-J th{
+    text-align: right;
+    vertical-align: middle;
+}
+.table-J td{
+    text-align: left;
+}
+input[type="radio"], input[type="checkbox"]{
+    margin: 0;
+}
+textarea, input[type="text"], input[type="password"]{
+    border-width: 1px;
+}
+.table.table-bordered tr th,.table.table-bordered tr td{
+    border-bottom: none;
+}

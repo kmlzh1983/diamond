@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>首頁</title>
+	<tc_include file="Public:head"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+
+</head>
+<body class="theme">	
+	<tc_include file='Public:header'/>
+	
+	<div class="wrapper">
+		<div class="wrap">
+			<div class="order-main order-process">
+				<ul class="process-02">
+					<li>我的购物车</li>
+					<li>确认订单</li>
+					<li>付款</li>
+					<li>支付成功</li>
+				</ul>
+			</div>
+			<div class="border-top3 bg-white">
+				<div class="order-main pay-process">
+					<div class="hd">
+						填写核对订单资料
+					</div>
+					<div class="bd">
+					<form action='{:U("Order/order/generate")}' method='post'>
+						<div class="data-item">
+							<h5>收货信息</h5>
+							<dl>
+								<dt>*收&nbsp;货&nbsp;&nbsp;人：</dt>
+								<dd>
+									<input type="text" name='consignee' placeholder="姓名" />
+								</dd>
+							</dl>
+							<dl>
+								<dt>*收货地址：</dt>
+								<dd><input type='hidden' name='country' value='1'><input type='hidden' name='province' value='22'><input type='hidden' name='city' value='88'><input type='hidden' name='district' value='666'>
+									<input type="text" name='address' placeholder="姓名" style="width: 700px;" />
+								</dd>
+							</dl>
+							<dl>
+								<dt>*手机号码：</dt>
+								<dd>
+									<input name='mobile' type="text" placeholder="常用手机号码" />
+									或固定电话：
+									<input type="text" placeholder="区号" style="width: 80px;" />
+									-
+									<input name='tel' type="text" placeholder="电话号码" style="width: 140px;" />
+									-
+									<input type="text" placeholder="分机号" style="width: 80px;"/>
+								</dd>
+							</dl>
+							<dl>
+								<dt>*邮箱地址：</dt>
+								<dd>
+									<input name='email' type="text" placeholder="" />
+								</dd>
+							</dl>
+							<div class="checkbox">								
+								<input type="checkbox" name="" id="" value="" />设为默认地址
+							</div>
+							<div class="">
+								<button class="btn btn-lg">&nbsp;&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;&nbsp;</button>
+							</div>
+						</div>
+						<div class="hr-dot">								
+						</div>
+						<div class="data-item">
+							<h5>支付及抵用券信息</h5>
+							<dl>
+								<dt>付運方式：</dt>
+								<dd>
+									<select name="shipping_id">
+										<volist name='expressMethod' id='vo'>
+										<option value="{$vo.shipping_id}">{$vo.name}</option>
+										</volist>
+									</select>
+								</dd>
+							</dl>
+							<dl>
+								<dt>付款方法：</dt>
+								<dd>
+									<select name="pay_id">
+										<volist name='paymentMethod' id='vo'>
+										<option name='pay_id' value="{$vo.id}">{$vo.name}</option>
+										</volist>
+									</select>
+								</dd>
+							</dl>
+							<div class="checkbox">
+								<input type="checkbox" name="" id="" value="" />
+								使用電子優惠碼
+							</div>		
+							<div class="checkbox">
+								<input type="checkbox" name="" id="" value="" />
+								使用積分<span class="tips">（您當前可用積分<span class="color">120</span>）</span>
+							</div>		
+							<div class="checkbox">
+								<input type="checkbox" name="exquisitepack" id="" value="1" />
+								禮品包裝<span class="tips">（每份包裝貨品，我們會收取<span class="color">HK$8.00</span>服務費）</span>
+							</div>					
+						</div>
+						<div class="hr-dot">								
+						</div>
+						<div class="data-item">
+							<h5>商品信息</h5>
+							<table class="data-table">
+								<thead>
+									<tr>
+										<th>商品名稱</th>
+										<th>數量（個）</th>
+										<th>重量（kg）</th>
+										<th>金額</th>
+									</tr>
+								</thead>
+								<tbody>
+									<volist name='cart["cart"]' id='vo'>
+									<tr>
+										<td>
+											{$vo.name}
+										</td>
+										<td>{$vo.num}</td>
+										<td>{$vo.weight_real}</td>
+										<td>HK${$vo['price_real']*$vo.num}</td>
+									</tr>
+									</volist>
+								</tbody>
+							</table>
+							<div class="price-all">
+								<p>商品金額：HK${$cart['total_price']}</p>
+								<p>包裝費用：HK$8.00</p>
+								<p>訂單運費：HK${$cart['shipping_fee']}</p>
+								<if condition="$cart['pay_fee'] neq 0"><p>支付费用：HK${$cart['pay_fee']}</p></if>
+								<p>訂單總額：HK${$cart['total_price']+$cart['shipping_fee']+$cart['pay_fee']}</p>
+							</div>		
+						</div>
+						<div class="hr-dot">								
+						</div>
+						<div class="data-item">
+							<div class="fr text-right">
+								<p>使用積分：120</p>
+								<p>您需要為訂單支付<span class="color">HK${$cart.total_price}</span></p>
+								<p><button class="btn btn-lg pay-submit fr">立即支付</button></p>
+							</div>
+						</div>
+					</form>
+					</div>
+				</div>	
+			</div>
+		</div>		
+	</div>
+	
+	<tc_include file="Public:footer"/>
+</body>
+	<script type="text/javascript">
+		$('.select-all').change(function(){
+			if($(this).prop('checked')){
+				$('.car-table input[type=checkbox]').prop('checked',true);
+			}else{
+				$('.car-table input[type=checkbox]').prop('checked',false);
+			}
+		});
+		$('.car-table tbody input[type=checkbox]').change(function(){
+			var arg=true;
+			$('.car-table tbody input[type=checkbox]').each(function(){
+				arg=arg && $(this).prop('checked');
+			});
+			$('.select-all').prop('checked',arg);
+		});
+	</script>
+</html>

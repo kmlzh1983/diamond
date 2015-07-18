@@ -1,0 +1,58 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="javascript:;">支付方式</a></li>
+     <li><a href="{:U('AdminPayment/add')}"  target="_self">添加支付方式</a></li>
+  </ul>
+  <form class="J_ajaxForm" action="" method="post">
+    <div class="table_list">
+      <table width="100%" class="table table-hover">
+        <thead>
+	          <tr>
+	            <th width="15"><label><input type="checkbox" class="J_check_all" data-direction="x" data-checklist="J_check_x"></label></th>
+                <th width="40">排序</th>
+				<th width="200">显示名</th>
+				<th width="100">支付费用</th>
+	            <th width="100">标识</th>
+	            <th>描述</th>
+                <th width="80">状态</th>
+                <th width="60">操作</th>
+	          </tr>
+        </thead>
+        	<php>
+        		$status=array("1"=>"正常","0"=>"禁用");
+        	</php>
+        	<volist name="rows" id="vo">
+	        	<tr>
+		            <td><input type="checkbox" class="J_check" data-yid="J_check_y" data-xid="J_check_x" name="ids[]" value="{$vo.id}" ></td>
+		            <td><input name='listorders[{$vo.id}]' value='{$vo.listorder}' style="width: 40px"></td>
+					<td>{$vo.title}</td>
+					<td>{$vo.pay_fee}</td>
+		            <td><img src='{$vo.img_url}'></td>
+		            <td>{$vo.remark}</td>
+		            <td>{$status[$vo['status']]}</td>               
+                    <td>
+		            	<a href="{:U('AdminPayment/edit',array('id'=>$vo['id']))}">修改</a> |
+		            	<a href="{:U('AdminPayment/delete',array('id'=>$vo['id']))}" class="J_ajax_del">删除</a>
+					</td>
+	          	</tr>
+          </volist>
+          	<tr>
+          		<td colspan="13">
+          			<label class="checkbox inline" for="check_all"><input type="checkbox" class="J_check_all" data-direction="y" data-checklist="J_check_y" id="check_all">全选</label>   
+					<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminPayment/listorders')}" data-subcheck="true" data-msg="你确定排序吗？">排序</button>
+					<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminPayment/able')}" data-subcheck="true" data-msg="你确定启用吗？">启用</button>
+					<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminPayment/disable')}" data-subcheck="true" data-msg="你确定禁用吗？">禁用</button>					
+			        <button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminPayment/delete')}" data-subcheck="true" data-msg="你确定删除吗？">删除</button>
+          		</td>
+          	</tr>
+          </table>
+          <div class="pagination">{$Page}</div>
+     
+    </div>
+  </form>
+</div>
+<script src="__ROOT__/statics/js/common.js"></script>
+</body>
+</html>

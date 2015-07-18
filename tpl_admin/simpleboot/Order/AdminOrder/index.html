@@ -1,0 +1,97 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="javascript:;">所有订单</a></li>
+     <li><a href="{:U('AdminOrder/search',array('term'=>empty($term['term_id'])?'':$term['term_id']))}"  target="_self">订单查询</a></li>
+  </ul>
+  <form class="well form-search" method="post" action="{:u('AdminOrder/index')}">
+    <div class="search_type cc mb10">
+      <div class="mb10">
+		订单号：
+        <input type="text" class="input length_2" name="order_sn" value="{$where.order_sn}" placeholder="请输入订单号">	  
+		收货人：
+        <input type="text" class="input-middle" name="consignee" value="{$where.consignee}" placeholder="请输入收货人">	  
+        <span class="mr20">订单状态：
+        <select class="input-small" name="order_status">
+          	<option value='-1' selected <if condition="$where.order_status eq -1">selected</if> >全部</option>
+			<option value='0' <if condition="$where.order_status eq 0">selected</if> >未确认</option>
+			<option value='1' <if condition="$where.order_status eq 1">selected</if> >已确认</option>
+			<option value='2' <if condition="$where.order_status eq 2">selected</if> >取消</option>
+			<option value='3' <if condition="$where.order_status eq 3">selected</if> >无效</option>
+			<option value='4' <if condition="$where.order_status eq 4">selected</if> >退货</option>
+			<option value='5' <if condition="$where.order_status eq 5">selected</if> >已分单</option>
+			<option value='6' <if condition="$where.order_status eq 6">selected</if> >部分分单</option>
+          	{$taxonomys}
+        </select>
+        &nbsp;&nbsp;下单时间：
+        <input type="text" name="start_time" class="input length_2 J_date" value="{$where.start_time|default=''}" style="width:80px;" autocomplete="off">-<input type="text" class="input length_2 J_date" name="end_time" value="{$where.end_time}" style="width:80px;" autocomplete="off">
+               &nbsp; &nbsp;
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        </span>
+      </div>
+    </div>
+  </form>
+  <form class="J_ajaxForm" action="" method="post">
+    <div class="table_list">
+      <table width="100%" class="table table-hover">
+        <thead>
+	          <tr>
+				<th width="15"><label><input type="checkbox" class="J_check_all" data-direction="x" data-checklist="J_check_x"></label></th>
+	            <th width="100">订单号</th>
+                <th width="200">下单时间</th>
+                <th>收货人</th>
+                <th width="50">总金额</th>
+                <th width="100">应付金额</th>
+                <th width="200">订单状态</th>
+	            <th width="60">操作</th>
+	          </tr>
+        </thead>
+        	<php>
+        		$order_status=array("0"=>"未确认","1"=>'已确认','2'=>'<font color="red">取消</font>','3'=>'<font color="red">无效</font>','4'=>'<font color="red">退货</font>','5'=>'已分单','6'=>'部分分单');
+        		$pay_status=array("0"=>"未付款","1"=>"已付款");
+        		$shipping_status=array("0"=>"未发货","1"=>"配货中",'2'=>'已发货');
+        	</php>
+        	<foreach name="list" item="vo">
+
+	        	<tr>
+					<td><input type="checkbox" class="J_check" data-yid="J_check_y" data-xid="J_check_x" name="ids[]" value="{$vo.order_id}" ></td>
+		            <td>{$vo.order_sn}</td>
+		            <td>{$vo.user}<br>
+						{$vo.add_time|date='Y-m-d H:i:s',###}
+					</td>
+		            <td>
+						{$vo.consignee}[TEL:{$vo.tel}]<br>
+						<volist name='vo["addr"]' id='addr'>
+						{$addr.name}
+						</volist>
+						{$vo.address},{$vo.zipcode}
+					</td>
+		            <td>{$vo['money_total']}</td>
+                    <td>{$vo['money_total']-$vo['discount']-$vo['paid_points']/C('POINTS_TO_HK')-$vo['paid_coupon']|number_format='2'}</td>
+                    <td>{$order_status[$vo['order_status']]},{$pay_status[$vo['pay_status']]},{$shipping_status[$vo['shipping_status']]}</td>
+		            <td>
+		            	<a href="{:U('AdminOrder/edit',array('term'=>empty($term['term_id'])?'':$term['term_id'],'id'=>$vo['order_id']))}">查看</a>
+		            	<if condition="($vo['order_status'] eq 2) or ($vo['order_status'] eq 3)">| <a href="{:U('AdminOrder/delete',array('term'=>empty($term['term_id'])?'':$term['term_id'],'id'=>$vo['order_id']))}" class="J_ajax_del" >移除</a></if>
+						<if condition="$vo['shipping_status'] gt 1">| <a href="{:U('AdminOrder/confirm',array('term'=>empty($term['term_id'])?'':$term['term_id'],'id'=>$vo['order_id']))}" class="J_ajax_confirm" >确认收货</a></if>
+					</td>
+	          	</tr>
+          </foreach>
+          	<tr>
+          		<td colspan="14">
+          			<label class="checkbox inline" for="check_all"><input type="checkbox" class="J_check_all" data-direction="y" data-checklist="J_check_y" id="check_all">全选</label>                
+			        <button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminOrder/confirm_multiple')}" data-subcheck="true" data-msg="你确定要确认订单吗？">确认</button>
+					<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminOrder/disable_multiple')}" data-subcheck="true" data-msg="你确定要订单无效吗？">无效</button>
+					<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminOrder/cancel_multiple')}" data-subcheck="true" data-msg="你确定要取消订单吗？">取消</button>
+					<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminOrder/delete_multiple')}" data-subcheck="true" data-msg="你确定要移除订单吗？">移除</button>
+          		</td>
+          	</tr>
+          </table>
+          <div class="pagination">{$Page}</div>
+     
+    </div>
+  </form>
+</div>
+<script src="__ROOT__/statics/js/common.js"></script>
+</body>
+</html>

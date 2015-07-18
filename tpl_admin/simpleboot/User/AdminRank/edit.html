@@ -1,0 +1,63 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	<div class="wrap jj">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('AdminRank/index')}">用户等级</a></li>
+			<li><a href="{:U('AdminRank/add')}">添加用户等级</a></li>
+			<li class="active"><a href="#">编辑用户等级</a></li>
+		</ul>
+		<div class="common-form">
+			<form method="post" class="form-horizontal J_ajaxForm" action="{:U('AdminRank/edit_post')}">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label">名称:</label>
+						<div class="controls">
+							<input type="text" class="input" name="rank_name" value="{$data.rank_name}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">积分下限:</label>
+						<div class="controls">
+							<input type="text" class="input-small" name="min_points" value="{$data.min_points}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">积分上限:</label>
+						<div class="controls">
+							<input type="text" class="input-small" name="max_points" value="{$data.max_points}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">显示商品价格:</label>
+						<div class="controls">
+							<input type="checkbox" value="1" name="show_price" <php>echo $data['show_price']==1?"checked":""</php>>
+							<span class="must_red">在商品详情页显示该会员等级的商品价格</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">特殊会员组:</label>
+						<div class="controls">
+							<input type="checkbox" value="1" name="special_rank" <php>echo $data['special_rank']==1?"checked":""</php>>
+							<span class="must_red">特殊会员组的会员不会随着积分的变化而变化。</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">初始折扣率:</label>
+						<div class="controls">
+							<input type="text" class="input-small" name="discount" value="{$data.discount}">
+							<span class="must_red">请填写为 0-100 的整数，如填入 80，表示初始折扣率为 8 折</span>
+						</div>
+					</div>
+					
+				</fieldset>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary btn_submit J_ajax_submit_btn">提交</button>
+					<a class="btn" href="{:U('AdminRank/index')}">返回</a>
+					<input type="hidden" class="input" name="rank_id" value="{$data.rank_id}">
+				</div>
+			</form>
+		</div>
+	</div>
+	<script src="__ROOT__/statics/js/common.js"></script>
+</body>
+</html>

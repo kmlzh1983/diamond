@@ -1,0 +1,375 @@
+<admintpl file="header"/>
+<style type="text/css">
+.col-auto {
+	overflow: hidden;
+	_zoom: 1;
+	_float: left;
+	border: 1px solid #c2d1d8;
+}
+.col-right {
+	float: right;
+	width: 210px;
+	overflow: hidden;
+	margin-left: 6px;
+	border: 1px solid #c2d1d8;
+}
+
+body fieldset {
+	border: 1px solid #D8D8D8;
+	padding: 10px;
+	background-color: #FFF;
+}
+body fieldset legend {
+    background-color: #F9F9F9;
+    border: 1px solid #D8D8D8;
+    font-weight: 700;
+    padding: 3px 8px;
+}
+a.accordion-toggle span{
+    display:inline-block;
+    *zoom: 1;
+    width: 12px;
+}
+.list-dot{ padding-bottom:10px}
+.list-dot li,.list-dot-othors li{padding:5px 0; border-bottom:1px dotted #c6dde0; font-family:"宋体"; color:#bbb; position:relative;_height:22px}
+.list-dot li span,.list-dot-othors li span{color:#004499}
+.list-dot li a.close span,.list-dot-othors li a.close span{display:none}
+.list-dot li a.close,.list-dot-othors li a.close{ background: url("__ROOT__/statics/images/cross.png") no-repeat left 3px; display:block; width:16px; height:16px;position: absolute;outline:none;right:5px; bottom:5px}
+.list-dot li a.close:hover,.list-dot-othors li a.close:hover{background-position: left -46px}
+.list-dot-othors li{float:left;width:24%;overflow:hidden;}
+</style>
+<link href="__ROOT__/statics/simpleboot/css/main.css" rel="stylesheet">
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <!--<ul class="nav nav-tabs">-->
+	 <!--<li><a href="{:U('AdminOrder/index',array('term'=>empty($term['term_id'])?'':$term['term_id']))}"  target="_self">所有订单</a></li>-->
+     <!--<li class="active"><a href="#">订单详情</a></li>-->
+  <!--</ul>-->
+  <form name="myform" id="myform" action="{:u('AdminOrder/do_edit_other')}" method="post" class="form-horizontal J_ajaxForms" enctype="multipart/form-data">
+  <input type='hidden' name='order_id' value='{$detail.order_id}'>
+  <div class="accordion" id="accordion1">
+      <div class="accordion-group">
+          <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                  <span style="font-size:12px;">▼</span>选择包装
+              </a>
+          </div>
+          <div id="collapseOne" class="accordion-body collapse in">
+              <div class="accordion-inner">
+                  <table class="table table-bordered" width="100%"  cellpadding="2" cellspacing="2">
+                      <thead>
+                          <tr>
+                              <th style="width: 20px;text-align: center"></th>
+                              <th>名称 </th>
+                              <th>包装费 </th>
+                              <th>免费额度 </th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+
+
+                      <tr>
+                          <td>
+                              <input <if condition="$detail['package_id'] eq 0">checked</if> type='radio' name='package_id' value='0'>
+                          </td>
+                          <td>
+                              不要包装
+                          </td>
+                          <td>
+                          </td>
+                          <td>
+                          </td>
+                      </tr>
+                      <volist name='package' id='vo'>
+                          <tr>
+                              <td>
+                                  <input <if condition="$detail['package_id'] eq $vo['id']">checked</if> type='radio' name='package_id' value='{$vo.id}'>
+                              </td>
+                              <td>
+                                  {$vo.name}
+                              </td>
+                              <td>
+                                  {$vo.fee}
+                              </td>
+                              <td>
+                                  {$vo.free_fee}
+                              </td>
+                          </tr>
+                      </volist>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="accordion" id="accordion2">
+      <div class="accordion-group">
+          <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                  <span style="font-size:12px;">▼</span>选择贺卡
+              </a>
+          </div>
+          <div id="collapseTwo" class="accordion-body collapse in">
+              <div class="accordion-inner">
+                  <table class="table table-bordered" width="100%"  cellpadding="2" cellspacing="2">
+                      <thead>
+                      <tr>
+                          <th style="width: 20px;text-align: center"></th>
+                          <th>名称 </th>
+                          <th>贺卡费 </th>
+                          <th>免费额度 </th>
+                      </tr>
+                      </thead>
+                      <tbody>
+
+                      <tr>
+                          <td>
+                              <input <if condition="$detail['card_id'] eq 0">checked</if> type='radio' name='card_id' value='0'>
+                          </td>
+                          <td>
+                              不要贺卡
+                          </td>
+                          <td>
+                          </td>
+                          <td>
+                          </td>
+                      </tr>
+                      <volist name='card' id='vo'>
+                          <tr>
+                              <td>
+                                  <input <if condition="$detail['card_id'] eq $vo['id']">checked</if> type='radio' name='card_id' value='{$vo.id}'>
+                              </td>
+                              <td>
+                                  {$vo.name}
+                              </td>
+                              <td>
+                                  {$vo.fee}
+                              </td>
+                              <td>
+                                  {$vo.free_fee}
+                              </td>
+                          </tr>
+                      </volist>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="accordion" id="accordion3">
+      <div class="accordion-group">
+          <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
+                  <span style="font-size:12px;">▼</span>收货人信息
+              </a>
+          </div>
+          <div id="collapseThree" class="accordion-body collapse in">
+              <div class="accordion-inner">
+                  <table class="table table-J table-bordered" width="100%"  cellpadding="2" cellspacing="2">
+                      <thead>
+                          <tr>
+                              <th width="30%">贺卡祝福语 </th>
+                              <td width="70%">
+                                  <input type='text' value='{$detail.card_message}' name='card_message'>
+                              </td>
+                          </tr>
+                      </thead>
+
+                      <tr>
+                          <th>发票类型 </th>
+                          <td>
+                              <input type='text' name='receipt_type' value='{$detail.receipt_type}'>
+                          </td>
+                      </tr>
+                      <tr>
+                          <th>发票抬头 </th>
+                          <td>
+                              <input type='text' value='{$detail.receipt_head}' name='receipt_head'>
+                          </td>
+
+                      </tr>
+                      <tr>
+                          <th>发票内容 </th>
+                          <td>
+                              <input type='text' value='{$detail.receipt_content}' name='receipt_content'>
+                          </td>
+
+                      </tr>
+                      <tr>
+                          <th>客户给商家的留言 </th>
+                          <td>
+                              <input type='text' value='{$detail.message}' name='message'>
+                          </td>
+
+                      </tr>
+                      <tr>
+                          <th>缺货处理 </th>
+                          <td>
+                              <input type='text' value='{$detail.how_oos}' name='how_oos'>
+                          </td>
+
+                      </tr>
+                      <tr>                          <th>商家给客户的留言 </th>
+                          <td>
+                              <input type='text' value='{$detail.message_admin}' name='message_admin'>
+                          </td>
+
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+      <div class="form-actions" style="position: absolute;top: -10000px">
+          <button class="btn btn-primary btn_submit J_ajax_submit_btn"type="submit">提交</button>
+          <!--<a class="btn" href="{:U('AdminOrder/edit',array('id'=>$_GET['id']))}">返回</a>-->
+      </div>
+ </form>
+</div>
+<script type="text/javascript" src="__ROOT__/statics/js/common.js"></script>
+<script type="text/javascript" src="__ROOT__/statics/js/content_addtop.js"></script>
+<script type="text/javascript"> 
+$(function () {
+    $('.accordion-toggle').click(function(){
+        if($(this).children('span').text()=='▼'){
+            $(this).children('span').text('✚');
+        }else{
+            $(this).children('span').text('▼');
+        }
+    });
+	//setInterval(function(){public_lock_renewal();}, 10000);
+	$(".J_ajax_close_btn").on('click', function (e) {
+	    e.preventDefault();
+	    Wind.use("artDialog", function () {
+	        art.dialog({
+	            id: "question",
+	            icon: "question",
+	            fixed: true,
+	            lock: true,
+	            background: "#CCCCCC",
+	            opacity: 0,
+	            content: "您确定需要关闭当前页面嘛？",
+	            ok:function(){
+					setCookie("refersh_time",1);
+					window.close();
+					return true;
+				}
+	        });
+	    });
+	});
+	/////---------------------
+	 Wind.use('validate', 'ajaxForm', 'artDialog', function () {
+			//javascript
+	        
+	            //编辑器
+	            editorcontent = new baidu.editor.ui.Editor();
+	            editorcontent.render( 'content' );
+	            try{editorcontent.sync();}catch(err){};
+	            //增加编辑器验证规则
+	            jQuery.validator.addMethod('editorcontent',function(){
+	                try{editorcontent.sync();}catch(err){};
+	                return editorcontent.hasContents();
+	            });
+	            var form = $('form.J_ajaxForms');
+	        //ie处理placeholder提交问题
+	        if ($.browser.msie) {
+	            form.find('[placeholder]').each(function () {
+	                var input = $(this);
+	                if (input.val() == input.attr('placeholder')) {
+	                    input.val('');
+	                }
+	            });
+	        }
+	        //表单验证开始
+	        form.validate({
+				//是否在获取焦点时验证
+				onfocusout:false,
+				//是否在敲击键盘时验证
+				onkeyup:false,
+				//当鼠标掉级时验证
+				onclick: false,
+	            //验证错误
+	            showErrors: function (errorMap, errorArr) {
+					//errorMap {'name':'错误信息'}
+					//errorArr [{'message':'错误信息',element:({})}]
+					try{
+						$(errorArr[0].element).focus();
+						art.dialog({
+							id:'error',
+							icon: 'error',
+							lock: true,
+							fixed: true,
+							background:"#CCCCCC",
+							opacity:0,
+							content: errorArr[0].message,
+							cancelVal: '确定',
+							cancel: function(){
+								$(errorArr[0].element).focus();
+							}
+						});
+					}catch(err){
+					}
+	            },
+	            //验证规则
+	            rules: {'post[goods_title]':{required:1},'post[goods_content]':{editorcontent:true}},
+	            //验证未通过提示消息
+	            messages: {'post[goods_title]':{required:'请输入标题'},'post[goods_content]':{editorcontent:'内容不能为空'}},
+	            //给未通过验证的元素加效果,闪烁等
+	            highlight: false,
+	            //是否在获取焦点时验证
+	            onfocusout: false,
+	            //验证通过，提交表单
+	            submitHandler: function (forms) {
+	                $(forms).ajaxSubmit({
+	                    url: form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+	                    dataType: 'json',
+	                    beforeSubmit: function (arr, $form, options) {
+	                        
+	                    },
+	                    success: function (data, statusText, xhr, $form) {
+	                        if(data.status){
+								setCookie("refersh_time",1);
+								//添加成功
+								Wind.use("artDialog", function () {
+								    art.dialog({
+								        id: "succeed",
+								        icon: "succeed",
+								        fixed: true,
+								        lock: true,
+								        background: "#CCCCCC",
+								        opacity: 0,
+								        content: data.info,
+										button:[
+											{
+												name: '继续编辑？',
+												callback:function(){
+													//reloadPage(window);
+													return true;
+												},
+												focus: true
+											},{
+    											name: '返回列表页',
+												callback:function(){
+													location='{:U('AdminGoods/index')}';
+													return true;
+												}
+											}
+										]
+								    });
+								});
+							}else{
+								isalert(data.info);
+							}
+	                    }
+	                });
+	            }
+	        });
+	    });
+	////-------------------------
+});
+</script>
+</body>
+</html>

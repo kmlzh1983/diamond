@@ -1,0 +1,133 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap container-fluid">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">所有职位</a></li>
+
+    </ul>
+
+        <div class="search_type cc mb10 row-fluid">
+            <div class="mb10 col-lg-3">
+                <span class="mr20">分类：
+                    <select name="catid" id="catid" class="input-medium">
+                        <option value="-1">所有分类</option>
+                        {$cate}
+                    </select>
+                </span>
+                <span class="mr20">状态：
+                    <select name="status" id="status" class="input-medium">
+                        <option value="-1">所有状态</option>
+                        <option value="0">审核中</option>
+                        <option value="2">审核通过</option>
+                        <option value="3">审核不通过</option>
+                        <option value="4">下架</option>
+                    </select>
+                </span>
+                <span class="mr20">关键字：
+                    <input type="text" name="keyword" value="{$keyword}" id="keyword"/>
+                </span>
+                <span class="mr20">
+                    <button id="search" class="btn btn-success">搜索</button>
+                </span>
+            </div>
+        </div>
+
+    <form class="J_ajaxForm" action="" method="post">
+        <div class="table_list">
+            <table width="100%" class="table table-hover">
+                <thead>
+                <tr>
+                    <th width="15"><label><input type="checkbox" class="J_check_all" data-direction="x" data-checklist="J_check_x"></label></th>
+                    <th width="15">ID</th>
+                    <th>名称</th>
+                    <th>分类</th>
+                    <th>招聘人数</th>
+                    <th>工作内容</th>
+                    <th>工作性质</th>
+                    <th>发布时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <volist name="jobs" id="vo">
+                    <tr>
+                        <td><input type="checkbox" class="J_check" data-yid="J_check_y" data-xid="J_check_x" name="ids[]" value="{$vo.id}" ></td>
+                        <td><a>{$vo.id}</a></td>
+                        <td>
+                            <a href="{:U('Portal/Jobs/detail',array('id'=>$vo['id']))}" target="_blank">
+                                <span>{$vo.job_name}</span>
+                            </a>
+                        </td>
+                        <td>{$vo.category}</td>
+                        <td>{$vo.person_num}</td>
+                        <td>{$vo.job_desc}</td>
+                        <td>{$vo.nature_name}</td>
+                        <td>{$vo.addtime|date="Y-m-d",###}</td>
+                        <td>
+                            <if condition="$vo.status eq 0">
+                                审核中
+                                <elseif condition="$vo.status eq 2" />
+                                审核通过
+                                <elseif condition="$vo.status eq 3" />
+                                审核不通过
+                                <elseif condition="$vo.status eq 4" />
+                                下架
+                            </if>
+                        </td>
+                        <td>
+                            <a href="{:U('AdminJobs/delete')}&id={$vo.id}">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+
+            </table>
+            <div class="pagination">{$Page}</div>
+
+        </div>
+    </form>
+</div>
+<script src="__ROOT__/statics/js/common.js"></script>
+<script>
+    var url = "{:U('AdminJobs/index')}";
+//    var catid = $("select[name=catid]");
+//    var status = $("select[name=status]");
+//    var keyword = $("input[name=keyword]");
+    url+='&catid='+catid+"&status="+status+"&keyword="+keyword;
+    $("#catid").change(function(){
+        var catid = $(this).val();
+        var status = $("select[name=status]").val();
+        var keyword = $("input[name=keyword]").val();
+        url+='&catid='+catid+"&status="+status+"&keyword="+keyword;
+        location.href=url;
+    });
+    $("#status").change(function(){
+        var status = $(this).val();
+        var catid = $("select[name=catid]").val();
+        var keyword = $("input[name=keyword]").val();
+        url+='&catid='+catid+"&status="+status+"&keyword="+keyword;
+        location.href=url;
+    });
+    $("#search").click(function () {
+        var keyword = $("#keyword").val();
+        var catid = $("select[name=catid]").val();
+        var status = $("select[name=status]").val();
+        url+='&catid='+catid+"&status="+status+"&keyword="+keyword;
+        location.href=url;
+        return false;
+    });
+    var catid = "{$catid}";
+    $("#catid option").each(function () {
+        if($(this).val()==catid){
+            $(this).attr("selected",'selected');
+        }
+    });
+    var status = "{$status}";
+    $("#status option").each(function () {
+        if($(this).val()==status){
+            $(this).attr("selected",'selected');
+        }
+    });
+
+</script>
+</body>
+</html>

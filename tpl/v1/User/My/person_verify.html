@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <title>个人认证</title>
+
+    <tc_include file='Public:head'/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/zp/css/user.css"/>
+    <script src="__TMPL__Public/js/ajaxupload.js"></script>
+    <script src="/statics/js/Util.js"></script>
+    <script type="text/javascript" src="__TMPL__Public/js/swfobject.js"></script>
+    <script type="text/javascript" src="__TMPL__Public/js/fullAvatarEditor.js"></script>
+
+</head>
+<body class="theme foot-white-bg">
+<tc_include file='Public:header'/>
+
+<div class="wrapper order-wrap">
+    <div class="wrap">
+        <div class="grid address-page">
+            <tc_include file='User:My:leftside'/>
+            <div class="grid-r">
+                <div class="order-main">
+                    <div class="hd">
+                        <div class="tips">
+                            <span>安全认证</span>
+                        </div>
+                    </div>
+                    <div class="bd verify">
+                        <div class="verify_head">
+                            <ul class="flul">
+                                <li><a href="{:U('my/company_verify')}">企业认证</a></li>
+                                <span class="fl">|</span>
+                                <li><a href="{:U('my/person_verify')}">个人认证</a></li>
+                            </ul>
+                            <div class="c"></div>
+                        </div>
+                        <div class="line" style="border-bottom: 1px solid #362e2b"></div>
+                        <div class="description">
+                            <p class="promise">
+                                <span class="danger-icon"></span>
+                                <span class="danger-word">郑重承诺：</span>
+                            </p>
+                            <p class="desc">
+                                1、上传的身份证图片自动添加合成用途说明水印，仅用于人工在线平台实名认证，无法用于其他途径。
+                            </p>
+                            <p class="desc">
+                                2、所有信息加密传输和存储，严格保护用户隐私安全。
+                            </p>
+                        </div>
+                        <div class="audit">
+                            <p>
+                                <span class="audit">
+                                    认证状态：
+                                </span>
+                                <span>
+                                    <if condition="$account['audit'] eq 1">
+                                        等待管理员审核
+                                        <elseif condition="$account['audit'] eq 2" />
+                                        审核通过
+                                        <elseif condition="$account['audit'] eq 3" />
+                                        审核不通过
+                                    </if>
+                                </span>
+                            </p>
+                        </div>
+                        <br />
+                        <div class="verify-info">
+                            <form action="{:U('my/person_post')}" method="post" enctype="multipart/form-data" onsubmit="return check_person();">
+                                <div class="controls">
+                                    <label>身份证姓名：</label>
+                                    <input type="text" name="person_name" class="input" placeholder="请输入您的真实姓名" value="{$account.person_name}"/>
+                                </div>
+                                <br/>
+                                <div class="controls">
+                                    <label>身份证号码：</label>
+                                    <input type="text" name="person_id" class="input" placeholder="请输入您的真实身份证号码" value="{$account.person_id}"/>
+                                </div>
+
+                                <div class="yaoqiu">
+                                    <p class="text-center" style="text-align: center">
+                                        图片要求：支持jpg、bmp、gif、png格式的图片，图片清晰且小于1024kb。
+                                    </p>
+                                </div>
+                                <div class="box">
+                                    <div class="item identify-upload fl">
+                                        <div class="identify-info" style="margin-top: 20px;">
+                                            <label >正面</label>
+                                            <input type="file" name="identify_z" id="identify_z" style="display: none"/>
+                                            <div class="identify_z" onclick="$('#identify_z').click()"></div>
+
+                                        </div>
+                                        <div class="identify-info" style="margin-top: 38px;">
+                                            <label >反面</label>
+                                            <input type="file" name="identify_f" id="identify_f" style="display: none"/>
+                                            <div class="identify_f" onclick="$('#identify_f').click()"></div>
+                                        </div>
+                                    </div>
+                                    <div class="item jiaotou fl">
+                                        <div class="jiantou-icon"></div>
+                                    </div>
+                                    <div class="item preview fl">
+                                        <div class="identify-info">
+                                            <if condition="$account['identify_z'] neq ''">
+                                                <img src="{$account.identify_z}" id="pre_z"/>
+                                                <else />
+                                                <img src="__TMPL__Public/zp/images/preimg_09.png" id="pre_z"/>
+                                            </if>
+                                        </div>
+                                        <div class="identify-info">
+                                            <if condition="$account['identify_f'] neq ''">
+                                                <img src="{$account.identify_f}" id="pre_f"/>
+                                                <else />
+                                                <img src="__TMPL__Public/zp/images/preimg_09.png" id="pre_f"/>
+                                            </if>
+
+                                        </div>
+                                    </div>
+                                    <div class="c"></div>
+
+                                    <div class="submit" style="text-align: center">
+
+                                        <if condition="$account['audit'] eq 2">
+                                            <span class="red">您已通过验证</span>
+                                            <else />
+                                        <input type="submit" class="btn btn-submit" value="上传"/>
+                                            </if>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<tc_include file='Public:footer'/>
+<script>
+
+Util.previewImg('identify_z','pre_z',false,300,300);
+Util.previewImg('identify_f','pre_f',false,300,300);
+
+    function check_person(){
+
+        var person_name = $("input[name=person_name]").val();
+        var person_id = $("input[name=person_id]").val();
+        var id_z = $("#pre_z").attr('src');
+        var id_f = $("#pre_f").attr('src');
+        if(person_name==''){
+            alert("身份证姓名必须填写");
+            return false;
+        }
+        if(person_id.length!=16 && person_id.length!=18){
+            alert("身份证必须是16位或者18位");
+            return false;
+        }
+        if(id_z=='__TMPL__Public/zp/images/preimg_09.png'){
+            alert("请上传正面");
+            return false;
+        }
+        if(id_f=='__TMPL__Public/zp/images/preimg_09.png'){
+            alert("请上传反面");
+            return false;
+        }
+        return true;
+    }
+
+    $("#change_pwd").click(function(){
+
+        var pwd_data = {
+            oldpwd:$('input[name=oldpwd]').val(),
+            newpwd:$('input[name=newpwd]').val(),
+            renewpwd:$('input[name=renewpwd]').val()
+        }
+        //console.log(pwd_data);
+        if(pwd_data.oldpwd=='' || pwd_data.oldpwd.length<6 || pwd_data.oldpwd.length>16){
+            alert("旧密码长度应该在6到16之间11");
+            return false;
+        }
+        if(pwd_data.newpwd.length<6 || pwd_data.newpwd.length>16){
+            alert("新密码长度应该在6到16之间");
+            return false;
+        }
+        if(pwd_data.newpwd != pwd_data.renewpwd){
+            alert("两次密码不一致");
+            return false;
+        }
+
+
+        $.ajax({
+            type:'post',
+            url:"{:U('user/my/change_pwd')}",
+            dataType:"json",
+            data: pwd_data,
+            success:function(data){
+                if(data.r==-1){
+                    alert(data.msg);
+                }else{
+                    alert(data.msg);
+                    window.location.href="{:U('user/my/index')}"
+                }
+            }
+        });
+    });
+    $("#person").click(function () {
+        $(".user-type .company-type").hide();
+        $(".user-type .person-type").show();
+    });
+    $("#company").click(function () {
+        $(".user-type .person-type").hide();
+        $(".user-type .company-type").show();
+    });
+    //上传图片
+    var identify_z = $('#upload_identify_z'), interval;
+    var identify_f = $('#upload_identify_f');
+    var license = $('#upload_license');
+    var confirmdiv = $('.comfirmdiv').eq(0);
+    var fileType = "pic",fileNum = "one";
+    new AjaxUpload(identify_z, {
+        action: "{:U('user/my/upload_identify?act=z')}",
+        name: 'file',
+        onSubmit: function (file, ext) {
+            if (fileType == "pic") {
+                if (ext && /^(jpg|png|jpeg|gif|JPG)$/.test(ext)) {
+                    this.setData({
+                        'info': '文件类型为图片'
+                    });
+                } else {
+                    alert('文件格式错误，请上传格式为.png .jpg .jpeg 的图片');
+                    return false;
+                }
+            }
+
+            confirmdiv.text('文件上传中');
+
+            if (fileNum == 'one')
+                this.disable();
+
+            interval = window.setInterval(function () {
+                var text = confirmdiv.text();
+                if (text.length < 14) {
+                    confirmdiv.text(text + '.');
+                } else {
+                    confirmdiv.text('文件上传中');
+                }
+            }, 200);
+        },
+        onComplete: function (file, response) {
+            response = $.parseJSON(response);
+            if(response.r == 0){
+                var imgstr = "<img src='"+response.msg+"' alt='身份证正面'>";
+                $(".person-type .identify_z").html("").append(imgstr);
+                $('#upload_identify_z').html("上传成功");
+                $('#upload_identify_z').remove();
+            }else{
+                alert(response.msg);
+            }
+
+        }
+    });
+    new AjaxUpload(identify_f, {
+        action: "{:U('user/my/upload_identify?act=f')}",
+        name: 'file',
+        onSubmit: function (file, ext) {
+            if (fileType == "pic") {
+                if (ext && /^(jpg|png|jpeg|gif|JPG)$/.test(ext)) {
+                    this.setData({
+                        'info': '文件类型为图片'
+                    });
+                } else {
+                    alert('文件格式错误，请上传格式为.png .jpg .jpeg 的图片');
+                    return false;
+                }
+            }
+
+            confirmdiv.text('文件上传中');
+
+            if (fileNum == 'one')
+                this.disable();
+
+            interval = window.setInterval(function () {
+                var text = confirmdiv.text();
+                if (text.length < 14) {
+                    confirmdiv.text(text + '.');
+                } else {
+                    confirmdiv.text('文件上传中');
+                }
+            }, 200);
+        },
+        onComplete: function (file, response) {
+            response = $.parseJSON(response);
+            if(response.r == 0){
+                var imgstr = "<img src='"+response.msg+"' alt='身份证反面'>";
+                $(".person-type .identify_f").html("").append(imgstr);
+                $('#upload_identify_f').html("上传成功");
+                $('#upload_identify_f').remove();
+            }else{
+                alert(response.msg);
+            }
+
+        }
+    });
+    new AjaxUpload(license, {
+        action: "{:U('user/my/upload_identify?act=l')}",
+        name: 'file',
+        onSubmit: function (file, ext) {
+            if (fileType == "pic") {
+                if (ext && /^(jpg|png|jpeg|gif|JPG)$/.test(ext)) {
+                    this.setData({
+                        'info': '文件类型为图片'
+                    });
+                } else {
+                    alert('文件格式错误，请上传格式为.png .jpg .jpeg 的图片');
+                    return false;
+                }
+            }
+
+            confirmdiv.text('文件上传中');
+
+            if (fileNum == 'one')
+                this.disable();
+
+            interval = window.setInterval(function () {
+                var text = confirmdiv.text();
+                if (text.length < 14) {
+                    confirmdiv.text(text + '.');
+                } else {
+                    confirmdiv.text('文件上传中');
+                }
+            }, 200);
+        },
+        onComplete: function (file, response) {
+            if(response.r == 0){
+                $(".license").eq(0).html('<img src="' + response.msg +'"');
+                $('#upload_license').html("上传成功");
+                $('#upload_license').remove();
+            }else{
+                alert(response.msg);
+            }
+
+        }
+    });
+
+</script>
+
+</body>
+</html>

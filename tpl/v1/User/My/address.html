@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>地址</title>
+	
+	<tc_include file='Public:head'/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+
+</head>
+<body class="theme foot-white-bg">	
+	<tc_include file='Public:header'/>
+	
+	<div class="wrapper order-wrap">
+		<div class="wrap">
+			<div class="grid address-page">
+				<tc_include file='User:My:leftside'/>
+				<div class="grid-r">
+					<div class="order-main">
+						<div class="hd">
+							<div class="tips">
+								您已創建<span class="color">6</span>個收貨地址，最多可創建<span  class="color">10</span>個
+							</div>
+						</div>
+						<div class="bd">							
+							<div class="margin-out">													
+								<div class="add-address data-item">
+									<dl>
+										<dt>*收&nbsp;货&nbsp;&nbsp;人：</dt>
+										<dd>
+											<input type="text" name='consignee' placeholder="姓名" />
+										</dd>
+									</dl>
+									<dl>
+										<dt>*收货地址：</dt>
+										<dd>
+											<div class="adress-box">
+												<select name="country" id="selCountries" onchange="loadRegion('selCountries',1,'selProvinces','{:U('user/my/getRegion')}');">
+													<option value="0" >-please select-</option>
+													<volist name="country" id="vo">
+													<option value="{$vo.id}">{$vo.name}</option>
+													</volist>
+												</select>
+												<select name="province" id="selProvinces" onchange="loadRegion('selProvinces',2,'selCities','{:U('user/my/getRegion')}');">
+													<option value="0">-please select-</option>
+												</select>
+												<select name="city" id="selCities">
+													<option value="0">-please select-</option>
+												</select>
+												<!--
+												<select name="province">
+													<option value="0">請選擇</option>
+													<option value="1">中國</option>
+												</select>
+												<select name="city">
+													<option value="0">請選擇</option>
+													<option value="1">中國</option>
+												</select>
+												<select name="area">
+													<option value="0">請選擇</option>
+													<option value="1">中國</option>
+												</select>
+												-->
+											</div>
+										</dd>
+									</dl>
+									<dl>
+										<dt>*详细地址：</dt>
+										<dd>
+											<input name='address' type="text" placeholder="" />
+										</dd>
+									</dl>
+									<dl>
+										<dt>*手机号码：</dt>
+										<dd>
+											<input type="text" name='mobile' placeholder="常用手机号码" />
+											或固定电话：
+											<input type="text" name='zonecode' placeholder="区号" style="width: 80px;" />
+											-
+											<input type="text" name='telnum' placeholder="电话号码" style="width: 140px;" />
+											-
+											<input type="text" name='telext' placeholder="分机号" style="width: 80px;"/>
+										</dd>
+									</dl>
+									<dl>
+										<dt>*邮箱地址：</dt>
+										<dd>
+											<input name='email' type="text" placeholder="" />
+										</dd>
+									</dl>
+									<div class="checkbox">								
+										<input type="checkbox" id='is_default' name="is_default" id="" value="1" />设为默认地址
+									</div>
+									<div class="">
+										<button id='addAddress' class="btn btn-lg">&nbsp;&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;&nbsp;</button>
+									</div>
+								</div>									
+								
+								<table class="f-table">
+									<thead>
+										<tr>
+											<td width="10%">收貨人</td>
+											<td width="14%">電話/手機</td>
+											<td>詳細地址</td>
+											<td width="16%">郵箱</td>
+											<td width="14%">操作</td>
+											<td width="12%"></td>
+										</tr>
+									</thead>
+									<tbody class="dot-line">
+										<tr>
+											<td colspan="6"></td>
+										</tr>
+										<tr>
+											<td colspan="6"></td>
+										</tr>
+									</tbody>
+									<volist name='address' id='vo'>
+									<tbody>
+										<tr>
+											<td>{$vo.consignee}</td>
+											<td>
+												<p>{$vo.tel}</p>
+												<p>{$vo.mobile}</p>
+											</td>
+											<td class="text-left">
+												{$vo.addr}&nbsp;{$vo.address}
+											</td>
+											<td>
+												{$vo.email}
+											</td>
+											<td>
+												<a class='edit' data-id="{$vo.address_id}" href="">修改</a>
+												|
+												<a data-id='{$vo.address_id}' class='delAddress' href="">刪除</a>
+											</td>
+											<if condition="$vo['is_default'] eq 1">
+											<td>
+												<a data-id='{$vo.address_id}' class="default-add disabled btn btn-sm">默認地址</a>
+											</td>
+											<else/>
+											<td>
+												<a href="" data-id='{$vo.address_id}' class="set-default btn btn-sm">設為默認</a>
+											</td>
+											</if>
+										</tr>
+									</tbody>
+									<tbody class="dot-line">
+										<tr>
+											<td colspan="6"></td>
+										</tr>
+										<tr>
+											<td colspan="6"></td>
+										</tr>
+									</tbody>
+									</volist>														
+								</table>								
+							</div>							
+						</div>
+						<div class="bd">							
+						</div>
+					</div>
+					<div class="order-main">
+						<div class="hd">
+							根据您的浏览历史为您推荐
+						</div>
+						<div class="bd">							
+							<div class="order-hd">								
+								<div class="item-list">
+									<div class="item-grid">
+										<div class="clearfix">
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+										</div>						
+									</div>
+									<div class="item-page">							
+										<ul class="pagination">
+											<li class="prev disabled"><a><</a></li>
+											<li class="active"><a>1</a></li>
+											<li><a>2</a></li>
+											<li><a>3</a></li>
+											<li><a>4</a></li>
+											<li><a>5</a></li>
+											<li><a>></a></li>
+									 	</ul>
+									 	<div class="form">
+									 		<span class="txt">到第</span>
+									 		<input class="input" type="text" name="" id="" value="" />
+									 		<span class="txt">页</span>
+									 		<span class="btn btn-sm submit">确定</span>
+									 	</div>
+									</div>
+								</div>
+							</div>				
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>		
+	</div>
+	
+	<tc_include file='Public:footer'/>
+	<script>
+			$("#addAddress").click(function(){
+			var is_default = 0;
+			if( $('input[name=is_default]').prop('checked') ) is_default = 1;
+			$.ajax({
+				type:'post',
+				url:"{:U('user/my/addAddress')}",
+				data: {consignee:$('input[name=consignee]').val(),
+						country:$('select[name=country] option:selected').val(),
+						province:$('select[name=province] option:selected').val(),
+						city:$('select[name=city] option:selected').val(),
+						address:$('input[name=address]').val(),
+						mobile:$('input[name=mobile]').val(),
+						email:$('input[name=email]').val(),
+						is_default:is_default,
+						zonecode:$('input[name=zonecode]').val(),
+						telnum:$('input[name=telnum]').val(),
+						telext:$('input[name=telext]').val(),
+						address_id:$('.add-address input[name=address_id]').val()?$('.add-address input[name=address_id]').val():'',
+					},
+				success:function(data){
+					if(data.status==1){
+						alert(data.info);
+						location.reload();
+					}else{
+						alert(data.info);
+					}
+				}
+			})
+		});
+		
+		$(".set-default").click(function(){
+			$.ajax({
+				url:"{:U('user/my/setAdressDefault')}",
+				data:{id:$(this).attr('data-id')},
+				success:function(data){
+					alert(data.info);
+					location.reload();
+				}
+				
+			});
+		});
+		
+		$(".delAddress").click(function(){
+			$.ajax({
+				url:"{:U('user/my/delAddress')}",
+				data:{id:$(this).attr('data-id')},
+				success:function(data){
+					alert(data.info);
+					location.reload();
+				}
+				
+			});
+		});
+		
+function loadRegion(sel,type_id,selName,url){
+	//alert(jQuery("#"+sel).val());
+	jQuery("#"+selName+" option").each(function(){
+		jQuery(this).remove();
+	});
+	jQuery("<option value=0>-please select-</option>").appendTo(jQuery("#"+selName));
+	if(jQuery("#"+sel).val()==0){
+		return;
+	}
+	jQuery.getJSON(url,{pid:jQuery("#"+sel).val(),type:type_id},
+	function(data){
+		if(data){
+			jQuery.each(data,function(idx,item){
+				if(idx==0){
+					return true;//同countinue，返回false同break
+				}
+
+				//jQuery(new Option(item.name,item.id)).appendTo(jQuery("#"+selName));
+				jQuery("<option value="+item.id+">"+item.name+"</option>").appendTo(jQuery("#"+selName));
+
+			});
+		}else{
+			jQuery("<option value='0'>All Province</option>").appendTo(jQuery("#"+selName));
+		}
+
+	}
+
+	);
+}
+function addconfig(){
+	var city=jQuery("#selCities").val();
+	var Provinces=jQuery("#selProvinces").val();
+	var Countries=jQuery("#selCountries").val();
+	if(city>0){
+		var chboxtext="<input type='checkbox' name='config[]' value='"+city+"' checked />"+jQuery("#selCities").find('option:selected').text();
+	}
+	else{
+		if(Provinces>0){
+			var chboxtext="<input type='checkbox' name='config[]' value='"+Provinces+"' checked />"+jQuery("#selProvinces").find('option:selected').text();
+		}
+		else{
+			if(Countries>0){
+				var chboxtext="<input type='checkbox' name='config[]' value='"+Countries+"' checked />"+jQuery("#selCountries").find('option:selected').text();
+			}
+		}
+	}
+
+	jQuery("#configtext").append(chboxtext);
+}
+$('a.edit').click(function(){
+			var data_id=$(this).attr('data-id');
+			$.ajax({
+				url:"{:U('user/my/getAddress')}",
+				data:{id:data_id},
+				success:function(data){
+					for(var obj in data.info){
+						$("div.add-address input[name="+obj+"]").val(data.info[obj]);
+					}
+					$("div.add-address input[name=address_id]").remove();
+					$("div.add-address").append("<input type='hidden' name='address_id' value='"+data.info.address_id+"'>");
+					if( data.info.is_default==1 ){
+						$('div.add-address input[name=is_default]').attr('checked' , true);
+					};
+					if( data.info.tel ){
+						var tel = data.info.tel.split('-');
+						$("div.add-address input[name=zonecode]").val(tel[0]);
+						$("div.add-address input[name=telnum]").val(tel[1]);
+						$("div.add-address input[name=telext]").val(tel[2]);
+					};
+					$("#selCountries").val(data.info.country);
+					$("button#addAddress").html("&nbsp;&nbsp;&nbsp;修&nbsp;&nbsp;&nbsp;改&nbsp;&nbsp;&nbsp;");
+				}
+			});
+			return false;
+});
+	</script>
+</body>
+</html>

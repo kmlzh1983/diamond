@@ -1,0 +1,131 @@
+<admintpl file="header"/>
+<body>
+<div class="wrap">
+  <div id="home_toptip"></div>
+  <h4 class="well">订单统计信息</h4>
+  <div class="home_info">
+    <table class='table table-bordered'>
+		<tr>
+			<td width="20%">待发货订单</td>
+			<td width="30%">{$orderInfo.tobeshippinged}</td>
+			<td width="20%">未确认订单</td>
+			<td width="30%">{$orderInfo.tobeconfirmed}</td>
+		</tr>
+		<tr>
+			<td>待支付订单</td>
+			<td>{$orderInfo.tobepaid}</td>
+			<td>已成交订单</td>
+			<td>{$orderInfo.finishedorder}</td>
+		</tr>
+		<tr>
+			<td>新缺货登记</td>
+			<td>1</td>
+			<td>退款申请</td>
+			<td>{$orderInfo.refundorder}</td>
+		</tr>
+		<tr>
+			<td>部分发货订单</td>
+			<td>{$orderInfo.parialshippinged}</td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+  </div>
+  <h4 class="well">商品统计数</h4>
+  <div class="home_info">
+    <table class='table table-bordered'>
+		<tr>
+			<td width="20%">商品总数</td>
+			<td width="30%">{$goodsInfo.total}</td>
+			<td width="20%">库存警告商品数</td>
+			<td width="30%"></td>
+		</tr>
+		<tr>
+			<td>新品推荐数</td>
+			<td>{$goodsInfo.new}</td>
+			<td>精品推荐数</td>
+			<td>{$goodsInfo.recommend}</td>
+		</tr>
+		<tr>
+			<td>热销商品数</td>
+			<td>{$goodsInfo.hot}</td>
+			<td>促销商品数</td>
+			<td></td>
+		</tr>
+	</table>
+  </div>
+  <h4 class="well">访问统计</h4>
+  <div class="" >
+      <table class='table table-bordered'>
+		<tr>
+			<td width="20%">今日访问</td>
+			<td width="30%">1</td>
+			<td width="20%">在线人数</td>
+			<td width="30%">2</td>
+		</tr>
+		<tr>
+			<td>最新留言</td>
+			<td>1</td>
+			<td>未审核评论</td>
+			<td>2</td>
+		</tr>
+	</table>
+  </div>
+  <h4 class="well">系统信息</h4>
+  <div class="" >
+      <table class='table table-bordered'>
+		<tr>
+			<td width="20%">服务器操作系统</td>
+			<td width="30%">{$server_info.os}</td>
+			<td width="20%">web服务器</td>
+			<td width="30%">{$server_info.web_server}</td>
+		</tr>
+		<tr>
+			<td>PHP版本</td>
+			<td>{$server_info.php_ver}</td>
+			<td>MySQL版本</td>
+			<td>{$server_info.mysql_ver}</td>
+		</tr>
+		<tr>
+			<td>安全模式</td>
+			<td>{$server_info.safe_mode}</td>
+			<td>安全模式GID</td>
+			<td>{$server_info.safe_mode_gid}</td>
+		</tr>
+		<tr>
+			<td>Socket支持</td>
+			<td>{$server_info.socket}</td>
+			<td>时区设置</td>
+			<td>{$server_info.timezone}</td>
+		</tr>
+		<tr>
+			<td>GD版本</td>
+			<td>{$server_info.gd}</td>
+			<td>Zlib支持</td>
+			<td>{$server_info.zlib}</td>
+		</tr>
+		<tr>
+			<td>IP版本库</td>
+			<td>1</td>
+			<td>文件上传的最大大小</td>
+			<td>{$server_info.upload_limit}</td>
+		</tr>
+		<tr>
+			<td>商城版本</td>
+			<td>{$server_info.version}</td>
+			<td>安装日期</td>
+			<td>{$server_info.install_date}</td>
+		</tr>
+		<tr>
+			<td>编码</td>
+			<td>{$server_info.encode}</td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+  </div>
+</div>
+<script src="__ROOT__/statics/js/common.js"></script> 
+
+</body>
+</html>

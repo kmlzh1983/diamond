@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>{$seo_name}</title>
+	<meta name="keywords" content="{$seo_keywords}" />
+	<meta name="description" content="{$seo_description}">
+	<tc_include file='Public:head'/>
+	<script src="/statics/js/goods.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/special.css"/>
+</head>
+<body class="theme">	
+	
+	<tc_include file='Public:header'/>
+	<php>
+        $ads = sp_sql_ads("ad_content:sort_banner;field:*;limit:1;order:ad_id desc;");
+    </php>		
+	<!-- <div class="banner">
+		<div class="bannerBox" style="width: 100%;height: 449px; background-image: url({$ads.0.ad_imgurl});background-position: center;background-repeat: no-repeat;">        
+            
+        </div>
+	</div> -->
+	<div class="wrapper">
+		<div class="wrap">
+			<div class="bg-white border-top3">
+				<div class="special-page sorts-page border border-nt">
+					<div class="slider">
+						<div class="slider-hd">
+							<h4>Top50排行榜</h4>
+						</div>
+						<div class="bd">
+							<ul class="sp-sliderbar">
+							<!--<li class="active"><a href="{:U('goods/index/sort', array('type'=>$type))}">Top40排行榜</a></li>-->
+							<php>
+								$cate = sp_goods_cate("field:id,name,parent;");
+							</php>
+							<volist name="cate" id="vo">									
+								<li <if condition="$cid eq $vo['id']  or $pid eq  $vo['id']">class="current"</if>><a href="{:U('goods/index/sort', array('cid'=>$vo['id'],'type'=>$type))}">{$vo.name}<i class="hmv-icon"></i></a></li>
+								<ul class="sub-nav <if condition="$cid eq $vo['id'] or $pid eq  $vo['id']">current</if>">
+									<volist name="vo.sub" id="voli">
+										<li <if condition="$cid eq $voli['id']">class="current"</if>><a href="{:U('goods/index/sort', array('cid'=>$voli['id'],'pid'=>$vo['id'],'type'=>$type))}">{$voli.name}</a></li>
+									</volist>
+								</ul>
+							</volist>
+							</ul>
+						</div>	
+					</div>
+					
+					<div class="main grid-right">
+						<ul class="filter-sort">
+							<li><a href="{:U('goods/index/sort', array('type'=>'this_week','cid'=>$cid,'pid'=>$pid))}">本周</a></li>
+							<li><a href="{:U('goods/index/sort', array('type'=>'this_month','cid'=>$cid,'pid'=>$pid))}">本月</a></li>
+							<li><a href="{:U('goods/index/sort', array('type'=>'total','cid'=>$cid,'pid'=>$pid))}">總版</a></li>
+						</ul>
+						<table class="sotr-table">
+							<php>
+								$lists = sp_goods_sort("cid:$cid;field:g.id,g.name,g.title,g.price,g.img_url;limit:10;order:$type;");
+							</php>
+							<volist name="lists['goods']" id="vo">		
+							<tr>
+								<td class="first-td">
+									<span class="num num-red">									
+										<php>echo 10*($p-1) + $key + 1</php>
+									</span>
+								</td>
+								<td>
+									<div class="info">
+										<a class="imgbox" href="{:U('goods/index/detail', array( 'id' => $vo['id'] ) )}">
+											<img src="{$vo.smallimage}"/>
+										</a>
+										<div class="intr">
+
+											<h5 class="text-overflow">{$vo.name}</h5>
+											<if condition="$vo['title'] != '' "><p class="text-overflow">{$vo.title}</p></if>
+											<div class="color">HK${$vo.price}</div>
+
+										</div>
+										<button class="btn btn-lg add-btn" onclick="addCart({$vo.id}, 1, '{:U('Order/cart/addCart')}')" ><span class="add-car cate-icon"></span>加入购物车</button>
+									</div>
+
+								</td>
+							</tr>
+							</volist>						
+						</table>
+						{$lists['page']}
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<tc_include file='Public:footer'/>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>{$post_title} {$site_name} </title>
+	<meta name="keywords" content="{$post_keywords}" />
+	<meta name="description" content="{$post_excerpt}">
+	<tc_include file='Public:head'/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>	
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/special.css"/>
+</head>
+<body class="theme">	
+	
+	<tc_include file='Public:header'/>
+	
+	<div class="wrapper">
+		<div class="wrap">
+			<section class="bg-white">
+				<div class="grid news-detail">
+					<tc_include file='Portal:news_left'/>
+					
+					<div class="main grid-right">
+						<div class="news-head">
+							<div class="data-form">
+								來源：{$post_source}
+							</div>
+							<h4>{$post_title}</h4>
+							
+						</div>
+						<div class="news-top">
+							<div class="share">
+								<div class="share-box">
+									<!-- JiaThis Button BEGIN -->
+									<div class="jiathis_style">
+										<span class="jiathis_txt">分享到：</span>
+										<a class="jiathis_button_fb"></a>
+										<a class="jiathis_button_twitter"></a>
+										<a class="jiathis_button_tsina"></a>
+										<a class="jiathis_button_email"></a>
+										<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank">更多</a>
+										<a class="jiathis_counter_style"></a>
+									</div>
+									<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+									<!-- JiaThis Button END -->
+								</div>
+							</div>
+							<p class="text-center">
+								{$post_date}
+							</p>
+						</div>
+						<div class="content">
+							{$post_content}
+						</div>
+						
+						 <!-- <div>
+							<if condition="!empty($prev)">
+							<a href="{:U('article/index',array('id'=>$prev['tid']))}" class="btn btn-primary pull-left">上一篇</a>
+							</if>
+							<if condition="!empty($next)">
+							<a href="{:U('article/index',array('id'=>$next['tid']))}" class="btn btn-warning pull-right">下一篇</a>
+							</if>
+		    	           <script type="text/javascript" src="__TMPL__Public/js/qrcode.min.js"></script>
+		                    <div id="qrcode" style="width: 100px;margin:0 auto"></div>
+		    					<script type="text/javascript">
+		                        var qrcode = new QRCode(document.getElementById("qrcode"), {
+		                        width : 100,
+		                        height : 100
+		                        });
+		                        function makeCode () {		
+		                        	qrcode.makeCode("http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}");
+		                        }
+		                        makeCode();
+		                        </script>
+		                       
+							<div class="clearfix"></div>
+						</div> -->
+						<!-- 
+						{:Comments("posts",$object_id)}
+						-->
+					</div>
+				</div>
+			</section>
+			
+			
+		</div>		
+	</div>
+	<tc_include file="Public:footer" />
+</body>
+</html>

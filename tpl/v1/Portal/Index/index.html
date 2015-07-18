@@ -1,0 +1,64 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>招聘系统</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <link rel="shortcut icon" href="http://localhost/zp/favicon.ico" />
+    <meta name="author" content="XG人才招聘系统" />
+    <meta name="copyright" content="XG人才招聘系统" />
+
+    <link href="__TMPL__Public/zp/css/index.css" rel="stylesheet" type="text/css" />
+    <script src="__TMPL__Public/js/jquery-1.11.1.min.js" type="text/javascript" language="javascript"></script>
+</head>
+<body>
+<div class="wrap">
+<!--头部start-->
+    <tc_include file='Public:header'/>
+<!--头部end-->
+<!--主体部分-->
+<div id="main" class="main">
+
+    <div class="job-list">
+        <volist name="newJob" id="vo">
+            <a href="{:U('Portal/Jobs/detail')}&id={$vo.id}">
+
+            <div class="item fl">
+                <div class="item-body">
+                    <ul>
+                        <li>岗位名称：{$vo.job_name}</li>
+                        <li>工作内容：{$vo.job_desc}</li>
+                        <li>工作时间：{$vo.work_start_date|substr=5,5}</li>
+                        <li>岗位类别：{$vo.catname}</li>
+                    </ul>
+                </div>
+                <div class="item-bottom">
+                    <ul class="flul">
+                        <li>地点：{$_SESSION['wiki']['city']}</li>
+                        <li>{$vo.work_pay}元/小时</li>
+                        <li>联系</li>
+                        <div class="c"></div>
+                    </ul>
+
+                </div>
+                <div class="c"></div>
+            </div>
+        </volist>
+        <div class="c"></div>
+        </a>
+    </div>
+
+
+</div>
+<!--主体部分end-->
+
+<!--底部start-->
+    <tc_include file='Public:footer'/>
+    <!--底部end-->
+</div>
+
+</body>
+</html>

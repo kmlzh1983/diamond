@@ -1,0 +1,54 @@
+<admintpl file="header"/>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="{:U('AdminSupplier/index')}">供应商列表</a></li>
+     <li><a href="{:U('AdminSupplier/add')}">添加供应商</a></li>
+  </ul>
+  <div class="common-form">
+    <form method="post" class="J_ajaxForm" action="{:U('AdminSupplier/listorders')}">
+      <div class="table_list">
+      	<php>
+        		$status=array("1"=>"显示","0"=>"隐藏");
+        </php>
+	    <table width="100%" class="table table-hover">
+	        <thead>
+	          <tr>
+	          	<th width="16"><label><input type="checkbox" class="J_check_all" data-direction="x" data-checklist="J_check_x"></label></th>
+	            <th>ID</th>
+	            <th>名称</th>
+	            <th>描述</th>
+	            <th width="45">状态</th>
+	            <th width="120">操作</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	        	<foreach name="lists" item="vo">
+		        	<tr>
+		        		<td><input type="checkbox" class="J_check" data-yid="J_check_y" data-xid="J_check_x" name="ids[]" value="{$vo.id}"></td>
+			            <td>{$vo.id}</td>
+			            <td>{$vo.name}</td>
+			            <td>{$description = mb_substr($vo['description'], 0, 48, 'utf-8')}</td>
+			            <td>{$status[$vo['status']]}</td>
+			            <td>
+			            	<a href="{:U('AdminSupplier/edit',array('id'=>$vo['id']))}" >修改</a> |
+				            <a href="{:U('AdminSupplier/delete',array('id'=>$vo['id']))}" class="J_ajax_del" >删除</a>
+				        </td>
+		          	</tr>
+	          	</foreach>
+	          	<tr>
+	          		<td colspan="8">
+	          			<label class="checkbox inline" for="check_all"><input type="checkbox" class="J_check_all" data-direction="y" data-checklist="J_check_y" id="check_all">全选</label>  
+			    		<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminSupplier/toggle',array('display'=>1))}" data-subcheck="true" >显示</button>
+			        	<button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminSupplier/toggle',array('hide'=>1))}" data-subcheck="true" >隐藏</button>
+	          		</td>
+	          	</tr>
+			</tbody>
+	      </table>
+  </div>
+    </form>
+  </div>
+</div>
+<script src="__ROOT__/statics/js/common.js?"></script>
+</body>
+</html>

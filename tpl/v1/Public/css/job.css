@@ -1,0 +1,6 @@
+.job-pos-page .job-pos-content{padding: 20px;}
+.job-pos-page .job-pos-content .jobname{height: 40px;line-height: 40px;border-bottom: 1px dashed #ccc}
+.job-pos-page .job-pos-content .pos-type{margin-top: 20px;}
+.job-pos-page .job-pos-content .pos-type strong{font-weight: bold;color: #d41e24}
+.job-pos-page .job-pos-content >div{margin: 10px 0;}
+.job-pos-page .job-pos-content .myaccount span{color: red;}

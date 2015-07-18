@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>个人中心</title>
+	
+	<tc_include file='Public:head'/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+
+</head>
+<body class="theme">	
+	<tc_include file='Public:header'/>
+	
+	<div class="wrapper order-wrap">
+		<div class="wrap">
+			<div class="grid myhmv-grid  portrait-page">
+				<tc_include file='User:My:leftside'/>
+				<div class="grid-r">
+					<div class="order-main">
+						<ul class="user-info">
+							<li class="info-line-1 cate-icon"></li>
+							<li class="base-info">
+								<a href="{$user.avatar_origin}" target='_blank'>
+									<div class="user-pic">
+										<div class="cate-icon msk">										
+										</div>
+										<img src="{$user.avatar_large}"/>										
+									</div>
+								</a>
+								<div class="u-info">
+									<div class="u-name">
+										{$user.user_login}
+									</div>
+									<div class="u-safe">
+										<p>
+											账户安全
+										</p>
+										<div class="rank-box">
+											<span class="safe-rank">
+												<i class="rank-1"></i>
+												<!--<i class="rank-2"></i>-->
+												<!--<i class="rank-3"></i>-->
+											</span>
+											<span class="rank-txt">低</span>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="info-line-2 cate-icon"></li>
+							<li class="user-couts">
+								<ul>
+									<li>
+										<div class="counts-item">
+											<i class="cate-icon count-01"></i>
+											<p>余额<em>{$account['money']|default=0}</em></p>
+										</div>										
+									</li>
+
+									<li>
+										<div class="counts-item">
+											<i class="cate-icon count-04"></i>
+											<p>职位<em>{$jobCount|default=0}</em></p>
+										</div>										
+									</li>
+									<li>
+										<div class="counts-item">
+											<i class="cate-icon count-05"></i>
+											<p>申请<em>{$applyCount|default=0}</em></p>
+										</div>										
+									</li>
+									<li>
+										<div class="counts-item">
+											<i class="cate-icon count-06"></i>
+											<p>简历<em>{$resumeCount|default=0}</em></p>
+										</div>										
+									</li>									
+								</ul>
+							</li>
+							<li class="info-line-3 cate-icon"></li>
+						</ul>
+					</div>
+                    <div class="order-main" id="user-index" style="display: none">
+                        <hr/>
+                        <div class="myaccount">
+                            <p>注册日期：<span class="red">{$_SESSION['user']['create_time']}</span></p>
+                            <p>用户类型：<span class="red">
+                                <if condition="$_SESSION['user']['utype'] eq 2">
+                                    企业
+                                    <else />
+                                    个人
+                                </if>
+                            </span></p>
+                            <p>认证状态：<span class="red">
+                                <if condition="$account['audit'] eq 0">
+                                    未验证
+                                    <elseif condition="$account['audit'] eq 1" />
+                                    验证中
+                                    <elseif condition="$account['audit'] eq 2" />
+                                    已验证
+                                    <else />
+                                    验证不通过
+                                </if>
+
+                            </span></p>
+                            <p>发布权限：<span class="red">
+                                <if condition="$account['audit'] eq 2">
+                                    有
+                                    <else />
+                                    无
+                                    </if>
+                            </span></p>
+
+                            <!--<p>我的余额：<span class="red">{$account.money}</span></p>-->
+                            <!--<p><a href="" class="btn btn-primary">现在充值</a></p>-->
+                        </div>
+                    </div>
+				</div>
+                <div class="grid-r">
+                    <div class="order-main">
+                        <div class="hd">
+                            <ul class="portrait-head">
+                                <li class="active">基本资料</li>
+                                <li><a href="{:U('user/my/portrait')}">头像照片</a></li>
+                            </ul>
+                        </div>
+                        <div class="bd">
+                            <form action="">
+                                <div class="grid">
+                                    <!--<p class="title">&nbsp;&nbsp;用户名：{$_SESSION['user']['user_realname']}</p>-->
+                                </div>
+                                <div class="portrait-gd dl-hori">
+                                    <dl style="display: none">
+                                        <dt>
+                                            当前头像：
+                                        </dt>
+                                        <dd>
+                                            <a class="pot-pic" target='_blank' href="{$user.avatar_origin}">
+                                                <img src="{$user.avatar}"/>
+                                            </a>
+                                        </dd>
+                                    </dl>
+
+                                    <dl>
+                                        <dt>
+                                            *昵   称：
+                                        </dt>
+                                        <dd>
+                                            <input type="text" name="user_nicename" id="" value="{$user.user_nicename}" />
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>
+                                            *用&nbsp;户&nbsp;&nbsp;名：
+                                        </dt>
+                                        <dd>
+                                            <input type="text" name="user_realname" id="" value="{$user.user_realname}" />
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>
+                                            *性　　別：
+                                        </dt>
+                                        <dd>
+                                            <div class="checkbox">
+                                                <input type="radio" name='sex' <if condition="$user['sex'] eq 0">checked</if> name="gender" id="" value="0" />&nbsp;男
+                                            </div>
+                                            <div class="checkbox">
+                                                <input type="radio" name='sex' <if condition="$user['sex'] eq 1">checked</if> name="gender" id="" value="1" />&nbsp;女
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                    <dl style="display: none">
+                                        <dt>
+                                            *生　　日：
+                                        </dt>
+                                        <dd class="date">
+                                            <select name="year">
+                                                <option value="">年</option>
+                                                <php>
+                                                    for( $i=1970;$i<2016;$i++ ){
+                                                    if( $user['birth'][0] == $i ){
+                                                    echo "<option selected value='".$i."'>$i</option>";
+                                                    }else{
+                                                    echo "<option value='".$i."'>$i</option>";
+                                                    }
+                                                    }
+                                                </php>
+                                            </select>
+                                            <select name="month">
+                                                <option value="">月</option>
+                                                <php>
+                                                    for( $i=0;$i<13;$i++ ){
+                                                    if( $user['birth'][1] == $i ){
+                                                    echo "<option selected value='".$i."'>$i</option>";
+                                                    }else{
+                                                    echo "<option value='".$i."'>$i</option>";
+                                                    }
+                                                    }
+                                                </php>
+                                            </select>
+                                            <select name="day">
+                                                <option value="">日</option>
+                                                <php>
+                                                    for( $i=0;$i<32;$i++ ){
+                                                    if( $user['birth'][2] == $i ){
+                                                    echo "<option selected value='".$i."'>$i</option>";
+                                                    }else{
+                                                    echo "<option value='".$i."'>$i</option>";
+                                                    }
+                                                    }
+                                                </php>
+                                            </select>
+                                            <span class="tips">（出生年月為保密）</span>
+                                        </dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>
+                                            *居&nbsp;住&nbsp;&nbsp;地：
+                                        </dt>
+                                        <dd>
+                                            <input type="text" class="l-text" name="address" id="" value="{$user.address}" />
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="grid text-center">
+                                    <button class="btn btn-lg submit">保　存</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+			</div>			
+		</div>		
+	</div>
+	
+	<tc_include file='Public:footer'/>
+    <script>
+        $("button.submit").click(function(data){
+            $.ajax({
+                url:"{:U('user/profile/edit_post')}",
+                type:'post',
+                data:{
+                    user_nicename:$("input[name=user_nicename]").val(),
+                    sex:$("input[name=sex]:checked").val(),
+                    birthday:$("select[name=year] option:selected").val()+'-'+$("select[name=month] option:selected").val()+'-'+$("select[name=day] option:selected").val(),
+                    address:$("input[name=address]").val(),
+                    user_realname:$("input[name=user_realname]").val(),
+                },
+                success:function(data){
+                    alert(data.info);
+                }
+            });
+            return false;
+        })
+    </script>
+</body>
+</html>

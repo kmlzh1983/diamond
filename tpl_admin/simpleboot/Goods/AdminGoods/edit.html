@@ -1,0 +1,566 @@
+<admintpl file="header"/>
+<script src="__ROOT__/statics/js/utils.js"></script>
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+     <!-- 
+	     <li><a href="{:U('AdminGoods/index')}">所有商品</a></li>
+	     <li class="active"><a href="{:U('AdminGoods/add',array('term'=>empty($term['term_id'])?'':$term['term_id']))}"  target="_self">添加商品</a></li>
+      -->
+      <li class="active"><a href="#A" data-toggle="tab">基本属性</a></li>
+      <li><a href="#B" data-toggle="tab">详细描述</a></li>
+      <li><a href="#F" data-toggle="tab">其他属性</a></li>
+      <li><a href="#C" data-toggle="tab">商品属性</a></li>
+      <li><a href="#D" data-toggle="tab">商品相册</a></li>
+      <li><a href="#E" data-toggle="tab">SEO设置</a></li>
+      <li><a href="#F" data-toggle="tab">关联商品</a></li>
+      <li><a href="#G" data-toggle="tab">关联文章</a></li>
+  </ul>
+  <form name="myform" id="myform" action="{:u('AdminGoods/edit_post')}" method="post" class="form-horizontal J_ajaxForms" enctype="multipart/form-data">
+  <div class="tabbable">
+     <div class="tab-content">
+       <div class="tab-pane active" id="A">
+		  <table cellpadding="2" cellspacing="2" width="100%">
+			<tbody>
+				<tr>
+					<th style="width:90px;">名称:</th>
+						<td>
+							<input type="text" style="width:400px;" name="post[name]" required style="color:" class="input input_hd J_title_color" placeholder="请输入商品名称" onkeyup="strlen_verify(this, 'title_len', 160)" value="{$goods.name}" />
+              				<span class="must_red">*</span>
+						</td>
+					</tr>
+					<tr>
+					<th>标题:</th>
+						<td>
+							<input type="text" style="width:400px;" name="post[title]" style="color:" class="input input_hd J_title_color" placeholder="请输入标题" onkeyup="strlen_verify(this, 'title_len', 160)" value="{$goods.title}" />
+						</td>
+					</tr>
+                    <tr>
+						<th>货号:</td>
+						<td><input type="text" name="post[serial]"  class='input' value="{$goods.serial}" />如果您不输入商品货号，系统将自动生成一个唯一的货号。</td>
+					</tr>
+                    <tr>
+						<th>价格:</th>
+						<td><input type="text" name="post[price]"  class='input' value="{$goods.price}" /></td>
+					</tr>
+                    <tr>
+						<th>特价:</th>
+						<td><input type="text" name="post[pricespe]"  class='input'  value="{$goods.pricespe}" /></td>
+					</tr>
+					  <tr>
+						<th>成本价:</th>
+						<td><input type="text" name="post[costprice]"  class='input'  value="{$goods.costprice}" /></td>
+					</tr>
+                    <tr>
+						<th>供应商:</th>
+						<td>
+							<select name="post[supplier_id]"  class='normal_select'  >
+		                        <option value="0">请选择</option>
+		                        <volist name="supplier" id="vo">
+		                        	<php>$selected=$goods['supplier_id']==$vo['id']?"selected":""</php>
+		                        	<option value="{$vo['id']}" {$selected}>{$vo.name}</option>
+		                        </volist>
+	                        </select>
+						</td>
+					</tr>
+					
+                    <tr>
+						<th>赠送积分:</th>
+						<td><input type="text" name="post[points]"  class='input'  value="{$goods.points}" /></td>
+					</tr>
+                    <tr>
+						<th>产品分类:</th>
+						<td>
+							<select name="post[cate_id]" class="normal_select">
+								<option value="0">请选择</option>
+								<foreach name="cate" item="vo">
+									<php>$selected=$goods['cate_id']==$vo['id']?"selected":""</php>
+						        	<option value="{$vo.id}" {$selected}>{$vo.spacer}{$vo.name}</option>
+								</foreach>
+							</select>
+						</td>
+					</tr>
+                     <tr>
+						<th>品牌:</th>
+						<td>
+	                        <select name="post[brand_id]"  class='input'  >
+		                        <option value="0">请选择</option>
+		                        <volist name="brand" id="vo">
+		                        	<php>$selected=$goods['brand_id']==$vo['id']?"selected":""</php>
+		                        	<option value="{$vo['id']}" {$selected}>{$vo.name}</option>
+		                        </volist>
+	                        </select>
+                        </td>
+					</tr>
+					<tr>
+						<th>格式:</th>
+						<td>
+                        <select name="post[format]"  class='normal_select'  >
+	                        <option value="0">请选择</option>
+	                        <volist name="format" id="vo">
+	                        	<option value="{$key}" <php>echo $goods['format']==$key?"selected":""</php>>{$vo}</option>
+	                        </volist>
+                        </select>
+                        </td>
+					</tr>
+					
+                     <tr>
+						<th>付運預計時間:</th>
+						<td>
+                        <select name="post[availability]"  class='normal_select'  >
+	                        <option value="0">请选择</option>
+	                        <volist name="availability" id="vo">
+	                        	<option value="{$key}" <php>echo $goods['availability']==$key?"selected":""</php>>{$vo}</option>
+	                        </volist>
+                        </select>
+                        </td>
+					</tr>
+					 <tr>
+						<th>邮费分类:</th>
+						<td>
+                        <select name="post[charge]"  class='normal_select'  >
+	                        <option value="0">请选择</option>
+	                        <volist name="charge" id="vo">
+	                        	<option value="{$key}" <php>echo $goods['charge']==$key?"selected":""</php>>{$vo}</option>
+	                        </volist>
+                        </select>
+                        </td>
+					</tr>
+					 
+			</tbody>
+		</table>
+  		</div>
+		
+		<div class="tab-pane" id="F">
+		  <table cellpadding="2" cellspacing="2" width="98%">
+			<tbody>
+					<tr>
+						<th style="width:90px;">重量(KG):</th>
+						<td><input type="text" name="post[weight]"  class='input'  value="{$goods.weight}" /></td>
+					</tr>
+					<tr>
+						<th>库存:</th>
+						<td><input type="text" name="post[stock]"  class='input'  value="{$goods.stock}" /></td>
+					</tr>
+					  <tr style="height:30px;">
+						<th>预售产品:</th>
+						<td><input type="radio" value="1"  name="post[preorder]"  class='input' <php>echo $goods['preorder']==1?"checked":""</php>  />是 
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[preorder]"  class='input'  <php>echo $goods['preorder']==0?"checked":""</php> />否</td>
+					</tr>         
+                    <tr style="height:30px;">
+						<th>最新产品:</th>
+						<td><input type="radio" value="1"  name="post[isnew]"  class='input' <php>echo $goods['isnew']==1?"checked":""</php>  />是 
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[isnew]"  class='input'  <php>echo $goods['isnew']==0?"checked":""</php> />否</td>
+					</tr>
+                    <tr style="height:30px;">
+						<th>热卖产品:</th>
+						<td><input type="radio" value="1"  name="post[ishot]"  class='input' <php>echo $goods['ishot']==1?"checked":""</php>  />是
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[ishot]"  class='input' <php>echo $goods['ishot']==0?"checked":""</php> />否</td>
+					</tr>
+                    <tr style="height:30px;">
+						<th>推荐产品:</th>
+						<td><input type="radio" value="1"  name="post[isrec]"  class='input' <php>echo $goods['isrec']==1?"checked":""</php> />是
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[isrec]"  class='input' <php>echo $goods['isrec']==0?"checked":""</php> />否</td>
+					</tr>
+                    <tr style="height:30px;">
+						<th>特价产品:</th>
+						<td><input type="radio" value="1"  name="post[isprice]"  class='input' <php>echo $goods['isprice']==1?"checked":""</php> />是
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[isprice]"  class='input' <php>echo $goods['isprice']==0?"checked":""</php> />否</td>
+					</tr>
+                   <tr style="height:30px;">
+						<th>上架:</th>
+						<td><input type="radio" value="1"  name="post[isdown]"  class='input' <php>echo $goods['isdown']==1?"checked":""</php> />是
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[isdown]"  class='input'  <php>echo $goods['isdown']==0?"checked":""</php> />否</td>
+					</tr>
+                   
+			</tbody>
+		</table>
+  		</div>
+  		
+		  <div class="tab-pane" id="B">
+		       <table width="98%">
+				<tbody>
+					<tr>
+		              <td><div id='content_tip'></div>
+		              <script type="text/plain" id="content" name="post[content]" style="height:500px">{$goods.content}</script>
+		                <script type="text/javascript">
+		                //编辑器路径定义
+		                var editorURL = GV.DIMAUB;
+		                </script>
+		                <script type="text/javascript"  src="__ROOT__/statics/js/ueditor/ueditor.config.js"></script>
+		                <script type="text/javascript"  src="__ROOT__/statics/js/ueditor/ueditor.all.min.js"></script>
+						</td>
+		            </tr>
+				</tbody>
+			</table>
+		   </div>
+		   
+		   <div class="tab-pane" id="C">
+		       <table width="98%">
+				<tbody>
+					<tr>
+		              <th width="80">商品类型</th>
+		              <td>
+							<select name="post[type_id]"  class='input' id="type_id">
+	                        <option value="0">请选择</option>
+	                        <volist name="type" id="vo">
+	                        	<php>$selected=$goods['type_id']==$vo['id']?"selected":""</php>
+	                        	<option value="{$vo['id']}" {$selected}>{$vo.name}</option>
+	                        </volist>
+                        </select>
+					  </td>
+		            </tr>
+		             <tr>
+			            <td id="tbody-goodsAttr" colspan="2" style="padding:0">{$goods_attr_html}</td>
+			        </tr>
+				</tbody>
+			</table>
+		   </div>
+		   
+		   <div class="tab-pane" id="D">
+		       <table width="98%">
+				<tbody>
+					<tr>
+		              <td>
+						<fieldset class="blue pad-10">
+				        <legend>图片列表</legend>
+				        <ul id="goods_photos" class="picList">
+				         <volist name="gallery" id="vo">
+				        	<li id="image{$vo.id}">
+				        	<input type="text" class="input" ondblclick="image_priview(this.value);" style="width:310px;" value="{$vo.img_url}" name="goods_photos_url[]" title="双击查看"> 
+				        	<input type="text" onblur="if(this.value.replace(' ','') == '') this.value = this.defaultValue;" onfocus="if(this.value == this.defaultValue) this.value = ''" class="input" style="width:160px;" value="QQ图片20150420114427" name="goods_photos_alt[]"> 
+				        	&nbsp;排序:<input type="text" name="goods_photos_listorder[]" value="{$vo.listorder}" class='input-small'  />
+				        	&nbsp;<input type='radio' value='{$vo.id}' class='input' name='goods_photos_isIndex' <eq name="vo['img_url']" value="$goods['bigimage']">checked</eq>>设为封面
+				        	<input type="hidden" name="gid[]" value="{$vo.id}" />
+				        	&nbsp;<a href="javascript:remove_div('image{$vo.id}')">移除</a> </li>
+				         </volist>
+				        </ul>
+						</fieldset>
+						<div class="bk10"></div>
+						&nbsp;&nbsp;<a href='javascript:void(0);' onclick="javascript:flashupload('albums_images', '图片上传','goods_photos',change_images,'10,gif|jpg|jpeg|png|bmp,0','','','', 0)" class="btn">选择图片 </a> </td>
+		            </tr>
+				</tbody>
+			</table>
+		   </div>
+		   
+		    <div class="tab-pane" id="E">
+          		<table cellpadding="2" cellspacing="2" width="100%">
+					<tbody>
+						<tr>
+							<th width="80">SEO标题:</th>
+							<td><input type="text" class="input" name="post[seo_title]" value="{$goods.seo_title}"></td>
+						</tr>
+						<tr>
+							<th>SEO关键字:</th>
+							<td><input type="text" class="input" name="post[seo_keywords]" value="{$goods.seo_keywords}"></td>
+						</tr>
+						<tr>
+							<th>SEO描述:</th>
+							<td><textarea name="post[seo_description]" rows="5" cols="57">{$goods.seo_description}</textarea></td>
+						</tr>
+					</tbody>
+				</table>
+          </div>
+          
+          <div class="tab-pane" id="F">
+          		<table cellpadding="2" cellspacing="2" width="100%">
+		          <tbody><tr>
+		            <td colspan="3">
+		              <select name="cate_id" id="cate_id" class="normal_select">
+							<option value="">所有分类</option>
+							<foreach name="cate" item="vo">
+					        	<option value="{$vo.id}">{$vo.spacer}{$vo.name}</option>
+							</foreach>
+					  </select>	
+		              <select name="brand_id" id="brand_id" class='normal_select'>
+	                        <option value="">所有品牌</option>
+	                        <volist name="brand" id="vo">
+	                        	<option value="{$vo['id']}">{$vo.name}</option>
+	                        </volist>
+                        </select>
+                        
+		              <input type="text" name="keyword" id="keyword" class="input">
+		              <a class="btn btn-primary" onclick="javascript:searchGoods()" href="javascript:void(0);">搜索 </a>
+		            </td>
+		          </tr>
+		          <tr>
+		            <th>可选商品</th>
+		            <th>操作</th>
+		            <th>跟该商品关联的商品</th>
+		          </tr>
+		          <tr>
+		            <td width="42%" id='select_content'>
+		              <select multiple="true" ondblclick="" style="width:100%" size="20" name="source_name" id="source_name"></select>
+		            </td>
+		            <td align="center">
+		              <p>
+			              <input type="radio" checked="checked" value="1" name="is_single">单向关联
+			              <br>
+			              <input type="radio" value="0" name="is_single">双向关联
+			          </p>
+		              <p><input type="button" class="button" id="add_all_link_goods" value=">>"></p>
+		              <p><input type="button" class="button" id="add_link_goods" value=">"></p>
+		              <p><input type="button" class="button" id="drop_link_goods" value="<"></p>
+		              <p><input type="button" class="button" id="drop_all_link_goods" value="<<"></p>
+		            </td>
+		            <td width="42%">
+		              <select multiple="true" style="width:100%" size="20" name="target_name" id="target_name">
+                           <foreach name="link_goods" item="vo">
+                           		<php>$text = $vo['is_double'] == 1 ?" -- [双向关联]":" -- [单向关联]"</php>
+                           		<option value="{$vo.link_goods_id}">{$vo.name}{$text}</option>
+							</foreach>
+                      </select>
+		            </td>
+		          </tr>
+		        </tbody></table>
+          </div>
+          <div class="tab-pane" id="G">
+          		<table cellpadding="2" cellspacing="2" width="100%">
+		          <tbody><tr>
+		            <td colspan="3">
+		              <input type="text" name="keyword_posts" id="keyword_post" class="input">
+		              <a class="btn btn-primary" onclick="javascript:searchPosts()" href="javascript:void(0);">搜索 </a>
+		            </td>
+		          </tr>
+		          <tr>
+		            <th>可选文章</th>
+		            <th>操作</th>
+		            <th>跟该商品关联的文章</th>
+		          </tr>
+		          <tr>
+		            <td width="42%" id='select_posts_content'>
+		              <select multiple="true" ondblclick="" style="width:100%" size="20" name="source_name_posts" id="source_name_posts"></select>
+		            </td>
+		            <td align="center">
+		              <p><input type="button" class="button" id="add_all_link_posts" value=">>"></p>
+		              <p><input type="button" class="button" id="add_link_posts" value=">"></p>
+		              <p><input type="button" class="button" id="drop_link_posts" value="<"></p>
+		              <p><input type="button" class="button" id="drop_all_link_posts" value="<<"></p>
+		            </td>
+		            <td width="42%">
+		              <select multiple="true" style="width:100%" size="20" name="target_name" id="target_name_posts">
+                           <foreach name="link_posts" item="vo">
+                           		<option value="{$vo.posts_id}">{$vo.post_title}</option>
+							</foreach>
+                      </select>
+		            </td>
+		          </tr>
+		        </tbody></table>
+          </div>
+		          
+	 </div>
+  </div>		   
+  <div class="form-actions">
+        <button class="btn btn-primary btn_submit J_ajax_submit_btn"type="submit">提交</button>
+        <a class="btn" href="<php> echo Cookie('__forward__')</php>">返回</a>
+        <input type="hidden" name="post[id]" value="{$goods.id}" />
+  </div>
+ </form>
+</div>
+<script type="text/javascript" src="__ROOT__/statics/js/common.js"></script>
+<script type="text/javascript" src="__ROOT__/statics/js/content_addtop.js"></script>
+<script type="text/javascript"> 
+var goods_id = {$goods.id};
+$(function () {
+	//setInterval(function(){public_lock_renewal();}, 10000);
+	$(".J_ajax_close_btn").on('click', function (e) {
+	    e.preventDefault();
+	    Wind.use("artDialog", function () {
+	        art.dialog({
+	            id: "question",
+	            icon: "question",
+	            fixed: true,
+	            lock: true,
+	            background: "#CCCCCC",
+	            opacity: 0,
+	            content: "您确定需要关闭当前页面嘛？",
+	            ok:function(){
+					setCookie("refersh_time",1);
+					window.close();
+					return true;
+				}
+	        });
+	    });
+	});
+	/////---------------------
+	 Wind.use('validate', 'ajaxForm', 'artDialog', function () {
+			//javascript
+	            //编辑器
+	            editorcontent = new baidu.editor.ui.Editor();
+	            editorcontent.render( 'content' );
+	            try{editorcontent.sync();}catch(err){};
+	            //增加编辑器验证规则
+	            jQuery.validator.addMethod('editorcontent',function(){
+	                try{editorcontent.sync();}catch(err){};
+	                return editorcontent.hasContents();
+	            });
+	            var form = $('form.J_ajaxForms');
+	        //ie处理placeholder提交问题
+	        if ($.browser.msie) {
+	            form.find('[placeholder]').each(function () {
+	                var input = $(this);
+	                if (input.val() == input.attr('placeholder')) {
+	                    input.val('');
+	                }
+	            });
+	        }
+	        //表单验证开始
+	        form.validate({
+				//是否在获取焦点时验证
+				onfocusout:false,
+				//是否在敲击键盘时验证
+				onkeyup:false,
+				//当鼠标掉级时验证
+				onclick: false,
+	            //验证错误
+	            showErrors: function (errorMap, errorArr) {
+					//errorMap {'name':'错误信息'}
+					//errorArr [{'message':'错误信息',element:({})}]
+					try{
+						$(errorArr[0].element).focus();
+						art.dialog({
+							id:'error',
+							icon: 'error',
+							lock: true,
+							fixed: true,
+							background:"#CCCCCC",
+							opacity:0,
+							content: errorArr[0].message,
+							cancelVal: '确定',
+							cancel: function(){
+								$(errorArr[0].element).focus();
+							}
+						});
+					}catch(err){
+					}
+	            },
+	            //验证规则
+	            rules: {'post[name]':{required:1},'post[content]':{editorcontent:true}},
+	            //验证未通过提示消息
+	            messages: {'post[name]':{required:'请输入商品名称'},'post[content]':{editorcontent:'内容不能为空'}},
+	            //给未通过验证的元素加效果,闪烁等
+	            highlight: false,
+	            //是否在获取焦点时验证
+	            onfocusout: false,
+	            //验证通过，提交表单
+	            submitHandler: function (forms) {
+	                $(forms).ajaxSubmit({
+	                    url: form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+	                    dataType: 'json',
+	                    beforeSubmit: function (arr, $form, options) {
+	                        
+	                    },
+	                    success: function (data, statusText, xhr, $form) {
+	                        if(data.status){
+								setCookie("refersh_time",1);
+								//添加成功
+								Wind.use("artDialog", function () {
+								    art.dialog({
+								        id: "succeed",
+								        icon: "succeed",
+								        fixed: true,
+								        lock: true,
+								        background: "#CCCCCC",
+								        opacity: 0,
+								        content: data.info,
+										button:[
+											{
+												name: '继续添加？',
+												callback:function(){
+													reloadPage(window);
+													return true;
+												},
+												focus: true
+											},{
+												name: '返回列表页',
+												callback:function(){
+													location="<php> echo Cookie('__forward__')</php>";
+													return true;
+												}
+											}
+										]
+								    });
+								});
+							}else{
+								isalert(data.info);
+							}
+	                    }
+	                });
+	            }
+	        });
+	    });
+	////-------------------------
+	$("#type_id").change(function(){ 
+		$.getJSON( "{:u('AdminGoods/getGoodsTypeAttrs')}", { type_id: this.value, goods_id:goods_id }, function(data, textStatus, jqXHR){
+			if (data.state === 'success') {
+				 $("#tbody-goodsAttr").html( data.content );
+            } else if (data.state === 'fail') {
+                //art.dialog.alert(data.info);
+            	alert(data.info);//暂时处理方案
+            }
+		} );
+		
+	})
+	$("#type_id").change();
+	// 关联商品
+	$('#drop_link_goods').click(function(){
+		drop_link( "{:u('AdminGoods/drop_link_goods')}", 'target_name', goods_id );
+	})
+	$('#drop_all_link_goods').click(function(){
+		drop_all_link( "{:u('AdminGoods/drop_link_goods')}", 'target_name', goods_id );
+	})
+	$('#add_link_goods').click(function(){
+		var is_single = $('input:radio[name=is_single]:checked').val();
+		add_link( "{:u('AdminGoods/add_link_goods')}", 'source_name', 'target_name', goods_id, is_single ); 
+	})
+	$('#add_all_link_goods').click(function(){
+		var is_single = $('input:radio[name=is_single]:checked').val();
+		add_all_link( "{:u('AdminGoods/add_link_goods')}", 'source_name', 'target_name', goods_id, is_single, 'clean' ); 
+	})
+	// 关联文章
+	$('#drop_link_posts').click(function(){
+		drop_link( "{:u('AdminGoods/drop_link_posts')}", 'target_name_posts', goods_id );
+	})
+	$('#drop_all_link_posts').click(function(){
+		drop_all_link( "{:u('AdminGoods/drop_link_posts')}", 'target_name_posts', goods_id );
+	})
+	$('#add_link_posts').click(function(){
+		add_link( "{:u('AdminGoods/add_link_posts')}", 'source_name_posts', 'target_name_posts', goods_id ); 
+	})
+	$('#add_all_link_posts').click(function(){
+		add_all_link( "{:u('AdminGoods/add_link_posts')}", 'source_name_posts', 'target_name_posts', goods_id, '', 'clean' ); 
+	})	
+});
+//搜索商品
+function searchGoods(){
+	$.getJSON( "{:u('AdminGoods/search_goods')}", { goods_id : goods_id, cate_id: $('#cate_id').val(),brand_id:$('#brand_id').val(),keyword:$('#keyword').val()  }, function(data, textStatus, jqXHR){
+		if (data.state === 'success') {
+            $("#select_content").html( data.content );
+        } else if (data.state === 'fail') {
+            //art.dialog.alert(data.info);
+        	alert(data.info);//暂时处理方案
+        }
+	} );
+}
+// 搜索文章
+function searchPosts(){
+	$.getJSON( "{:u('AdminGoods/search_posts')}", {keyword:$('#keyword_posts').val()  }, function(data, textStatus, jqXHR){
+		if (data.state === 'success') {
+            $("#select_posts_content").html( data.content );
+        } else if (data.state === 'fail') {
+            //art.dialog.alert(data.info);
+        	alert(data.info);//暂时处理方案
+        }
+	} );
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>修改头像</title>
+	
+	<tc_include file='Public:head'/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+	<script type="text/javascript" src="__TMPL__Public/js/swfobject.js"></script>
+    <script type="text/javascript" src="__TMPL__Public/js/fullAvatarEditor.js"></script>
+
+</head>
+<body class="theme">	
+	<tc_include file='Public:header'/>
+	
+	<div class="wrapper order-wrap">
+		<div class="wrap">
+			<div class="grid portrait-page">
+				<tc_include file='User:My:leftside'/>
+				<div class="grid-r">
+					<div class="order-main">
+						<div class="hd">
+							<ul class="portrait-head">
+								<li><a href="{:U('user/my/profile')}">基本资料</a></li>
+								<li class="active">头像照片</li>
+							</ul>
+						</div>
+						<div class="bd">
+							<div style="width:632px;margin: 0 auto;text-align:center">
+								<div>
+									<p id="swfContainer">
+										本组件需要安装Flash Player后才可使用，请从<a href="http://www.adobe.com/go/getflashplayer">这里</a>下载安装。
+									</p>
+								</div>
+								<!--<button type="button" id="upload" style="display:none;margin-top:8px;">swf外定义的上传按钮，点击可执行上传保存操作</button>-->
+							</div>
+						</div>						
+					</div>					
+				</div>
+			</div>			
+		</div>		
+	</div>
+<script type="text/javascript">
+            swfobject.addDomLoadEvent(function () {
+				//以下两行代码正式环境下请删除
+				if(location.href.indexOf('http://') == -1) 
+				alert('请于WEB服务器环境中查看、测试！\n\n既 http://*/simpleDemo.html\n\n而不是本地路径 file:///*/simpleDemo.html的方式');
+				var swf = new fullAvatarEditor("/statics/fullAvatarEditor.swf", "expressInstall.swf", "swfContainer", {
+					    id : 'swf',
+						upload_url : "/index.php/user/profile/savePortrait",	//上传接口
+						method : 'post',	//传递到上传接口中的查询参数的提交方式。更改该值时，请注意更改上传接口中的查询参数的接收方式
+						src_upload : 1,		//是否上传原图片的选项，有以下值：0-不上传；1-上传；2-显示复选框由用户选择
+						avatar_box_border_width : 0,
+						avatar_sizes : '130*130|90*90|60*60',
+						avatar_sizes_desc : '130*130像素|90*90像素|60*60像素'
+					}, function (msg) {
+                        console.log(msg);
+						switch(msg.code)
+						{
+							case 1 :// alert("页面成功加载了组件！");break;
+							case 2 :
+								document.getElementById("upload").style.display = "inline";
+								break;
+							case 3 :
+								if(msg.type == 0)
+								{
+									alert("摄像头已准备就绪且用户已允许使用。");
+								}
+								else if(msg.type == 1)
+								{
+									alert("摄像头已准备就绪但用户未允许使用！");
+								}
+								else
+								{
+									alert("摄像头被占用！");
+								}
+							break;
+							case 5 : 
+								if(msg.type == 0)
+								{
+									if(msg.content.sourceUrl)
+									{
+										//alert("原图已成功保存至服务器，url为：\n" +　msg.content.sourceUrl+"\n\n" + "头像已成功保存至服务器，url为：\n" + msg.content.avatarUrls.join("\n\n")+"\n\n传递的userid="+msg.content.userid+"&username="+msg.content.username);
+										alert('头像保存成功');
+									}
+									else
+									{
+										//alert("头像已成功保存至服务器，url为：\n" + msg.content.avatarUrls.join("\n\n")+"\n\n传递的userid="+msg.content.userid+"&username="+msg.content.username);
+										alert('头像保存成功');
+									}
+								}
+							break;
+						}
+					}
+				);
+//                $("#upload").click(function (e) {
+//                    alert(333);
+//                    swf.call("upload");
+//                });
+//				document.getElementById("upload").onclick=function(){
+//					swf.call("upload");
+//				};
+            });
+			var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+			document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F5f036dd99455cb8adc9de73e2f052f72' type='text/javascript'%3E%3C/script%3E"));
+</script>	
+	<tc_include file='Public:footer'/>
+</body>
+</html>

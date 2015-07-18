@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <title>企业认证</title>
+
+    <tc_include file='Public:head'/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/zp/css/user.css"/>
+    <script src="__TMPL__Public/js/ajaxupload.js"></script>
+    <script src="/statics/js/Util.js"></script>
+    <script type="text/javascript" src="__TMPL__Public/js/swfobject.js"></script>
+    <script type="text/javascript" src="__TMPL__Public/js/fullAvatarEditor.js"></script>
+
+</head>
+<body class="theme foot-white-bg">
+<tc_include file='Public:header'/>
+
+<div class="wrapper order-wrap">
+    <div class="wrap">
+        <div class="grid address-page">
+            <tc_include file='User:My:leftside'/>
+            <div class="grid-r">
+                <div class="order-main">
+                    <div class="hd">
+                        <div class="tips">
+                            <span>安全认证</span>
+                        </div>
+                    </div>
+                    <div class="bd verify">
+                        <div class="verify_head">
+                            <ul class="flul">
+                                <li><a href="{:U('my/company_verify')}">企业认证</a></li>
+                                <span class="fl">|</span>
+                                <li><a href="{:U('my/person_verify')}">个人认证</a></li>
+                            </ul>
+                            <div class="c"></div>
+                        </div>
+                        <div class="line" style="border-bottom: 1px solid #362e2b"></div>
+                        <div class="description">
+                            <p class="promise">
+                                <span class="danger-icon"></span>
+                                <span class="danger-word">郑重承诺：</span>
+                            </p>
+                            <p class="desc">
+                                1、上传的营业执照图片自动添加合成用途说明水印，仅用于人工在线平台实名认证，无法用于其他途径。
+                            </p>
+                            <p class="desc">
+                                2、所有信息加密传输和存储，严格保护用户隐私安全。
+                            </p>
+                        </div>
+                        <div class="audit">
+                            <p>
+                                <span class="audit">
+                                    认证状态：
+                                </span>
+                                <span>
+                                    <if condition="$account['audit'] eq 1">
+                                        等待管理员审核
+                                        <elseif condition="$account['audit'] eq 2" />
+                                        审核通过
+                                        <elseif condition="$account['audit'] eq 3" />
+                                        审核不通过
+                                    </if>
+                                </span>
+                            </p>
+                        </div>
+                        <br />
+                        <div class="verify-info">
+                            <form action="{:U('my/company_post')}" method="post" enctype="multipart/form-data" onsubmit="return check_company();">
+                                <div class="controls">
+                                    <label>企业（个体户）名称：</label>
+                                    <input type="text" name="company_name" class="input" placeholder="请输入您的真实企业名称" value="{$account.company_name}"/>
+                                </div>
+                                <br/>
+                                <div class="controls">
+                                    <label>企业（个体户）号码：</label>
+                                    <input type="text" name="company_id" class="input" placeholder="请输入您的真实营业执照号" value="{$account.company_id}"/>
+                                </div>
+
+                                <div class="box company">
+                                    <div class="item identify-upload fl">
+                                        <div class="identify-info" style="margin-top: 20px;">
+                                            <input type="file" name="license" id="license" style="display: none"/>
+                                            <div class="license" onclick="$('#license').click()"></div>
+                                        </div>
+
+                                    </div>
+                                    <div class="item jiaotou fl" style="margin-left: 12px;margin-top: -46px;">
+                                        <div class="jiantou-icon"></div>
+                                    </div>
+                                    <div class="item preview fl" style="margin-top: 20px;">
+                                        <div class="identify-info">
+                                            <if condition="$account['license'] neq ''">
+                                                <img  class="company_img" src="{$account.license}" id="license_z"/>
+                                                <else />
+                                                <img class="company_img" src="__TMPL__Public/zp/images/preimg_09.png" id="license_z"/>
+                                            </if>
+                                        </div>
+
+                                    </div>
+                                    <div class="c"></div>
+                                    <div class="shuoming" style="margin-top: 10px;">
+                                        <p>温馨提示：</p>
+                                        <p>1、影印件图片必须是营业执照副本，且在有效期内。 </p>
+                                        <p>2、影印件要求必须为彩色、清晰的数码相机拍摄件或扫描件，涂改后无效（或黑白影印件加盖公司红色公章）。</p>
+                                        <p>3、影印件上的公司名称必须与您公司信息中填写的公司名称完全一致</p>
+                                        <p>4、若发照机关为钢印公章，则需要复印营业执照副本并加盖公司红色公章后，再拍照或扫描后上传。</p>
+                                        <p>5、图片必须清晰、完整、方向正确，支持jpg、png、gif、bmp的图片格式，大小不超过2M。</p>
+                                    </div>
+
+                                    <div class="submit" style="text-align: center">
+
+                                        <if condition="$account['audit'] eq 2">
+                                            <span class="red">您已通过验证</span>
+                                            <else />
+                                            <input type="submit" class="btn btn-submit" value="上传"/>
+                                        </if>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<tc_include file='Public:footer'/>
+<script>
+
+Util.previewImg('license','license_z',false,300,300);
+
+function check_company(){
+
+    var company_name = $("input[name=company_name]").val();
+    var company_id = $("input[name=company_id]").val();
+    var license_z = $("#license_z").attr('src');
+
+    if(company_name==''){
+        alert("企业名称必须填写");
+        return false;
+    }
+    if(company_id==''){
+        alert("营业执照号码不能为空");
+        return false;
+    }
+    if(license_z=='__TMPL__Public/zp/images/preimg_09.png'){
+        alert("请上传营业执照");
+        return false;
+    }
+
+    return true;
+}
+
+
+
+</script>
+
+</body>
+</html>

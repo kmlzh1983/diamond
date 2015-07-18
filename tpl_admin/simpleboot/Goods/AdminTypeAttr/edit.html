@@ -1,0 +1,92 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	<div class="wrap jj">
+		<ul class="nav nav-tabs">
+			<li><a href="<php> echo Cookie('__forward__')</php>">商品类型</a></li>
+			<li><a href="{:U('AdminTypeAttr/index')}">属性列表</a></li>
+			<li class="active"><a href="#">编辑属性</a></li>
+		</ul>
+		<div class="common-form">
+			<form method="post" class="form-horizontal J_ajaxForm" action="{:U('AdminTypeAttr/edit_post')}">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label">名称:</label>
+						<div class="controls">
+							<input type="text" class="input" name="name" value="{$name}">
+							<span class="must_red">*</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">所属商品类型:</label>
+						<div class="controls">
+							<select name="type_id" id="type_id">
+		                        <volist name="types" id="vo">
+		                       		<option value="{$vo.id}">{$vo.name}</option>
+		                        </volist>
+	                        </select>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">能否进行检索:</label>
+						<div class="controls">
+							<input type="radio" checked="true" value="0" name="attr_index">
+							不需要检索
+							<input type="radio" value="1" name="attr_index">
+							关键字检索
+							<input type="radio" value="2" name="attr_index">
+							范围检索
+							<br>
+						  <span id="noticeindex" class="notice-span" style="color:#666;font-size:12px;" >不需要该属性成为检索商品条件的情况请选择不需要检索，需要该属性进行关键字检索商品时选择关键字检索，如果该属性检索时希望是指定某个范围时，选择范围检索。</span>
+					</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">属性是否可选:</label>
+						<div class="controls">
+							<input type="radio" checked="true" value="0" name="attr_type">
+							唯一属性
+							<input type="radio" value="1" name="attr_type">
+							单选属性
+							<input type="radio" value="2" name="attr_type">
+							复选属性
+							<br>
+							<span id="noticeAttrType" class="notice-span" style="color:#666;font-size:12px;">选择"单选/复选属性"时，可以对商品该属性设置多个值，同时还能对不同属性值指定不同的价格加价，用户购买商品时需要选定具体的属性值。选择"唯一属性"时，商品的该属性值只能设置一个值，用户只能查看该值。</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">属性值的录入方式:</label>
+						<div class="controls">
+							<div>
+								<input type="radio" name="input_type" value="0" onClick='$("#values").hide();'  />手工录入
+								&nbsp;&nbsp;<input  name="input_type" type="radio" value="1"  onClick='$("#values").show();' />从下面的列表中选择（一行代表一个可选值）
+								<input type="radio" value="2" name="input_type" onClick='$("#values").hide();'>多行文本框 
+								<!-- &nbsp;&nbsp;<input  name="input_type" type="radio" value="3" checked="checked" onClick='$("#values").show();' />多选项选择（一行代表一个多选值） -->
+	                        </div>
+	                        <div style="padding-top:12px;">
+	                       		<textarea name="values" id="values" cols="40" rows="7" >{$values}</textarea>
+	                        </div>
+						</div>
+					</div>
+									
+				</fieldset>
+				<div class="form-actions">
+					<button type="submit"
+						class="btn btn-primary btn_submit J_ajax_submit_btn">更新</button>
+					<a class="btn" href="<php> echo Cookie('__forward__')</php>">返回</a>
+				</div>
+            <input type="hidden" name="id" value="{$id}" />
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("#type_id").val("{$type_id}");
+		$("input[name='attr_index'][value={$attr_index}]").attr("checked",true);
+		$("input[name='attr_type'][value={$attr_type}]").attr("checked",true);
+		$("input[name='input_type'][value={$input_type}]").attr("checked",true);
+		$("input[name='status'][value={$status}]").attr("checked",true);
+		<if condition="$input_type != 1 ">
+		$("#values").hide();
+		</if>
+	</script>
+	<script src="__ROOT__/statics/js/common.js"></script>
+</body>
+</html>

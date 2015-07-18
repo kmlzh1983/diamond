@@ -1,0 +1,84 @@
+
+<style type="text/css">
+body,td {font-size:13px;}
+</style>
+
+<h1 align="center">订单信息</h1>
+<table width="100%" cellpadding="1">
+    <tr>
+        <td width="8%">购 货 人：</td>
+        <td>{$detail.user_login}<!-- 购货人姓名 --></td>
+        <td align="right">下单时间：</td><td>{$detail.add_time|date='Y-m-d H:i:s',###}<!-- 下订单时间 --></td>
+        <td align="right">支付方式：</td><td>{$detail.pay_name}<!-- 支付方式 --></td>
+        <td align="right">订单编号：</td><td>{$detail.order_sn}<!-- 订单号 --></td>
+    </tr>
+    <tr>
+        <td>付款时间：</td><td><if condition="$detail.pay_time neq 0">{$detail.pay_time|date='Y-m-d H:i:s',###}<else/>未付款</if></td><!-- 付款时间 -->
+        <td align="right">发货时间：</td><td><if condition="$detail.shipping_time neq 0">{$detail.shipping_time|date='Y-m-d H:i:s',###}<else/>未付款</if><!-- 发货时间 --></td>
+        <td align="right">配送方式：</td><td>{$detail.shipping_name}<!-- 配送方式 --></td>
+        <td align="right">发货单号：</td><td><if condition="$detail.shipping_sn neq ''">{$detail.shipping_sn}<else/>未发货</if><!-- 发货单号 --></td>
+    </tr>
+    <tr>
+        <td>收货地址：</td>
+        <td colspan="7">
+        [<php>foreach($detail['addr'] as $v){echo $v['name'];};</php>]&nbsp;{$detail.address}&nbsp;<!-- 收货人地址 -->
+        收货人：{$detail.consignee}&nbsp;<!-- 收货人姓名 -->
+        邮编：{$detail.zipcode}&nbsp;<!-- 邮政编码 -->
+        电话：{$detail.tel}&nbsp; <!-- 联系电话 -->
+        手机：{$detail.mobile}<!-- 手机号码 -->
+        </td>
+    </tr>
+</table>
+<table width="100%" border="1" style="border-collapse:collapse;border-color:#000;">
+    <tr align="center">
+        <td bgcolor="#cccccc">商品名称  <!-- 商品名称 --></td>
+        <td bgcolor="#cccccc">货号    <!-- 商品货号 --></td>
+        <td bgcolor="#cccccc">属性  <!-- 商品属性 --></td>
+        <td bgcolor="#cccccc">价格 <!-- 商品单价 --></td>
+        <td bgcolor="#cccccc">数量<!-- 商品数量 --></td>
+        <td bgcolor="#cccccc">小计    <!-- 价格小计 --></td>
+    </tr>
+    <!--  -->
+	<volist name='goods' id='vo'>
+    <tr>
+        <td>&nbsp;{$vo.goods_name}</td>
+        <td>&nbsp;{$vo.goods_sn}</td>
+        <td>{$vo.goods_attr}</td>
+        <td align="right">￥{$vo.goods_price}元&nbsp;<!-- 商品单价 --></td>
+        <td align="right">{$vo.goods_num}&nbsp;<!-- 商品数量 --></td>
+        <td align="right">￥{$vo['goods_price']*$vo['goods_num']}元&nbsp;<!-- 商品金额小计 --></td>
+    </tr>
+	</volist>
+    <!--  -->
+    <!--  -->
+    <tr>
+        <!-- 发票抬头和发票内容 -->
+        <td colspan="4">{$detail.receipt_content}</td>
+        <td colspan="2" align="right">商品总金额：￥{$detail.money_goods}元</td>
+    </tr>
+</table>
+<table width="100%" border="0">
+    <tr align="right">
+        <td> 商品总金额:{$detail.money_goods}元-折扣:{$detail.discount}元+配送费用:{$detail.shipping_fee}元+保价费用:{$detail.insure_fee}元+支付费用:{$detail.pay_fee}元+包装费用:{$detail.package_fee}元+贺卡费用{$detail.card_fee}元+发票税额{$detail.receipt_fee}元     
+		</td>
+    </tr>
+    <tr align="right">
+        <td>
+        <!-- 应付款金额 -->
+        = 应付款金额：￥{$detail.money_total}元        </td>
+    </tr>
+</table>
+<table width="100%" border="0">
+            <tr> <!-- 发货备注 -->
+        <td>发货备注： {$detail.message}</td>
+    </tr>
+        
+    <tr><!-- 网店名称, 网店地址, 网店URL以及联系电话 -->
+        <td>
+        HMV（http://www.test.com/）
+        地址：xxx&nbsp;&nbsp;电话：xzxxxxx        </td>
+    </tr>
+    <tr align="right"><!-- 订单操作员以及订单打印的日期 -->
+        <td>打印时间：{$info['time']}&nbsp;&nbsp;&nbsp;操作者：{$info['operator']}</td>
+    </tr>
+</table>

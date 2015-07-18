@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <title><if condition="$edit">
+        修改简历
+        <else/>
+        新增简历
+    </if></title>
+
+    <tc_include file='Public:head'/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+
+    <script src="__TMPL__Public/js/Utils.js"></script>
+
+</head>
+<body class="theme foot-white-bg">
+<tc_include file='Public:header'/>
+
+<div class="wrapper order-wrap">
+<div class="wrap">
+<div class="grid address-page">
+<tc_include file='User:My:leftside'/>
+<div class="grid-r">
+    <div class="order-main">
+        <div class="hd">
+            <div class="tips">
+                <if condition="$edit">
+                    修改简历
+                    <else/>
+                    新增简历
+                </if>
+            </div>
+        </div>
+        <div class="bd">
+            <div class="margin-out">
+                <div class="add-address data-item">
+                    <dl>
+                        <dt>*简历名称：</dt>
+                        <dd>
+                            <input type="text" name='title' placeholder="简历名称" value="{$resume['title']}" />
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>*姓名：</dt>
+                        <dd>
+                            <input type="text" name='name' placeholder="姓名" value="{$resume['name']}"/>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>*性别：</dt>
+                        <dd>
+
+                            <input type="radio" name="gender" value="1" id="boy"/> 男
+                            <input type="radio" name="gender" value="0" id="girl"/> 女
+                            <input type="hidden" value="{$resume.gender}" id="sex" name="sex" />
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>*现居住地：</dt>
+                        <dd>
+                            <div class="adress-box">
+                                <input type="text" placeholder="现居住地" name="live_place" value="{$resume['live_place']}"/>
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>*年龄：</dt>
+                        <dd>
+                            <input name='age' type="text" placeholder="年龄" value="{$resume['age']}" />
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>*手机号码：</dt>
+                        <dd>
+                            <input type="text" name='tel' placeholder="常用手机号码" value="{$resume['tel']}" />
+
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>邮箱地址：</dt>
+                        <dd>
+                            <input name='email' type="text" placeholder="常用邮箱" value="{$resume['email']}" />
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>身高：</dt>
+                        <dd>
+                            <input name='height' type="text" placeholder="身高" value="{$resume['height']}" />
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>学历：</dt>
+                        <dd>
+                            <select name="degree" id="degree">
+                                <option value="小学">小学</option>
+                                <option value="初中">初中</option>
+                                <option value="高中/专科">高中/专科</option>
+                                <option value="大专">大专</option>
+                                <option value="本科">本科</option>
+                                <option value="硕士">硕士</option>
+                                <option value="博士">博士</option>
+                                <option value="其他">其他</option>
+
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>*工作经验：</dt>
+                        <dd style="height: 250px;width: 600px;" class="f">
+                            <textarea name="resume_content" placeholder="请简要描述，字数不少于20，不超过300" id="resume_content" style="width: 600px;height: 250px;">{$resume['resume_content']}</textarea>
+                        </dd>
+                    </dl>
+                    <if condition='$edit'>
+                        <input type="hidden" name="rid" id="rid" value="{$resume['id']}"/>
+                        </if>
+                    <div class="c"></div>
+                    <div class="" style="margin-top: 25px;margin-left: 130px">
+                        <button id='aeresume' class="btn btn-lg">&nbsp;&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;&nbsp;</button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+    </div>
+</div>
+</div>
+
+
+<tc_include file='Public:footer'/>
+<script>
+
+    <if condition='$edit'>
+    var gender = "{$resume['gender']}";
+//    $("input[name=gender]").val(gender);
+//     $("input[name=gender]").val(gender);
+    if(gender==1){
+        $("#boy").attr('checked','checked');
+    }else{
+        $("#girl").attr('checked','checked');
+
+    }
+    var degree = "{$resume['degree']}";
+    $("select[name=degree]").val(degree);
+
+    </if>
+
+    $("#boy").click(function(){
+        $("#sex").val(1);
+    });
+    $("#girl").click(function(){
+        $("#sex").val(0);
+    });
+
+    $("#aeresume").click(function(){
+
+        var resume = {
+            title: $('input[name=title]').val(),
+            name:$("input[name=name]").val(),
+            gender:$("input[name=sex]").val(),
+            live_place:$("input[name=live_place]").val(),
+            age:$("input[name=age]").val(),
+            tel:$("input[name=tel]").val(),
+            email:$("input[name=email]").val(),
+            height:$("input[name=height]").val(),
+            degree:$("select[name=degree]").val(),
+            resume_content:$("textarea[name=resume_content]").val()
+        };
+
+        if(resume.title=='' || resume.title.length>60){
+            alert("简历名称不能为空或者超过60个字符");
+            return false;
+        }
+        if(resume.name=='' || resume.name.length>20){
+            alert("姓名不能为空或者超过20个字符");
+            return false;
+        }
+//        alert(resume.gender);return false;
+        if(resume.gender!=0 && resume.gender!=1){
+            alert("请选择性别");
+            return false;
+        }
+        if(resume.live_place==''){
+            alert("居住地不能为空");
+            return false;
+        }
+        if(resume.age =='' && isNaN(resume.age) && resume.age<=0){
+            alert("年龄不能为空，并且必须是正整数");
+            return false;
+        }
+        if(!Util.isPhoneNum(resume.tel)){
+            alert("手机号格式有误");
+            return false;
+        }
+        if(resume.email!=''){
+            if(!Util.isEmail(resume.email)){
+                alert("邮箱格式有误");
+                return false;
+            }
+        }
+        if(!Util.isNum(resume.height) && resume.height!=''){
+            alert('身高只能是数字');
+            return false;
+        }
+        if(resume.resume_content=='' && resume.resume_content.length<10 && resume.resume_content.length>300){
+            alert("工作经历必须填写，并且字数要在10到300个之间");
+            return false;
+        }
+        var rid = $("#rid").val();
+        if(rid){
+            resume.rid = rid;
+        }
+        $.ajax({
+            type:'post',
+            url:"{:U('user/resume/aeresume')}",
+            dataType:'json',
+            data: resume,
+            success:function(data){
+                alert(data.msg);
+                if(data.r==0){
+                    location.href="{:U('user/resume/index')}";
+                }
+            }
+        })
+    });
+
+
+
+
+</script>
+</body>
+</html>

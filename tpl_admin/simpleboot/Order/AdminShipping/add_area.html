@@ -1,0 +1,140 @@
+<admintpl file="header"/>
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+		<li><a href="{:U('AdminShipping/list_area',array(id=>$_GET['id']))}">区域列表</a></li>
+	    <li class="active"><a href="{:U('AdminShipping/add_area')}"  target="_self">添加区域</a></li>
+  </ul>
+  <form name="myform" id="myform" action="{:u('AdminShipping/do_add_area')}" method="post" class="form-horizontal J_ajaxForms" enctype="multipart/form-data">
+  <input type='hidden' name='shipping_id' value='{$Think.get.id}'>
+  <div class="tabbable">
+     <div class="tab-content">
+       <div class="tab-pane active" id="A">
+		  <table cellpadding="2" cellspacing="2" width="100%">
+			<tbody>
+				<tr>
+					<th style="width:80px;">名称:</th>
+						<td>
+							<input type="text" style="width:400px;" name="name" required value="" style="color:" class="input input_hd J_title_color" placeholder="请输入标题" onkeyup="strlen_verify(this, 'title_len', 160)" />
+              				<span class="must_red">*</span>
+						</td>
+					</tr>
+                    <tr>
+						<th>1000克以内费用:</td>
+						<td><input type="text" style="width:400px;" name="base_fee"  class='input'  value="" /></td>
+					</tr>
+					<tr>
+						<th>续重每1000克或其零数的费用:</th>
+						<td><input type="text" style="width:400px;" name="step_fee"  class='input'  value="" /></td>
+					</tr>
+                    <tr>
+						<th>免费额度:</th>
+						<td><input type="text" style="width:400px;" name="free_money"  class='input'  value="" /></td>
+					</tr>     
+                  
+			</tbody>
+		</table>
+		 <fieldset>
+				<legend>区域设置</legend>
+				<table class="nostyle">
+					<tbody>
+					<tr>
+					<td colspan="4" id="configtext">
+					</td>
+					</tr>
+					<tr>
+						
+				<td>
+				  <select name="country" id="selCountries" onchange="loadRegion('selCountries',1,'selProvinces','{:U('AdminShipping/getRegion')}');" size="10" style="width:120px">
+                    <option value="0" >请选择</option>
+                    
+                    <volist name="country" id="vo">
+                    <option value="{$vo.id}">{$vo.name}</option>
+                    </volist>
+                  </select>
+				</td>
+						<td>
+						<select name="Provinces" id="selProvinces" onchange="loadRegion('selProvinces',2,'selCities','{:U('AdminShipping/getRegion')}');" size="10" style="width:120px">
+                    <option value="0">请选择</option>
+                  </select>
+						</td>
+						<td>
+						<select name="Cities" id="selCities" size="10" style="width:120px">
+                    <option value="0">请选择</option>
+                  </select>
+						</td>
+						<td>
+						<input type="button" value="+" onClick="addconfig();" />
+						</td>
+					</tr>
+					
+					
+				</tbody></table>
+			</fieldset> 
+  		</div>	          
+	 </div>
+  </div>	          
+  
+  <div class="form-actions">
+        <button class="btn btn-primary btn_submit J_ajax_submit_btn"type="submit">提交</button>
+        <a class="btn" href="{:U('AdminShipping/list_area',array('id'=>$_GET['id']))}">返回</a>
+  </div>
+ </form>
+</div>
+<script type="text/javascript" src="__ROOT__/statics/js/common.js"></script>
+<script type="text/javascript" src="__ROOT__/statics/js/content_addtop.js"></script>
+<script type="text/javascript"> 
+
+function loadRegion(sel,type_id,selName,url){
+	//alert(jQuery("#"+sel).val());
+	jQuery("#"+selName+" option").each(function(){
+		jQuery(this).remove();
+	});
+	jQuery("<option value=0>-please select-</option>").appendTo(jQuery("#"+selName));
+	if(jQuery("#"+sel).val()==0){
+		return;
+	}
+	jQuery.getJSON(url,{pid:jQuery("#"+sel).val(),type:type_id},
+	function(data){
+		if(data){
+			jQuery.each(data,function(idx,item){
+				if(idx==0){
+					return true;//同countinue，返回false同break
+				}
+
+				//jQuery(new Option(item.name,item.id)).appendTo(jQuery("#"+selName));
+				jQuery("<option value="+item.id+">"+item.name+"</option>").appendTo(jQuery("#"+selName));
+
+			});
+		}else{
+			jQuery("<option value='0'>All Province</option>").appendTo(jQuery("#"+selName));
+		}
+
+	}
+
+	);
+}
+function addconfig(){
+	var city=jQuery("#selCities").val();
+	var Provinces=jQuery("#selProvinces").val();
+	var Countries=jQuery("#selCountries").val();
+	if(city>0){
+		var chboxtext="<input type='checkbox' name='config[]' value='"+city+"' checked />"+jQuery("#selCities").find('option:selected').text();
+	}
+	else{
+		if(Provinces>0){
+			var chboxtext="<input type='checkbox' name='config[]' value='"+Provinces+"' checked />"+jQuery("#selProvinces").find('option:selected').text();
+		}
+		else{
+			if(Countries>0){
+				var chboxtext="<input type='checkbox' name='config[]' value='"+Countries+"' checked />"+jQuery("#selCountries").find('option:selected').text();
+			}
+		}
+	}
+
+	jQuery("#configtext").append(chboxtext);
+}
+</script>
+</body>
+</html>

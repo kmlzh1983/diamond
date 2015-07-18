@@ -1,0 +1,35 @@
+.header{height: 230px;width: 100%;}
+.header .top{padding: 0 20px;background: #e1dddd;height: 35px;line-height: 35px;}
+.header .top,.header .top a{color: #ef1410;}
+.header .top ul li{margin-left: 20px;}
+.h-center,.nav{width: 980px;margin: 0 auto;}
+.header .publish a{display: inline-block;width: 146px;height: 40px;background: url("../images/publish.png") no-repeat;text-indent: -9999px;margin-top: 10px;}
+.h-center .search{width: 600px;height: 50px;margin: 10px 0 0 20px;}
+.h-center .search .search-control{width:460px;height: 32px;border: 2px solid #ef1410;border-radius: 6px;margin-right: 10px;padding-left:5px; }
+.h-center .search  .btn-search{background: url("../images/btn-serach.gif") no-repeat;width: 113px;height: 39px;border: none;text-indent: -9999px;}
+.nav{ height: 35px;line-height: 35px;background: url("../images/nav-bg.png") no-repeat;border: 0!important;}
+.nav a{color:#ef1410;display: inline-block;width: auto;float: left;width: 99px;text-align: center;}
+.nav li{width: 105px;height: 35px;line-height: 35px;text-align: center;}
+.nav li .shu{background: url("../images/nav-r.gif") no-repeat;width: 6px;height: 32px;display: inline-block;float: right}
+.main{width: 980px;margin: 10px auto;height: auto; }
+.job-list{margin-bottom: 20px;}
+.job-list  .item{width: 235px;height: 260px;margin: 10px 10px  0 0px;}
+.job-list .item .item-body,.job-list .item .item-bottom{border:1px solid #ef1410; }
+.job-list a{color: #333;}
+.job-list a:hover{background: #eee;color: red;}
+.job-list .item .item-body{padding: 40px 10px;}
+.job-list .item .item-bottom{padding: 5px;margin-top: 15px;height: 30px;line-height: 30px;}
+.job-list .item .item-body li{height: 30px;line-height: 30px;overflow: hidden}
+.job-list .item .item-bottom li{margin-right: 5px;}
+.footer{padding: 10px 0;color:#ef1410;border-top: 5px solid #ef1410 }
+.footer a{color:#ef1410; }
+.footer .f-nav{margin:10px 0;}
+.footer .f-nav ul li {width: 240px;text-align: center;}
+.footer .copy-right{padding: 10px 0;text-align: center;}
+.footer .copy-right p{height: 40px;line-height: 40px;}
+
+#main .position{height: 45px;line-height: 45px;border:1px solid #ccc;padding: 0 10px;}
+
+
+
+

@@ -1,0 +1,39 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	<div class="wrap jj">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('AdminType/index')}">商品类型</a></li>
+			<li><a href="{:U('AdminType/add')}">添加类型</a></li>
+		</ul>
+		<div class="common-form">
+			<form method="post" class="form-horizontal J_ajaxForm" action="{:U('AdminType/edit_post')}">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label">名称:</label>
+						<div class="controls">
+							<input type="text" class="input" name="name" value="{$name}">
+							<span class="must_red">*</span>
+							<input type="hidden" class="input" name="id" value="{$id}">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">属性分组:</label>
+						<div class="controls">
+							<textarea name="attr_group" rows="5" cols="57">{$attr_group}</textarea>
+							<div>每行一个商品属性组。排序也将按照自然顺序排序。</div>
+						</div>
+						
+					</div>
+					
+				</fieldset>
+				<div class="form-actions">
+					<button type="submit"
+						class="btn btn-primary btn_submit J_ajax_submit_btn">更新</button>
+					<a class="btn" href="{:U('AdminType/index')}">返回</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script src="__ROOT__/statics/js/common.js"></script>
+</body>
+</html>

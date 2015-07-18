@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <title>推广职位</title>
+
+    <tc_include file='Public:head'/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/job.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/datepicker.css"/>
+
+
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/js/skin/layer.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/js/skin/layer.ext.css"/>
+    <script src="__TMPL__Public/js/bootstrap-datepicker.js"></script>
+    <script src="__TMPL__Public/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body class="theme foot-white-bg">
+<tc_include file='Public:header'/>
+
+<div class="wrapper order-wrap">
+    <div class="wrap">
+        <div class="grid job-pos-page">
+            <tc_include file='User:My:leftside'/>
+            <div class="grid-r">
+                <div class="order-main">
+                    <div class="hd">
+                        <div class="tips">
+                            职位推广
+                        </div>
+                    </div>
+                    <div class="bd">
+                        <div class="margin-out job-pos-content">
+                            <div class="jobname">
+                                {$job.job_name}
+                            </div>
+                           <div class="pos-type">
+                               推广类型：<strong>{$type}</strong>
+                           </div>
+                            <div class="cost">
+                                <p>一天消费：<span id="costMoney">{$costMoney}</span>元</p>
+                            </div>
+                            <div class="days">
+                                <label>推广时段：</label><input type="text" id="start_time" name="start_time" placeholder="开始时间"/>
+                                <span>至</span>
+
+                                <input type="text" id="end_time" name="end_time" placeholder="结束时间"/>
+                            </div>
+                            <div class="myaccount">
+                                我的账户余额：<span id="mymoney">{$yue}</span>元
+                            </div>
+                            <div class="btn-area" style="text-align: center">
+                                <button class="btn btn-sm" id="jobPos">确定推广</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bd">
+                        {$show}
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<tc_include file='Public:footer'/>
+<script>
+    $(function(){
+        $('#start_time').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+        $('#end_time').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+        $("#jobPos").click(function () {
+           var start_time = $("#start_time").val();
+           var end_time = $("#end_time").val();
+            if(start_time=='' || end_time==''){
+                alert("请选择推广时间");
+                return false;
+            }
+            if(start_time>end_time) {
+                alert("开始时间不能大于结束时间");
+                return false;
+            }
+            var job_id = "{$job.id}";
+            var type = "{$Think.get.type}";
+            $.ajax({
+                type:"POST",
+                url:"{:U('user/jobs/job_pos')}",
+                dataType:'json',
+                data:{job_id:job_id,start_time:start_time,end_time:end_time,type:type},
+                success:function(data){
+                    alert(data.msg);
+                    if(data.r==0){
+                        location.href= "{:U('jobs/index')}";
+                    }
+                }
+            })
+        });
+    });
+
+    //下架
+    $(".offline_job").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"{:U('user/jobs/offline_job')}",
+            dataType:'json',
+            data:{id:$(this).attr('data-id')},
+            success:function(data){
+                alert(data.msg);
+                if(data.r==0){
+                    location.reload();
+                }
+            }
+
+        });
+    });
+
+
+
+
+</script>
+</body>
+</html>

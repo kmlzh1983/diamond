@@ -1,0 +1,117 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>招聘页列表</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <link rel="shortcut icon" href="http://localhost/zp/favicon.ico" />
+    <meta name="author" content="XG人才招聘系统" />
+    <meta name="copyright" content="XG人才招聘系统" />
+
+    <link href="__TMPL__Public/zp/css/index.css" rel="stylesheet" type="text/css" />
+    <link href="__TMPL__Public/zp/css/jobs.css" rel="stylesheet" type="text/css" />
+
+    <script src="__ROOT__/statics/js/Util.js"></script>
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- HTML5 shim for IE8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <![endif]-->
+
+
+    <link href="__ROOT__/statics/simpleboot/font-awesome/4.2.0/css/font-awesome.min.css"  rel="stylesheet" type="text/css">
+    <style>
+        .length_3{width: 180px;}
+        form .input-order{margin-bottom: 0px;padding:3px;width:40px;}
+    </style>
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="__ROOT__/statics/simpleboot/font-awesome/4.2.0/css/font-awesome-ie7.min.css">
+
+    <![endif]-->
+
+    <script type="text/javascript">
+        //全局变量
+        var GV = {
+            DIMAUB: "__ROOT__/",
+            JS_ROOT: "statics/js/",
+            TOKEN: ""
+        };
+    </script>
+    <!-- Le javascript
+        ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="__ROOT__/statics/js/jquery.js"></script>
+    <script src="__ROOT__/statics/js/wind.js"></script>
+    <script src="__ROOT__/statics/simpleboot/bootstrap/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+
+<div class="wrap">
+    <!--头部start-->
+    <tc_include file='Public:header'/>
+    <!--头部end-->
+    <!--主体部分-->
+    <div id="main" class="main">
+        <div class="position">
+            <span class="red">当前位置:</span>
+            <a href="">首页</a>
+            <span> >> </span>
+            家政招聘
+        </div>
+
+        <div class="job-list">
+            <volist name="jobs" id="v">
+                <a href="{:U('Jobs/detail')}&id={$v.id}">
+                    <div class="item fl">
+                        <div class="item-body">
+                            <ul>
+                                <li>岗位名称：{$v.job_name}</li>
+                                <li>工作内容：{$v.job_desc}</li>
+                                <li>工作时间：{$v.work_start_date|substr=5,5}</li>
+                                <li>岗位类别：{$v.catname}</li>
+                            </ul>
+                        </div>
+                        <div class="item-bottom">
+                            <ul class="flul">
+                                <li>地点：{$v.cityName}</li>
+                                <li>{$v.work_pay}元/小时</li>
+                                <li>联系</li>
+                                <div class="c"></div>
+                            </ul>
+
+                        </div>
+                        <div class="c"></div>
+                    </div>
+                </a>
+            </volist>
+
+            <div class="c"></div>
+        </div>
+        <div class="page">
+            {$show}
+        </div>
+    </div>
+    <!--主体部分end-->
+
+    <!--底部start-->
+    <tc_include file='Public:footer'/>
+    <!--底部end-->
+</div>
+<script>
+
+
+</script>
+<script src="__ROOT__/statics/js/common.js"></script>
+<script src="__TMPL__Public/zp/js/job.js" type="text/javascript" language="javascript"></script>
+</body>
+</html>

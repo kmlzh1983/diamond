@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>收藏夹</title>
+	<tc_include file='Public:head'/>
+	<link rel="stylesheet" type="__TMPL__Public/text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+		
+
+</head>
+<body class="theme foot-white-bg">	
+	<tc_include file='Public:header'/>
+	
+	<div class="wrapper order-wrap">
+		<div class="wrap">
+			<div class="grid favorites-page">
+				<tc_include file='User:My:leftside'/>
+				<div class="grid-r">
+					<div class="order-main">
+						<div class="hd">														
+							<div class="bd-search fl">
+								<input type="text" />
+								<button class="btn btn-sm">查找</button>
+							</div>
+						</div>
+						<div class="bd">
+							<div class="margin-out">
+								<table class="f-table">
+									<thead>
+										<tr>
+											<td>商品信息</td>
+											<td width="25%">单价</td>
+											<td width="25%">操作</td>
+										</tr>
+									</thead>
+									<tbody class="dot-line">
+										<tr>
+											<td colspan="3"></td>
+										</tr>
+										<tr>
+											<td colspan="3"></td>
+										</tr>
+									</tbody>
+									<volist name='fav' id='vo'>
+									<tbody>
+										<tr>
+											<td>
+												<a class="pic" target='_blank' href="{:U('goods/index/detail',array('id'=>$vo['gid']))}">
+													<img src="{$vo.smallimage}"/>
+												</a>
+												<div class="info">
+													<div class="info-hd">
+														{$vo.name}
+													</div>
+													<div class="">
+														郑秀文世界巡回演唱会郑秀文世界巡回演唱会秀文世界巡回演唱会
+													</div>
+												</div>
+											</td>
+											<td>
+												<span class="color">
+													HK$<if condition="$vo['pricespe'] neq 0">{$vo['pricespe']}<else/>{$vo['price']}</if>
+												</span>
+											</td>
+											<td>
+												<a href="{:U('order/cart/addCart',array('id'=>$vo['gid']))}" id='addCart' class="btn btn-sm">加入购物车</a>
+												<p><a href="{:U('user/my/delFav',array('id'=>$vo['id']))}" class='delFav'>取消收藏</a></p>
+											</td>
+										</tr>
+									</tbody>
+									<tbody class="dot-line">
+										<tr>
+											<td colspan="3"></td>
+										</tr>
+										<tr>
+											<td colspan="3"></td>
+										</tr>
+									</tbody>	
+									</volist>
+								</table>								
+							</div>							
+						</div>
+						<div class="bd">
+							<div class="item-page fr">							
+								{$page}
+							</div>
+						</div>
+					</div>
+					<div class="order-main">
+						<div class="hd">
+							根据您的浏览历史为您推荐
+						</div>
+						<div class="bd">							
+							<div class="order-hd">								
+								<div class="item-list">
+									<div class="item-grid">
+										<div class="clearfix">
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<div class="imgbox">
+													<a href="#"><img src="__TMPL__Public/images/page/search_item.jpg"/></a>
+													
+													<div class="price">										
+														<div class="price-bg">										
+														</div>
+														<span>HK$119.00</span>
+													</div>
+																						
+												</div>
+												<div class="item-bd">
+													<h4><a href="#">五月天</a></h4>
+													<div class="item-intr">
+														神的孩子都在跳舞
+													</div>
+													<a href="" class="list-car">
+														
+													</a>
+												</div>
+											</div>
+										</div>						
+									</div>
+									<div class="item-page">							
+										<ul class="pagination">
+											<li class="prev disabled"><a><</a></li>
+											<li class="active"><a>1</a></li>
+											<li><a>2</a></li>
+											<li><a>3</a></li>
+											<li><a>4</a></li>
+											<li><a>5</a></li>
+											<li><a>></a></li>
+									 	</ul>
+									 	<div class="form">
+									 		<span class="txt">到第</span>
+									 		<input class="input" type="text" name="" id="" value="" />
+									 		<span class="txt">页</span>
+									 		<span class="btn btn-sm submit">确定</span>
+									 	</div>
+									</div>
+								</div>
+							</div>				
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>		
+	</div>
+	
+<tc_include file='Public:footer'/>
+<script>
+$('a.delFav').click(function(){
+	var url = $(this).attr('href');
+	$.ajax({
+		url:url,
+		success:function(data){
+			if(data.status == 1){
+				alert(data.info);
+				location.reload();
+			}else{
+				alert(data.info);
+			}
+		}
+	})
+	return false;
+})
+
+$('a#addCart').click(function(){
+	var url = $(this).attr('href');
+	$.ajax({
+		url:url,
+		success:function(data){
+			if(data.status == 1){
+				alert(data.info);
+				location.reload();
+			}else{
+				alert(data.info);
+			}
+		}
+	})
+	return false;
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<div class="slider">
+	<div class="slider-hd">
+		<h4>熱門資訊</h4>
+	</div>
+	<div class="slider-bd">							
+		<ul class="items">							
+			<php>
+	        	$ads = sp_sql_ads("ad_content:news_left;field:*;limit:4;order:ad_id desc;");
+	        </php>
+	        <volist name="ads" id="vo">
+			<li>
+				<div class="imgbox">
+					<a href="<php>echo sp_ad_path( $vo['ad_cate'], $vo['ad_link'] )</php>" target="{$vo[ad_target]}">
+					<img src="{$vo.ad_imgurl}"/></a>
+				</div>
+				<div class="item-intr">
+					<a href="">{$vo.ad_name}</a>
+				</div>
+			</li>
+			</volist>
+											
+		</ul>
+	</div>
+</div>

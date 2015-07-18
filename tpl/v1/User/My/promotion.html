@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <title>推广消费</title>
+    <tc_include file='Public:head'/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+
+</head>
+<body class="theme foot-white-bg">
+<tc_include file='Public:header'/>
+
+<div class="wrapper order-wrap">
+    <div class="wrap">
+        <div class="grid address-page">
+            <tc_include file='User:My:leftside'/>
+            <div class="grid-r">
+                <div class="order-main">
+                    <div class="hd">
+                        <div class="tips">
+                            消费记录 <small>推广消费</small>
+                        </div>
+                    </div>
+                    <div class="bd">
+                        <div class="margin-out">
+
+                            <table class="f-table">
+                                <thead>
+                                <tr>
+                                    <td>日期</td>
+                                    <td>消费金额</td>
+                                    <td>消费用途</td>
+                                </tr>
+                                </thead>
+                                <volist name='list' id='vo'>
+                                    <tbody>
+                                    <tr>
+                                        <td>{$vo.addtime|date="Y-m-d H:i",###}</td>
+                                        <td>
+                                            <p>{$vo.cost} 元</p>
+                                        </td>
+                                        <td>
+                                            {$vo.alias}
+                                        </td>
+
+
+                                    </tr>
+                                    </tbody>
+
+                                </volist>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="bd">
+                        {$show}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<tc_include file='Public:footer'/>
+<script>
+
+    //查看简历
+    $(".viewResume").click(function () {
+        var rid = $(this).attr("data-id");
+        var url = "{:U('user/resume/aeresume?rid=')}"+rid;
+        location.href = url;
+    })
+
+
+
+    $(".delResume").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"{:U('user/resume/delResume')}",
+            dataType:'json',
+            data:{rid:$(this).attr('data-id')},
+            success:function(data){
+                alert(data.msg);
+                location.reload();
+            }
+
+        });
+    });
+
+    $(".refreshResume").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"{:U('user/resume/refreshResume')}",
+            dataType:'json',
+            data:{rid:$(this).attr('data-id')},
+            success:function(data){
+                alert(data.msg);
+                location.reload();
+            }
+
+        });
+    });
+
+</script>
+</body>
+</html>

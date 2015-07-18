@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <title>密码修改</title>
+
+    <tc_include file='Public:head'/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+
+</head>
+<body class="theme foot-white-bg">
+<tc_include file='Public:header'/>
+
+<div class="wrapper order-wrap">
+<div class="wrap">
+<div class="grid address-page">
+<tc_include file='User:My:leftside'/>
+<div class="grid-r">
+<div class="order-main">
+    <div class="hd">
+        <div class="tips">
+            修改密码
+        </div>
+    </div>
+    <div class="bd">
+        <div class="margin-out">
+            <div class="add-address data-item" style="width: 430px;margin: 0 auto">
+                <dl>
+                    <dt>*原&nbsp;密&nbsp;&nbsp;码：</dt>
+                    <dd>
+                        <input type="password" name='oldpwd' placeholder="请输入原密码" />
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>*新&nbsp;密&nbsp;&nbsp;码：</dt>
+                    <dd>
+                        <input type="password" name='newpwd' placeholder="请输入新密码" />
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>*确&nbsp;认&nbsp;密&nbsp;&nbsp;码：</dt>
+                    <dd>
+                        <input type="password" name='renewpwd' placeholder="确认新密码" />
+                    </dd>
+                </dl>
+                    <br />
+                <div class="">
+                    <button id='change_pwd' class="btn btn-lg">&nbsp;&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;&nbsp;</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="bd">
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<tc_include file='Public:footer'/>
+<script>
+    $("#change_pwd").click(function(){
+
+        var pwd_data = {
+            oldpwd:$('input[name=oldpwd]').val(),
+            newpwd:$('input[name=newpwd]').val(),
+            renewpwd:$('input[name=renewpwd]').val()
+        }
+        //console.log(pwd_data);
+        if(pwd_data.oldpwd=='' || pwd_data.oldpwd.length<6 || pwd_data.oldpwd.length>16){
+            alert("旧密码长度应该在6到16之间");
+            return false;
+        }
+        if(pwd_data.newpwd.length<6 || pwd_data.newpwd.length>16){
+            alert("新密码长度应该在6到16之间");
+            return false;
+        }
+        if(pwd_data.newpwd != pwd_data.renewpwd){
+            alert("两次密码不一致");
+            return false;
+        }
+
+
+        $.ajax({
+            type:'post',
+            url:"{:U('user/my/change_pwd')}",
+            dataType:"json",
+            data: pwd_data,
+            success:function(data){
+                if(data.r==-1){
+                    alert(data.msg);
+                }else{
+                    alert(data.msg);
+                    window.location.href="{:U('user/my/index')}"
+                }
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>

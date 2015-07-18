@@ -1,0 +1,170 @@
+<admintpl file="header"/>
+<style type="text/css">
+.col-auto {
+	overflow: hidden;
+	_zoom: 1;
+	_float: left;
+	border: 1px solid #c2d1d8;
+}
+.col-right {
+	float: right;
+	width: 210px;
+	overflow: hidden;
+	margin-left: 6px;
+	border: 1px solid #c2d1d8;
+}
+
+body fieldset {
+	border: 1px solid #D8D8D8;
+	padding: 10px;
+	background-color: #FFF;
+}
+body fieldset legend {
+    background-color: #F9F9F9;
+    border: 1px solid #D8D8D8;
+    font-weight: 700;
+    padding: 3px 8px;
+}
+
+.list-dot{ padding-bottom:10px}
+.list-dot li,.list-dot-othors li{padding:5px 0; border-bottom:1px dotted #c6dde0; font-family:"宋体"; color:#bbb; position:relative;_height:22px}
+.list-dot li span,.list-dot-othors li span{color:#004499}
+.list-dot li a.close span,.list-dot-othors li a.close span{display:none}
+.list-dot li a.close,.list-dot-othors li a.close{ background: url("__ROOT__/statics/images/cross.png") no-repeat left 3px; display:block; width:16px; height:16px;position: absolute;outline:none;right:5px; bottom:5px}
+.list-dot li a.close:hover,.list-dot-othors li a.close:hover{background-position: left -46px}
+.list-dot-othors li{float:left;width:24%;overflow:hidden;}
+</style>
+<link href="__ROOT__/statics/simpleboot/css/main.css" rel="stylesheet">
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+	 <li><a href="{:U('AdminOrder/index',array('term'=>empty($term['term_id'])?'':$term['term_id']))}"  target="_self">所有订单</a></li>
+     <li class="active"><a href="#">订单详情</a></li>
+  </ul>
+  <php>
+	$order_status=array("0"=>"未确认","1"=>'已确认','2'=>'<font color="red">取消</font>','3'=>'<font color="red">无效</font>','4'=>'<font color="red">退货</font>','5'=>'已分单','6'=>'部分分单');
+	$pay_status=array("0"=>"未付款","1"=>"已付款");
+	$shipping_status=array("0"=>"未发货","1"=>"配货中",'2'=>'已发货');
+  </php>
+    <div class="table_full">
+		<form name="myform" id="myform" action="{:u('AdminOrder/edit_goods_package')}" method="post" class="form-horizontal J_ajaxForms" enctype="multipart/form-data">
+		<table width="100%" class="table table-bordered" cellpadding="2" cellspacing="2">
+            <thead>
+                <tr>
+                    <th>商品名称[品牌] </th>
+                    <th>货号 </th>
+                    <th>价格 </th>
+                    <th>数量 </th>
+                    <th>属性 </th>
+                    <th>小计 </th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+	  		<volist name='rows' id='vo'>
+                <tr>
+                    <td>{$vo.goods_name}<input type='hidden' name='id[]' value='{$vo.id}'></td>
+                    <td>{$vo.goods_sn}</td>
+                    <td><input type='text' name='goods_price[]' value='{$vo.goods_price}'></td>
+                    <td><input type='text' name='goods_num[]' value='{$vo.goods_num}'></td>
+                    <td><input type='text' name='goods_attr[]' value='{$vo.goods_attr}'></td>
+                    <td>{$vo['goods_price']*$vo['goods_num']|number_format=###,2}</td>
+                    <td><a href='{:u('AdminOrder/edit_goods_del',array('id'=>$vo['id'],'order_id'=>$_GET['id']))}' class="J_ajax_del">删除</a></td>
+                </tr>
+			</volist>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><font style='font-weight:bold'>总计</font> {$total}</td>
+				<td>
+					<input type='hidden' value='{$Think.get.id}' name='order_id'>
+					<input type='submit' class="btn" value='更新商品'>
+				</td>
+			</tr>
+			<tr>
+		</tbody>
+	  </table>
+	  </form>
+	  <form action='{:u('AdminOrder/edit_goods',array('id'=>$order_id))}' method='post'>
+	  <input type='hidden' value='$Think.get.id' name='order_id'>
+	  <table width="100%" class="table table-J table-bordered" cellpadding="2" cellspacing="2">
+          <thead>
+          <tr>
+              <th colspan='2' style="text-align: center">按商品编号或商品货号搜索：<input type='text' value='{$keyword}' name='keyword'>&nbsp;
+                  <input class="btn" style="margin-bottom: 10px" type='submit' name='type' value='搜索'>&nbsp;
+                  <select onchange='selectGoods(this)'>
+                      <volist name='goods' id='vo'>
+                          <option <if condition="$i eq $_GET['search_display']">selected</if> value='{:u('AdminOrder/edit_goods',array('id'=>$order_id,'search_display'=>$i,'keyword'=>$keyword))}'>{$vo.name}</option>
+                      </volist>
+                  </select>
+              </th>
+
+          </tr>
+          </thead>
+		<tbody>
+
+			<tr>
+              <th width="30%">商品名称[品牌] </th>
+			  <td>{$goods[$search_display]['name']}
+				  <input type='hidden' name='goods_id' value="{$goods[$search_display]['id']}">	
+				  <input type='hidden' name='goods_name' value="{$goods[$search_display]['name']}">
+			  </td>
+			</tr>
+			<tr>
+			  <th>货号 </th>
+			  <td>{$goods[$search_display]["serial"]}
+					<input type='hidden' name='goods_sn' value='{$goods[$search_display]["serial"]}'>
+			  </td>
+			</tr>
+			<tr>
+			  <th>分类 </th>
+			  <td>{$goods[$search_display]['cate_id']}</td>
+			</tr>
+			<tr>
+			  <th>价格 </th>
+			  <td>
+				<if condition="$goods[$search_display]['id'] neq ''">
+				价格<input type='radio' name='goods_price' value='{$goods[$search_display]['price']}'>{$goods[$search_display]['price']}<br>
+				特价<input type='radio' checked name='goods_price' value='{$goods[$search_display]['pricespe']}'>{$goods[$search_display]['pricespe']}<br>
+				成本价<input type='radio' name='goods_price' value='{$goods[$search_display]['costprice']}'>{$goods[$search_display]['costprice']}<br>
+				自定义<input type='radio' name='goods_price' value='user_input'><input type='text' name='input_price'>
+				</if>
+			 </td>
+			</tr>
+			<tr>
+			  <th>属性 </th>
+			  <td><if condition="$goods[$search_display]['id'] neq ''">白色</if></td>
+			</tr>
+			<tr>
+			  <th>数量 </th>
+			  <td><input type='text' name='goods_num' value='1'></td>
+			</tr>
+			<tr>
+                <th> </th>
+				<td>
+					<input class="btn" name='type' type='submit' value='加入订单'>
+				</td>
+			</tr>
+		</tbody>
+	  </table>
+	  </form>
+    </div>
+
+    <div class="form-actions">
+        <!--<button class="btn btn-primary btn_submit J_ajax_submit_btn"type="submit">提交</button>-->
+        <a class="btn" href="{:U('AdminOrder/edit',array('id'=>$_GET['id']))}">返回</a>
+    </div>
+</div>
+<script type="text/javascript" src="__ROOT__/statics/js/common.js"></script>
+<script type="text/javascript" src="__ROOT__/statics/js/content_addtop.js"></script>
+<script type="text/javascript"> 
+function selectGoods(obj){
+	var url  = obj.options[obj.selectedIndex].value;
+	open(url , '_self');
+}
+</script>
+</body>
+</html>

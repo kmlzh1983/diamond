@@ -1,0 +1,797 @@
+<admintpl file="header"/>
+
+<style type="text/css">
+    .col-auto {
+        overflow: hidden;
+        _zoom: 1;
+        _float: left;
+        border: 1px solid #c2d1d8;
+    }
+
+    .col-right {
+        float: right;
+        width: 210px;
+        overflow: hidden;
+        margin-left: 6px;
+        border: 1px solid #c2d1d8;
+    }
+
+    body fieldset {
+        border: 1px solid #D8D8D8;
+        padding: 10px;
+        background-color: #FFF;
+    }
+
+    body fieldset legend {
+        background-color: #F9F9F9;
+        border: 1px solid #D8D8D8;
+        font-weight: 700;
+        padding: 3px 8px;
+    }
+
+    .list-dot {
+        padding-bottom: 10px
+    }
+
+    .list-dot li, .list-dot-othors li {
+        padding: 5px 0;
+        border-bottom: 1px dotted #c6dde0;
+        font-family: "宋体";
+        color: #bbb;
+        position: relative;
+        _height: 22px
+    }
+
+    .list-dot li span, .list-dot-othors li span {
+        color: #004499
+    }
+
+    .list-dot li a.close span, .list-dot-othors li a.close span {
+        display: none
+    }
+
+    .list-dot li a.close, .list-dot-othors li a.close {
+        background: url("__ROOT__/statics/images/cross.png") no-repeat left 3px;
+        display: block;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        outline: none;
+        right: 5px;
+        bottom: 5px
+    }
+
+    .list-dot li a.close:hover, .list-dot-othors li a.close:hover {
+        background-position: left -46px
+    }
+
+    .list-dot-othors li {
+        float: left;
+        width: 24%;
+        overflow: hidden;
+    }
+    dl.dl-horizontal{
+        margin-bottom: 10px;
+    }
+    a.accordion-toggle span{
+        display:inline-block;
+        *zoom: 1;
+        width: 12px;
+    }
+    .accordion-toggle>.btn-edit{
+        float: right;
+    }
+</style>
+<link href="__ROOT__/statics/simpleboot/css/main.css" rel="stylesheet">
+</head>
+<body class="J_scroll_fixed">
+
+<div class="wrap J_check_wrap">
+<ul class="nav nav-tabs">
+    <li><a href="{:U('AdminOrder/index',array('term'=>empty($term['term_id'])?'':$term['term_id']))}" target="_self">所有订单</a>
+    </li>
+    <li class="active"><a href="#">订单详情</a></li>
+</ul>
+<form name="myform" id="myform" action="{:u('AdminOrder/admin_order')}" method="post"
+      class="form-horizontal J_ajaxForms" enctype="multipart/form-data">
+<input type='hidden' name='order_id' value='{$Think.get.id}'>
+<php>
+    $order_status=array("0"=>"未确认","1"=>'已确认','2'=>'<font color="red">取消</font>','3'=>'<font color="red">无效</font>','4'=>'<font
+        color="red">退货</font>','5'=>'已分单','6'=>'部分分单');
+    $pay_status=array("0"=>"未付款","1"=>"已付款");
+    $shipping_status=array("0"=>"未发货","1"=>"配货中",'2'=>'已发货');
+</php>
+<div>
+    <div class="table_full">
+        <div style='text-align:center'>
+            <input type='button' onclick="location.href='{:u('AdminOrder/edit',array('id'=>$prev['order_id']))}'"
+            <if condition="$prev.order_id eq ''">disabled</if>
+            value='上一个订单'><input type='button'
+            <if condition="$next.order_id eq ''">disabled</if>
+            onclick="location.href='{:u('AdminOrder/edit',array('id'=>$next['order_id']))}'" value='下一个订单'><input
+                    type='button'
+                    onclick="window.open('{:u('AdminOrder/print_order',array('order_id'=>$detail['order_id']))}');"
+                    value='打印订单'></div>
+
+
+            <div class="accordion" id="accordion1">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                             <span style="font-size:12px;">▼</span>基本信息
+                         </a>
+                    </div>
+                    <div id="collapseOne" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div class="container-fluid">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <dl class="dl-horizontal">
+                                            <dt>订单号</dt>
+                                            <dd>{$detail.order_sn}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>购货人</dt>
+                                            <dd>{$detail.user}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>支付方式</dt>
+                                            <dd>
+                                                {$detail.pay_name}
+                                                <button data-title="支付方式" data-href="{:u('AdminOrder/edit_pay',array('id' => $detail['order_id']))}" role="button" class="btn btn-primary btn-small btn-edit">编辑</button>
+                                                <!--<button class="btn btn-primary btn-small" onclick="javascript:location.href='{:u('AdminOrder/edit_pay',array('id' => $detail['order_id']))}';return false;">-->
+                                                    <!--编辑-->
+                                                <!--</button>-->
+                                            </dd>
+                                        </dl>
+
+
+
+                                        <dl class="dl-horizontal">
+                                            <dt>配送方式</dt>
+                                            <dd>
+                                                {$detail.shipping_name}
+                                                <!--<button class="btn btn-primary btn-small"-->
+                                                        <!--onclick="javascript:location.href='{:u('AdminOrder/edit_express',array('id' => $detail['order_id']))}';return false;">-->
+                                                    <!--编辑-->
+                                                <!--</button>-->
+                                                <button data-title="配送方式" data-href="{:u('AdminOrder/edit_express',array('id' => $detail['order_id']))}" role="button" class="btn btn-primary btn-small btn-edit">编辑</button>
+                                            </dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>发货单号</dt>
+                                            <dd>
+                                                <if condition="$detail['shipping_status'] eq 0">未发货
+                                                    <else/>
+                                                    {$detail.shipping_sn}
+                                                </if>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="span6">
+                                        <dl class="dl-horizontal">
+                                            <dt>订单状态</dt>
+                                            <dd>
+                                                {$order_status[$detail['order_status']]},{$pay_status[$detail['pay_status']]},{$shipping_status[$detail['shipping_status']]}
+                                            </dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>下单时间</dt>
+                                            <dd>
+                                                {$detail.add_time|date='Y-m-d H:i:s',###}
+                                            </dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>付款时间</dt>
+                                            <dd>
+                                                <if condition="$detail.pay_status eq 0">未付款
+                                                    <else/>
+                                                    {$detail.pay_time|date='Y-m-d H:i:s',###}
+                                                </if>
+                                            </dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>发货时间</dt>
+                                            <dd>
+                                                <if condition="$detail['shipping_status'] eq 0">未发货
+                                                    <else/>
+                                                    {$detail.shipping_time|date='Y-m-d H:i:s',###}
+                                                </if>
+                                            </dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>订单来源</dt>
+                                            <dd>
+                                                {$detail.ref}
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordion2">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                            <span style="font-size:12px;">▼</span>其他信息
+                            <!--<button class="btn btn-primary btn-small" style="float: right" onclick="javascript:location.href='{:u('AdminOrder/edit_other',array('id' => $detail['order_id']))}';return false;">-->
+                                <!--编辑-->
+                            <!--</button>-->
+                            <button data-title="其他信息" data-href="{:u('AdminOrder/edit_other',array('id' => $detail['order_id']))}" role="button" class="btn btn-primary btn-small btn-edit">编辑</button>
+                        </a>
+                    </div>
+                    <div id="collapseTwo" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div class="container-fluid">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <dl class="dl-horizontal">
+                                            <dt>发票类型</dt>
+                                            <dd>{$detail.receipt_type}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>发票抬头</dt>
+                                            <dd>{$detail.receipt_head}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>客户给商家的留言</dt>
+                                            <dd>{$detail.message}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>缺货处理</dt>
+                                            <dd>{$detail['how_oos']}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>包装</dt>
+                                            <dd>{$detail.package_name}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>贺卡祝福语</dt>
+                                            <dd>{$detail.card_message}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>商家给客户的留言</dt>
+                                            <dd>{$detail.message_admin}</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="span6">
+                                        <dl class="dl-horizontal">
+                                            <dt></dt>
+                                            <dd></dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>发票内容</dt>
+                                            <dd>{$detail.receipt_content}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt></dt>
+                                            <dd></dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt></dt>
+                                            <dd></dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>贺卡</dt>
+                                            <dd>{$detail.card_name}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt></dt>
+                                            <dd></dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt></dt>
+                                            <dd></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordion3">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
+                            <span style="font-size:12px;">▼</span>收货人信息
+                            <!--<button class="btn btn-primary btn-small" style="float: right" onclick="javascript:location.href='{:u('AdminOrder/edit_address',array('id' => $detail['order_id']))}';return false;">-->
+                                <!--编辑-->
+                            <!--</button>-->
+                            <button data-title="收货人信息" data-href="{:u('AdminOrder/edit_address',array('id' => $detail['order_id']))}" role="button" class="btn btn-primary btn-small btn-edit">编辑</button>
+                        </a>
+                    </div>
+                    <div id="collapseThree" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div class="container-fluid">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <dl class="dl-horizontal">
+                                            <dt>收货人</dt>
+                                            <dd>{$detail.consignee}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>地址</dt>
+                                            <dd>
+                                                <volist name='detail["addr"]' id='vo'>
+												{$vo.name}
+												</volist>
+												{$detail.address}
+                                            </dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>电话</dt>
+                                            <dd>{$detail.tel}</dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>标志性建筑物</dt>
+                                            <dd></dd>
+                                        </dl>
+                                    </div>
+                                    <div class="span6">
+                                        <dl class="dl-horizontal">
+                                            <dt>电子邮件</dt>
+                                            <dd>
+                                                {$detail.email}
+                                            </dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>邮编</dt>
+                                            <dd>
+                                                {$detail.zipcode}
+                                            </dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>手机</dt>
+                                            <dd>
+                                                {$detail.mobile}
+                                            </dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>最佳送货时间</dt>
+                                            <dd>
+                                                {$detail.best_time}
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordion4">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour">
+                            <span style="font-size:12px;">▼</span>商品信息
+                            <button class="btn btn-primary btn-small" style="float: right"
+                                    onclick="javascript:location.href='{:u('AdminOrder/edit_goods',array('id' => $detail['order_id']))}';return false;">
+                                编辑
+                            </button>
+                            <!--<button data-title="商品信息" data-href="{:u('AdminOrder/edit_goods',array('id' => $detail['order_id']))}" role="button" class="btn btn-primary btn-small btn-edit">编辑</button>-->
+                        </a>
+                    </div>
+                    <div id="collapseFour" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div class="container-fluid" style="text-align: center">
+                                <div class="row-fluid">
+                                    <div class="span3">
+                                        <b>商品名称[品牌]</b>
+                                    </div>
+                                    <div class="span3">
+                                        <b>货号</b>
+                                    </div>
+                                    <div class="span1">
+                                        <b>价格</b>
+                                    </div>
+                                    <div class="span1">
+                                        <b>数量</b>
+                                    </div>
+                                    <div class="span1">
+                                        <b>属性</b>
+                                    </div>
+                                    <div class="span1">
+                                        <b>库存</b>
+                                    </div>
+                                    <div class="span2">
+                                        <b>小计</b>
+                                    </div>
+                                </div>
+                                <volist name='package' id='vo'>
+                                    <div class="row-fluid">
+                                        <div class="span3">{$vo.goods_name}</div>
+                                        <div class="span3">{$vo.goods_sn}</div>
+                                        <div class="span1">{$vo.goods_price}</div>
+                                        <div class="span1">{$vo.goods_num}</div>
+                                        <div class="span1">{$vo.goods_attr}</div>
+                                        <div class="span1">待定</div>
+                                        <div class="span2">{$vo['goods_price']*$vo['goods_num']|number_format=###,2}</div>
+                                    </div>
+                                </volist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordion5">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#collapseFive">
+                            <span style="font-size:12px;">▼</span>费用信息
+                            <!--<button class="btn btn-primary btn-small" style="float: right"-->
+                                    <!--onclick="javascript:location.href='{:u('AdminOrder/edit_fee',array('id' => $detail['order_id']))}';return false;">-->
+                                <!--编辑-->
+                            <!--</button>-->
+                            <button data-title="费用信息" data-href="{:u('AdminOrder/edit_fee',array('id' => $detail['order_id']))}" role="button" class="btn btn-primary btn-small btn-edit">编辑</button>
+                        </a>
+                    </div>
+                    <div id="collapseFive" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div class="container-fluid" style="text-align: center">
+                                <div class="row-fluid">
+                                    <div class="span12" style="text-align: right">
+                                        商品总金额:{$detail.money_goods}元-折扣:{$detail.discount}元-积分抵扣:{$detail['paid_points']/C('POINTS_TO_HK')|number_format='2'}元-电子优惠码:{$detail.paid_coupon|number_format='2'}元+配送费用:{$detail.shipping_fee}元+保价费用:{$detail.insure_fee}元+支付费用:{$detail.pay_fee}元+包装费用:{$detail.package_fee}元+贺卡费用{$detail.card_fee}元+发票税额{$detail.receipt_fee}元
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="span12" style="text-align: right">
+                                        =订单总金额:{$detail['money_total']-$detail['discount']-$detail['paid_points']/C('POINTS_TO_HK')-$detail['paid_coupon']|number_format='2'}元
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordion6">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion6" href="#collapseSix">
+                            <span style="font-size:12px;">▼</span>操作信息
+                        </a>
+                    </div>
+                    <div id="collapseSix" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div class="container-fluid">
+                                <div class="row-fluid">
+                                    <div class="span4" style="text-align: right">
+                                        操作备注:
+                                    </div>
+                                    <div class="span8">
+                                        <textarea rows="3" style="width: 50%"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row-fluid" style="margin-top: 10px">
+                                    <div class="span4" style="text-align: right">
+                                        当前可执行操作:
+                                    </div>
+                                    <div class="span8">
+                                        <if condition='($detail.order_status eq 0) or ($detail.order_status eq 2) or ($detail.order_status eq 3)'>
+                                            <input class="btn" type='submit' value='确认' onclick="$('form[name=myform]').append('<input type=\'hidden\' name=\'action\' value=\'1\'>')"></if>
+                                        <if condition='($detail.order_status elt 1) && ($detail.shipping_status elt 1)'><input class="btn" class="btn"
+                                                type='submit'
+                                                value='取消' onclick="$('form[name=myform]').append('<input type=\'hidden\' name=\'action\' value=\'2\'>')"></if>
+                                        <if condition='$detail.order_status elt 2 && ($detail.shipping_status eq 0)'><input class="btn"
+                                                type='submit'
+                                                value='无效' onclick="$('form[name=myform]').append('<input type=\'hidden\' name=\'action\' value=\'3\'>')"></if>
+                                        <if condition='($detail.order_status eq 1) && ($detail.pay_status eq 0)'><input class="btn"
+                                                type='submit'
+                                                value='付款' onclick="$('form[name=myform]').append('<input type=\'hidden\' name=\'action\' value=\'4\'>')"></if>
+                                        <if condition='($detail.shipping_status lt 2) && ($detail.pay_status eq 1)'><input class="btn"
+                                                type='submit'
+                                                value='未付款' onclick="$('form[name=myform]').append('<input type=\'hidden\' name=\'action\' value=\'5\'>')"></if>
+                                        <if condition='($detail.shipping_status lt 2) && ($detail.pay_status eq 1)'><input class="btn"
+                                                type='submit'
+                                                value='去发货' onclick="$('form[name=myform]').append('<input type=\'hidden\' name=\'action\' value=\'6\'>')"></if>
+                                        <if condition='$detail.shipping_status eq 2'><input class="btn" type='submit' value='退货'>
+                                        </if>
+                                        <if condition='$detail.shipping_status eq 2'><input class="btn" type='submit' value='售后'>
+                                        </if>
+                                        <if condition='($detail.order_status eq 2) or ($detail.order_status eq 3)'><input class="btn"
+                                                type='submit'
+                                                value='移除' onclick="$('form[name=myform]').append('<input type=\'hidden\' name=\'action\' value=\'9\'>')">
+                                        </if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="accordion7">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion7" href="#collapseSeven">
+                            <span style="font-size:12px;">▼</span>操作信息
+                        </a>
+                    </div>
+                    <div id="collapseSeven" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div class="container-fluid" style="text-align: center">
+                                <div class="row-fluid" style="font-weight: bold">
+                                    <div class="span1">
+                                        操作者
+                                    </div>
+                                    <div class="span3">
+                                        操作时间
+                                    </div>
+                                    <div class="span1">
+                                        订单状态
+                                    </div>
+                                    <div class="span1">
+                                        付款状态
+                                    </div>
+                                    <div class="span1">
+                                        发货状态
+                                    </div>
+                                    <div class="span5">
+                                        备注
+                                    </div>
+                                </div>
+                                <volist name='action' id='vo'>
+                                    <div class="row-fluid">
+                                        <div class="span1">{$vo.action_user}</div>
+                                        <div class="span3">{$vo.log_time|date='Y-m-d H:i:s',###}</div>
+                                        <div class="span1">{$order_status[$vo['order_status']]}</div>
+                                        <div class="span1">{$pay_status[$vo['pay_status']]}</div>
+                                        <div class="span1">{$shipping_status[$vo['shipping_status']]}</div>
+                                        <div class="span5">{$vo.action_note}</div>
+                                    </div>
+                                </volist>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</div>
+<div class="form-actions">
+    <a class="btn" href="{:U('AdminOrder/index')}">返回</a>
+</div>
+</form>
+</div>
+
+<!--弹窗-->
+
+    <div id="myModal" class="modal hide fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false" style="height:80%">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 id="myModalLabel">Modal header</h4>
+        </div>
+        <div class="modal-body" style="overflow-y:hidden;max-height: none">
+            <iframe class="modal-iframe" src="" frameborder="0" style="width: 100%;height: 100%;overflow:hidden;"></iframe>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary btn-save">提交</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">返回</button>
+
+        </div>
+    </div>
+
+<script type="text/javascript" src="__ROOT__/statics/js/common.js"></script>
+<script type="text/javascript" src="__ROOT__/statics/js/content_addtop.js"></script>
+<script type="text/javascript">
+
+    $('a.accordion-toggle').click(function(){
+        if($(this).find('span').text()=='▼'){
+            $(this).find('span').text('✚');
+        }else{
+            $(this).children('span').text('▼');
+        }
+    });
+
+    $('.btn-edit').click(function(e){
+       var url=$(this).attr('data-href');
+       var title=$(this).attr('data-title')
+       $('#myModal').modal();
+       $('#myModal').find('iframe').attr('src',url);
+       $('#myModal').find('#myModalLabel').text(title);
+       var Mheight=$($('.modal-iframe').get(0).contentWindow.document.body).height ();
+       var Pheight=$('#myModal').height();
+       $('.modal-body').height(Pheight-152);
+        window.onresize=function(){
+            var Pheight=$('#myModal').height();
+            $('.modal-body').height(Pheight-152);
+        };
+       return false;
+    });
+
+    $('.btn-save').click(function(e){
+        e.preventDefault();
+        var $this=$(this);
+        var form=$($('.modal-iframe').get(0).contentWindow.document.body).find('.J_ajax_submit_btn').parents('form');
+        $.ajax({
+            url:form.attr('action'),
+            data:form.serialize(),
+            type:"POST",
+            success:function(data){
+                if(data.status==1){
+                    Wind.use('artDialog', function () {
+                        art.dialog({
+                            title: '提示',
+                            icon: 'succeed',
+                            content:data.info,
+                            close: function () {
+                                $this.parents('#myModal').modal('hide');
+                                return true;
+                            },
+                            ok: function () {
+                            },
+                            cancelVal: '关闭',
+                            cancel: true
+                        });
+                    });
+                }else{
+                    Wind.use('artDialog', function () {
+                        art.dialog({
+                            title: '提示',
+                            icon: 'error',
+                            content:data.info,
+                            close: function () {
+                                return true;
+                            },
+                            ok: function () {
+                            },
+                            cancelVal: '关闭',
+                            cancel: true
+                        });
+                    });
+                }
+            }
+        });
+    });
+
+    $(function () {
+        //setInterval(function(){public_lock_renewal();}, 10000);
+        $(".J_ajax_close_btn").on('click', function (e) {
+            e.preventDefault();
+            Wind.use("artDialog", function () {
+                art.dialog({
+                    id: "question",
+                    icon: "question",
+                    fixed: true,
+                    lock: true,
+                    background: "#CCCCCC",
+                    opacity: 0,
+                    content: "您确定需要关闭当前页面嘛？",
+                    ok: function () {
+                        setCookie("refersh_time", 1);
+                        window.close();
+                        return true;
+                    }
+                });
+            });
+        });
+        /////---------------------
+        Wind.use('validate', 'ajaxForm', 'artDialog', function () {
+            //javascript
+
+            //编辑器
+            editorcontent = new baidu.editor.ui.Editor();
+            editorcontent.render('content');
+            try {
+                editorcontent.sync();
+            } catch (err) {
+            }
+            ;
+            //增加编辑器验证规则
+            jQuery.validator.addMethod('editorcontent', function () {
+                try {
+                    editorcontent.sync();
+                } catch (err) {
+                }
+                ;
+                return editorcontent.hasContents();
+            });
+            var form = $('form.J_ajaxForms');
+            //ie处理placeholder提交问题
+            if ($.browser.msie) {
+                form.find('[placeholder]').each(function () {
+                    var input = $(this);
+                    if (input.val() == input.attr('placeholder')) {
+                        input.val('');
+                    }
+                });
+            }
+            //表单验证开始
+            form.validate({
+                //是否在获取焦点时验证
+                onfocusout: false,
+                //是否在敲击键盘时验证
+                onkeyup: false,
+                //当鼠标掉级时验证
+                onclick: false,
+                //验证错误
+                showErrors: function (errorMap, errorArr) {
+                    //errorMap {'name':'错误信息'}
+                    //errorArr [{'message':'错误信息',element:({})}]
+                    try {
+                        $(errorArr[0].element).focus();
+                        art.dialog({
+                            id: 'error',
+                            icon: 'error',
+                            lock: true,
+                            fixed: true,
+                            background: "#CCCCCC",
+                            opacity: 0,
+                            content: errorArr[0].message,
+                            cancelVal: '确定',
+                            cancel: function () {
+                                $(errorArr[0].element).focus();
+                            }
+                        });
+                    } catch (err) {
+                    }
+                },
+                //验证规则
+                rules: {'post[goods_title]': {required: 1}, 'post[goods_content]': {editorcontent: true}},
+                //验证未通过提示消息
+                messages: {'post[goods_title]': {required: '请输入标题'}, 'post[goods_content]': {editorcontent: '内容不能为空'}},
+                //给未通过验证的元素加效果,闪烁等
+                highlight: false,
+                //是否在获取焦点时验证
+                onfocusout: false,
+                //验证通过，提交表单
+                submitHandler: function (forms) {
+                    $(forms).ajaxSubmit({
+                        url: form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+                        dataType: 'json',
+                        beforeSubmit: function (arr, $form, options) {
+
+                        },
+                        success: function (data, statusText, xhr, $form) {
+                            if (data.status) {
+                                setCookie("refersh_time", 1);
+                                //添加成功
+                                Wind.use("artDialog", function () {
+                                    art.dialog({
+                                        id: "succeed",
+                                        icon: "succeed",
+                                        fixed: true,
+                                        lock: true,
+                                        background: "#CCCCCC",
+                                        opacity: 0,
+                                        content: data.info,
+                                        button: [
+                                            {
+                                                name: '继续编辑？',
+                                                callback: function () {
+                                                    //reloadPage(window);
+                                                    return true;
+                                                },
+                                                focus: true
+                                            },
+                                            {
+                                                name: '返回列表页',
+                                                callback: function () {
+                                                    location = '{:U('
+                                                    AdminGoods / index
+                                                    ')}';
+                                                    return true;
+                                                }
+                                            }
+                                        ]
+                                    });
+                                });
+                            } else {
+                                isalert(data.info);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        ////-------------------------
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <title>查看简历</title>
+
+    <tc_include file='Public:head'/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/js/skin/layer.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/js/skin/layer.ext.css"/>
+
+    <script src="__TMPL__Public/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        .view-resume{padding: 20px ;}
+        .view-resume p{height: 40px;border-bottom: 1px dashed #ccc;line-height: 40px;}
+    </style>
+
+</head>
+<body class="theme foot-white-bg">
+<tc_include file='Public:header'/>
+
+<div class="wrapper order-wrap">
+    <div class="wrap">
+        <div class="grid address-page">
+            <tc_include file='User:My:leftside'/>
+            <div class="grid-r">
+                <div class="order-main">
+                    <div class="hd">
+                        <div class="tips">
+                            {$resume.title}
+                        </div>
+                    </div>
+                    <div class="bd">
+                        <div class="margin-out">
+                            <div class="view-resume">
+                                <p class="resume-title"><span>简历名称：</span>{$resume.title}</p>
+                                <p class="resume-name"><span>姓名：</span>{$resume.name}</p>
+                                <p class="resume-gender"><span>性别：</span><if condition="$resume.gender">男
+                                <else />女</if></p>
+
+                                <p class="resume-age"><span>年龄：</span>{$resume.age}</p>
+                                <p class="resume-tel"><span>电话：</span>{$resume.tel}</p>
+                                <p class="resume-degree"><span>学历：</span>{$resume.degree}</p>
+                                <p class="resume-live_place"><span>现居住地：</span>{$resume.live_place}</p>
+                                <p class="resume-email"><span>邮箱：</span>{$resume.email|default='无'}</p>
+                                <p class="resume-height"><span>身高：</span>{$resume.height|default='无'}</p>
+                                <p class="resume-refreshtime"><span>刷新时间：</span>{$resume.refreshtime|date="Y-m-d",###}</p>
+                                <p class="resume-resume_content"><span>工作经验：</span>
+                                    <br />
+                                    </p>
+                                <div style="margin-top: 10px;text-indent: 28px;">
+                                    {$resume.resume_content}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bd">
+                        {$show}
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<tc_include file='Public:footer'/>
+<script>
+
+    //编辑工作
+    $(".editJob").click(function () {
+        var rid = $(this).attr("data-id");
+        var url = "{:U('user/jobs/aejobs?jid=')}"+rid;
+        location.href = url;
+    })
+
+
+    //下架
+    $(".offline_job").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"{:U('user/jobs/offline_job')}",
+            dataType:'json',
+            data:{id:$(this).attr('data-id')},
+            success:function(data){
+                alert(data.msg);
+                if(data.r==0){
+                    location.reload();
+                }
+            }
+
+        });
+    });
+
+    $(".refreshJob").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"{:U('user/jobs/refreshJob')}",
+            dataType:'json',
+            data:{id:$(this).attr('data-id')},
+            success:function(data){
+
+                alert(data.msg);
+                if(data.r==0)
+                    location.reload();
+            }
+
+        });
+    });
+
+    //调用layer
+    $(".recommendJob").click(function () {
+        layer.open({
+            type: 1,
+            title:'置顶职位',
+            shade:['0.1'],
+            move:false,
+            skin: 'layui-layer-rim',
+            area: ['900px', '460px'],
+            shadeClose: true, //点击遮罩关闭
+            content: $('#jobPos')
+        });
+    });
+
+
+</script>
+</body>
+</html>

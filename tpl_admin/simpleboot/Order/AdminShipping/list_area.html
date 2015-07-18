@@ -1,0 +1,103 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+     <li class="active"><a href="javascript:;">区域列表</a></li>
+     <li><a href="{:U('AdminShipping/add_area',array('id'=>$_GET['id']))}"  target="_self">添加区域</a></li>
+  </ul>
+  <form class="J_ajaxForm" action="" method="post">
+    <div class="table_list">
+      <table width="100%" class="table table-hover">
+        <thead>
+	          <tr>
+	            <th width="15"><label><input type="checkbox" class="J_check_all" data-direction="x" data-checklist="J_check_x"></label></th>
+                <th>名称</th>
+				<th>区域</th>
+	            <th>运费</th>
+	            <th>续重每1000克</th>
+	            <th  width="30">免费额度</th>
+                <th>操作</th>
+	          </tr>
+        </thead>
+        	<volist name="rows" id="vo">
+	        	<tr>
+		            <td><input type="checkbox" class="J_check" data-yid="J_check_y" data-xid="J_check_x" name="ids[]" value="{$vo.id}" ></td>
+		            <td>{$vo.name}</td>
+		            <td>
+						<volist name="vo['addr']" id='addr'>
+							{$addr.name}&nbsp;&nbsp;
+						</volist>
+					</td>
+		            <td>{$vo.base_fee}</td>
+		            <td>{$vo.step_fee}</td>
+		            <td>{$vo.free_money}</td>                  
+                    <td>
+		            	<a href="{:U('AdminShipping/edit_area',array('id'=>$vo['id'] , 'shipping_id'=>$vo['shipping_id']))}">修改</a> |
+		            	<a href="{:U('AdminShipping/delete_area',array('id'=>$vo['id']))}" class="J_ajax_del">删除</a>
+					</td>
+	          	</tr>
+          </volist>
+          	<tr>
+          		<td colspan="13">
+          			<label class="checkbox inline" for="check_all"><input type="checkbox" class="J_check_all" data-direction="y" data-checklist="J_check_y" id="check_all">全选</label>  				
+			        <button class="btn btn-primary J_ajax_submit_btn" type="submit" data-action="{:u('AdminShipping/delete_area')}" data-subcheck="true" data-msg="你确定删除吗？">删除</button>
+          		</td>
+          	</tr>
+          </table>
+          <div class="pagination">{$Page}</div>
+     
+    </div>
+  </form>
+</div>
+<div class="form-actions">
+        <a class="btn" href="{:U('AdminShipping/index')}">返回</a>
+</div>
+<script src="__ROOT__/statics/js/common.js"></script>
+<script>
+
+function refersh_window() {
+    var refersh_time = getCookie('refersh_time');
+    if (refersh_time == 1) {
+        window.location="{:u('AdminGoods/index',$formget)}";
+    }
+}
+setInterval(function(){
+	refersh_window();
+}, 2000);
+$(function () {
+	setCookie("refersh_time",0);
+    Wind.use('ajaxForm','artDialog','iframeTools', function () {
+        //批量移动
+        $('#J_Content_remove').click(function (e) {
+            var str = 0;
+            var id = tag = '';
+            $("input[name='ids[]']").each(function () {
+                if ($(this).attr('checked')) {
+                    str = 1;
+                    id += tag + $(this).val();
+                    tag = ',';
+                }
+            });
+            if (str == 0) {
+				art.dialog.through({
+					id:'error',
+					icon: 'error',
+					content: '您没有勾选信息，无法进行操作！',
+					cancelVal: '关闭',
+					cancel: true
+				});
+                return false;
+            }
+            var $this = $(this);
+            art.dialog.open("__ROOT__/index.php?g=portal&m=AdminGoods&a=move&ids=" + id, {
+                title: "批量移动",
+                width:"80%"
+            });
+        });
+    });
+});
+
+
+</script>
+</body>
+</html>

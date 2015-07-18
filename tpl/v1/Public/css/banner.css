@@ -1,0 +1,70 @@
+.bannerBox{
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    font-size:0;
+    height: 486px;
+    width:700px
+}
+.bannerBox ul{
+    font-size:0;
+    position: absolute;
+    height: 486px;
+    margin: 0;
+}
+.bannerBox ul li{
+    position: absolute; 
+    list-style-type: none;
+    display: none;
+    *zoom: 1;
+}
+.bannerBox ul li.on{
+    display: block;
+}
+.bannerBox .control-box{
+    bottom: 20px;
+    position: absolute;
+    font-size: 0;
+    left: 50%;
+    margin-left: -100px;
+    width: 200px;
+    text-align: center;
+}
+
+.bannerBox .control-box span{
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Verdana,Arial;
+    font-size: 40px;
+    /*height: 20px;*/
+    line-height: 26px;
+    text-align: center;
+    text-decoration: none;
+    width: 20px;
+    text-shadow:1px 1px 1px #000;
+    margin:0 5px;
+    display: inline-block;
+    *zoom:1;
+}
+.bannerBox .control-btn{
+    position: absolute;
+    color: #fff;
+    top: 40%;
+    font-size: 100px;
+    line-height: 100px;
+    padding-top: 10px;
+    height: 100px;
+    background-color: #000;
+    opacity: 0;
+    filter:alpha(opacity=0);
+    cursor: pointer;
+    font-family:"宋体";
+    overflow: hidden;
+}
+.bannerBox .control-prev{
+    left: 10px;
+}
+.bannerBox .control-next{
+    right: 10px;
+}

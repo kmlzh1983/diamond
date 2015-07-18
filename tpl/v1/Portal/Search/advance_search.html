@@ -1,0 +1,484 @@
+<tc_include file='Public:head_page' />
+	<div class="wrapper">
+		<div class="wrap">
+			<section class="bg-white border-top3">
+				<div class="search-warp">
+					<form id="form" action="__APP__/search/index.html" method="post">
+						<div class="dl-hori">							
+							<dl>
+								<dt>
+									格式：
+								</dt>
+								<dd>
+	                                 <select name="format"  class='normal_select'  >
+				                        <option value="0">请选择</option>
+				                        <volist name="format" id="vo">
+				                        	<option value="{$key}">{$vo}</option>
+				                        </volist>
+			                        </select>
+	                             </select>
+								</dd>
+							</dl>
+							<dl>
+								<dt>
+									藝人：
+								</dt>
+								<dd>
+									<input type="text" value="" size="35" name="artist">
+								</dd>
+							</dl>
+							<dl>
+								<dt>
+									碟名/戲名：
+								</dt>
+								<dd>
+									<input type="text" value="" size="35" name="title">
+								</dd>
+							</dl>
+							<dl>
+								<dt>
+									歌名：
+								</dt>
+								<dd>
+									<input type="text" value="" size="35" name="song">
+								</dd>
+							</dl>
+							<dl>
+								<dt>
+									類別：
+								</dt>
+								<dd>
+									<select name="cate_id">
+										<option value="">所有分类</option>
+										<foreach name="cate" item="vo">
+								        	<option value="{$vo.id}">{$vo.spacer}{$vo.name}</option>
+										</foreach>
+									</select>
+								</dd>
+							</dl>
+							<dl>
+								<dt>
+									出版年份：
+								</dt>
+								<dd>
+									<select name="released_from" size="1">
+                                        
+                                        <option value="1980">
+                                        1980
+                                        </option>
+                                        
+                                        <option value="1981">
+                                        1981
+                                        </option>
+                                        
+                                        <option value="1982">
+                                        1982
+                                        </option>
+                                        
+                                        <option value="1983">
+                                        1983
+                                        </option>
+                                        
+                                        <option value="1984">
+                                        1984
+                                        </option>
+                                        
+                                        <option value="1985">
+                                        1985
+                                        </option>
+                                        
+                                        <option value="1986">
+                                        1986
+                                        </option>
+                                        
+                                        <option value="1987">
+                                        1987
+                                        </option>
+                                        
+                                        <option value="1988">
+                                        1988
+                                        </option>
+                                        
+                                        <option value="1989">
+                                        1989
+                                        </option>
+                                        
+                                        <option value="1990">
+                                        1990
+                                        </option>
+                                        
+                                        <option value="1991">
+                                        1991
+                                        </option>
+                                        
+                                        <option value="1992">
+                                        1992
+                                        </option>
+                                        
+                                        <option value="1993">
+                                        1993
+                                        </option>
+                                        
+                                        <option value="1994">
+                                        1994
+                                        </option>
+                                        
+                                        <option value="1995">
+                                        1995
+                                        </option>
+                                        
+                                        <option value="1996">
+                                        1996
+                                        </option>
+                                        
+                                        <option value="1997">
+                                        1997
+                                        </option>
+                                        
+                                        <option value="1998">
+                                        1998
+                                        </option>
+                                        
+                                        <option value="1999">
+                                        1999
+                                        </option>
+                                        
+                                        <option value="2000">
+                                        2000
+                                        </option>
+                                        
+                                        <option value="2001">
+                                        2001
+                                        </option>
+                                        
+                                        <option value="2002">
+                                        2002
+                                        </option>
+                                        
+                                        <option value="2003">
+                                        2003
+                                        </option>
+                                        
+                                        <option value="2004">
+                                        2004
+                                        </option>
+                                        
+                                        <option value="2005">
+                                        2005
+                                        </option>
+                                        
+                                        <option value="2006">
+                                        2006
+                                        </option>
+                                        
+                                        <option value="2007">
+                                        2007
+                                        </option>
+                                        
+                                        <option value="2008">
+                                        2008
+                                        </option>
+                                        
+                                        <option value="2009">
+                                        2009
+                                        </option>
+                                        
+                                        <option value="2010">
+                                        2010
+                                        </option>
+                                        
+                                        <option value="2011">
+                                        2011
+                                        </option>
+                                        
+                                        <option value="2012">
+                                        2012
+                                        </option>
+                                        
+                                        <option value="2013">
+                                        2013
+                                        </option>
+                                        
+                                        <option value="2014">
+                                        2014
+                                        </option>
+                                        
+                                        <option value="2015">
+                                        2015
+                                        </option>
+                                        
+                                      </select>
+									至
+									<select name="released_to" size="1">
+                                        
+                                        <option value="2016">
+                                        2016
+                                        </option>
+                                        
+                                        <option value="2015">
+                                        2015
+                                        </option>
+                                        
+                                        <option value="2014">
+                                        2014
+                                        </option>
+                                        
+                                        <option value="2013">
+                                        2013
+                                        </option>
+                                        
+                                        <option value="2012">
+                                        2012
+                                        </option>
+                                        
+                                        <option value="2011">
+                                        2011
+                                        </option>
+                                        
+                                        <option value="2010">
+                                        2010
+                                        </option>
+                                        
+                                        <option value="2009">
+                                        2009
+                                        </option>
+                                        
+                                        <option value="2008">
+                                        2008
+                                        </option>
+                                        
+                                        <option value="2007">
+                                        2007
+                                        </option>
+                                        
+                                        <option value="2006">
+                                        2006
+                                        </option>
+                                        
+                                        <option value="2005">
+                                        2005
+                                        </option>
+                                        
+                                        <option value="2004">
+                                        2004
+                                        </option>
+                                        
+                                        <option value="2003">
+                                        2003
+                                        </option>
+                                        
+                                        <option value="2002">
+                                        2002
+                                        </option>
+                                        
+                                        <option value="2001">
+                                        2001
+                                        </option>
+                                        
+                                        <option value="2000">
+                                        2000
+                                        </option>
+                                        
+                                        <option value="1999">
+                                        1999
+                                        </option>
+                                        
+                                        <option value="1998">
+                                        1998
+                                        </option>
+                                        
+                                        <option value="1997">
+                                        1997
+                                        </option>
+                                        
+                                        <option value="1996">
+                                        1996
+                                        </option>
+                                        
+                                        <option value="1995">
+                                        1995
+                                        </option>
+                                        
+                                        <option value="1994">
+                                        1994
+                                        </option>
+                                        
+                                        <option value="1993">
+                                        1993
+                                        </option>
+                                        
+                                        <option value="1992">
+                                        1992
+                                        </option>
+                                        
+                                        <option value="1991">
+                                        1991
+                                        </option>
+                                        
+                                        <option value="1990">
+                                        1990
+                                        </option>
+                                        
+                                        <option value="1989">
+                                        1989
+                                        </option>
+                                        
+                                        <option value="1988">
+                                        1988
+                                        </option>
+                                        
+                                        <option value="1987">
+                                        1987
+                                        </option>
+                                        
+                                        <option value="1986">
+                                        1986
+                                        </option>
+                                        
+                                        <option value="1985">
+                                        1985
+                                        </option>
+                                        
+                                        <option value="1984">
+                                        1984
+                                        </option>
+                                        
+                                        <option value="1983">
+                                        1983
+                                        </option>
+                                        
+                                        <option value="1982">
+                                        1982
+                                        </option>
+                                        
+                                        <option value="1981">
+                                        1981
+                                        </option>
+                                        
+                                        <option value="1980">
+                                        1980
+                                        </option>
+                                        
+                                      </select>
+								</dd>
+							</dl>
+							<dl>
+								<dt>
+									貨品付運預計時間：
+								</dt>
+								<dd>
+									<select name="availability"  class='normal_select'  >
+				                        <option value="0">请选择</option>
+				                        <volist name="availability" id="vo">
+				                        	<option value="{$key}">{$vo}</option>
+				                        </volist>
+			                        </select>
+								</dd>
+							</dl>
+							<dl>
+								<dt>
+									價格：
+								</dt>
+								<dd>
+									<select name="price_greater_than" size="1">
+
+                                      <option value="1">HK$1</option>
+                                      <option value="20">HK$20</option>
+                                      <option value="50">HK$50</option>
+                                      <option value="100">HK$100</option>
+                                      <option value="150">HK$150</option>
+                                      <option value="200">HK$200</option>
+                                      <option value="250">HK$250</option>
+                                      <option value="300">HK$300</option>
+                                      <option value="350">HK$350</option>
+                                      <option value="400">HK$400</option>
+                                      <option value="450">HK$450</option>
+                                      <option value="500">HK$500</option>
+                                      <option value="600">HK$600</option>
+                                      <option value="700">HK$700</option>
+                                      <option value="800">HK$800</option>
+                                      <option value="900">HK$900</option>
+                                      <option value="1000">HK$1000</option>
+                                      <option value="1500">HK$1500</option>
+                                      <option value="2000">HK$2000</option>
+                                      <option value="2500">HK$2500</option>
+                                      <option value="3000">HK$3000</option>
+                                      <option value="4000">HK$4000</option>
+                                      <option value="5000">HK$5000</option>
+                                      <option value="6000">HK$6000</option>
+                                      <option value="7000">HK$7000</option>
+                                      <option value="8000">HK$8000</option>
+                                      <option value="9000">HK$9000</option>
+                                      <option value="10000">HK$10000</option>
+                                    </select>
+									至
+									<select name="price_less_than" size="1">
+
+                                      <option value="1">HK$1</option>
+                                      <option value="20">HK$20</option>
+                                      <option value="50">HK$50</option>
+                                      <option value="100">HK$100</option>
+                                      <option value="150">HK$150</option>
+                                      <option value="200">HK$200</option>
+                                      <option value="250">HK$250</option>
+                                      <option value="300">HK$300</option>
+                                      <option value="350">HK$350</option>
+                                      <option value="400">HK$400</option>
+                                      <option value="450">HK$450</option>
+                                      <option value="500">HK$500</option>
+                                      <option value="600">HK$600</option>
+                                      <option value="700">HK$700</option>
+                                      <option value="800">HK$800</option>
+                                      <option value="900">HK$900</option>
+                                      <option value="1000">HK$1000</option>
+                                      <option value="1500">HK$1500</option>
+                                      <option value="2000">HK$2000</option>
+                                      <option value="2500">HK$2500</option>
+                                      <option value="3000">HK$3000</option>
+                                      <option value="4000">HK$4000</option>
+                                      <option value="5000">HK$5000</option>
+                                      <option value="6000">HK$6000</option>
+                                      <option value="7000">HK$7000</option>
+
+                                      <option value="8000" selected="selected">HK$8000</option>
+
+                                      <option value="9000">HK$9000</option>
+                                      <option value="10000">HK$10000</option>
+                                    </select>
+								</dd>
+							</dl>
+							<dl>
+								<dt>
+									停售貨品：
+								</dt>
+								<dd>
+									<input type="checkbox" value="1" name="isdown">
+									若您想列出已停售之貨品，請按此空格
+								</dd>
+							</dl>	
+							<dl>
+								<dt>									
+								</dt>
+								<dd>
+									<button class="btn button" type="button" onclick="submitForm();">搜索</button>&nbsp;&nbsp;
+									<a href="javascript:void(0)" class="clear" onclick="resetForm();">清空搜索條件</a>
+								</dd>
+							</dl>							
+						</div>
+					</form>
+				</div>
+				
+			</section>
+			
+			
+		</div>		
+	</div>
+	<script type="text/javascript">
+		function submitForm(){
+			$('#form').submit() 
+		}
+		function resetForm(){
+			$('#form')[0].reset() 
+		}
+	</script>
+<tc_include file='Public:footer_page' />

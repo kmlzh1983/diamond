@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <title>安全认证</title>
+
+    <tc_include file='Public:head'/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+    <script src="__TMPL__Public/js/ajaxupload.js"></script>
+    <script src="/statics/js/Util.js"></script>
+    <script type="text/javascript" src="__TMPL__Public/js/swfobject.js"></script>
+    <script type="text/javascript" src="__TMPL__Public/js/fullAvatarEditor.js"></script>
+
+</head>
+<body class="theme foot-white-bg">
+<tc_include file='Public:header'/>
+
+<div class="wrapper order-wrap">
+    <div class="wrap">
+        <div class="grid address-page">
+            <tc_include file='User:My:leftside'/>
+            <div class="grid-r">
+                <div class="order-main">
+                    <div class="hd">
+                        <div class="tips">
+                            安全认证
+                        </div>
+                    </div>
+                    <div class="bd">
+                        <div class="identify">
+                            <!--身份认证-->
+                            <div class="tips">
+                                <span>认证状态：</span>
+                                <if condition="$account['audit'] eq 2">
+                                <strong style="color:red">您已经认证通过</strong>
+                                    <elseif condition="$account['audit'] eq 0" />
+                                    <strong style="color: #c32627">您还未认证</strong>
+                                    <elseif condition="$account['audit'] eq 1" />
+                                    <strong style="color: #c32627">认证中</strong>
+
+                                    <elseif condition="$account['audit'] eq 3" />
+                                    <strong style="color: #c32627">未认证通过，请检查</strong>
+
+                                </if>
+                            </div>
+
+                            <br />
+                            <if condition="$user['utype'] eq 1">
+                                <div class="verify">
+                                    <div class="identify_z f">
+                                        <img src="__ROOT__/{$account['identify_z']}" alt=""/>
+                                    </div>
+                                    <div class="identify_f f">
+                                        <img src="__ROOT__/{$account['identify_f']}" alt=""/>
+                                    </div>
+                                    <div class="c"></div>
+                                    <if condition="$account['audit'] neq 2">
+                                        <div class="verify-btn">
+                                        <button class="btn btn-danger" id="upload_identify_z">重新上传正面</button>
+                                        <button class="btn btn-danger" id="upload_identify_f">重新上传反面</button>
+                                        </div>
+                                    </if>
+                                </div>
+                            </if>
+                            <if condition="$user['utype'] eq 2">
+                                <div class="license">
+                                    <img src="__ROOT__/{$account.license}" alt=""/>
+                                </div>
+                                <br />
+                                <if condition="$account['audit'] neq 2">
+                                    <button class="btn btn-danger" id="upload_license">重新上传营业执照</button>
+
+                                </if>
+                            </if>
+
+                            <if condition="$user['utype'] eq 0">
+                                <div class="form-group">
+                                    <label class="help-block">选择您的类型(身份认证)</label>
+                                    <input type="radio" name="choose-type" id="person" value="1"/><span class="col">个人</span>
+                                    <input type="radio" name="choose-type" id="company" value="2"/><span class="col">企业</span>
+                                </div>
+                                <div class="user-type">
+                                    <div class="person-type" style="display: none">
+                                        <div class="identify_z">
+                                            <img src="/tpl/v1/Public/images/page/slider_img.jpg" alt=""/>
+                                        </div>
+                                        <div class="identify_f">
+                                            <img src="/tpl/v1/Public/images/page/slider_img.jpg" alt=""/>
+
+                                        </div>
+                                        <div class="c"></div>
+                                        <button class="btn btn-danger" id="upload_identify_z">上传正面</button>
+                                        <button class="btn btn-danger" id="upload_identify_f">上传反面</button>
+                                    </div>
+                                    <div class="company-type" style="display: none">
+                                        <div class="license">
+
+                                        </div>
+                                        <button class="btn btn-danger" id="upload_license">上传营业执照</button>
+                                    </div>
+                                </div>
+                            </if>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<tc_include file='Public:footer'/>
+<script>
+
+    Util.previewImg('file1','imgsrc','txt',300,300);
+    $("#change_pwd").click(function(){
+
+        var pwd_data = {
+            oldpwd:$('input[name=oldpwd]').val(),
+            newpwd:$('input[name=newpwd]').val(),
+            renewpwd:$('input[name=renewpwd]').val()
+        }
+        //console.log(pwd_data);
+        if(pwd_data.oldpwd=='' || pwd_data.oldpwd.length<6 || pwd_data.oldpwd.length>16){
+            alert("旧密码长度应该在6到16之间11");
+            return false;
+        }
+        if(pwd_data.newpwd.length<6 || pwd_data.newpwd.length>16){
+            alert("新密码长度应该在6到16之间");
+            return false;
+        }
+        if(pwd_data.newpwd != pwd_data.renewpwd){
+            alert("两次密码不一致");
+            return false;
+        }
+
+
+        $.ajax({
+            type:'post',
+            url:"{:U('user/my/change_pwd')}",
+            dataType:"json",
+            data: pwd_data,
+            success:function(data){
+                if(data.r==-1){
+                    alert(data.msg);
+                }else{
+                    alert(data.msg);
+                    window.location.href="{:U('user/my/index')}"
+                }
+            }
+        });
+    });
+    $("#person").click(function () {
+       $(".user-type .company-type").hide();
+       $(".user-type .person-type").show();
+    });
+    $("#company").click(function () {
+        $(".user-type .person-type").hide();
+        $(".user-type .company-type").show();
+    });
+    //上传图片
+    var identify_z = $('#upload_identify_z'), interval;
+    var identify_f = $('#upload_identify_f');
+    var license = $('#upload_license');
+    var confirmdiv = $('.comfirmdiv').eq(0);
+    var fileType = "pic",fileNum = "one";
+    new AjaxUpload(identify_z, {
+        action: "{:U('user/my/upload_identify?act=z')}",
+        name: 'file',
+        onSubmit: function (file, ext) {
+            if (fileType == "pic") {
+                if (ext && /^(jpg|png|jpeg|gif|JPG)$/.test(ext)) {
+                    this.setData({
+                        'info': '文件类型为图片'
+                    });
+                } else {
+                    alert('文件格式错误，请上传格式为.png .jpg .jpeg 的图片');
+                    return false;
+                }
+            }
+
+            confirmdiv.text('文件上传中');
+
+            if (fileNum == 'one')
+                this.disable();
+
+            interval = window.setInterval(function () {
+                var text = confirmdiv.text();
+                if (text.length < 14) {
+                    confirmdiv.text(text + '.');
+                } else {
+                    confirmdiv.text('文件上传中');
+                }
+            }, 200);
+        },
+      onComplete: function (file, response) {
+          response = $.parseJSON(response);
+          if(response.r == 0){
+              var imgstr = "<img src='"+response.msg+"' alt='身份证正面'>";
+              $(".person-type .identify_z").html("").append(imgstr);
+              $('#upload_identify_z').html("上传成功");
+              $('#upload_identify_z').remove();
+          }else{
+              alert(response.msg);
+          }
+
+        }
+    });
+    new AjaxUpload(identify_f, {
+        action: "{:U('user/my/upload_identify?act=f')}",
+        name: 'file',
+        onSubmit: function (file, ext) {
+            if (fileType == "pic") {
+                if (ext && /^(jpg|png|jpeg|gif|JPG)$/.test(ext)) {
+                    this.setData({
+                        'info': '文件类型为图片'
+                    });
+                } else {
+                    alert('文件格式错误，请上传格式为.png .jpg .jpeg 的图片');
+                    return false;
+                }
+            }
+
+            confirmdiv.text('文件上传中');
+
+            if (fileNum == 'one')
+                this.disable();
+
+            interval = window.setInterval(function () {
+                var text = confirmdiv.text();
+                if (text.length < 14) {
+                    confirmdiv.text(text + '.');
+                } else {
+                    confirmdiv.text('文件上传中');
+                }
+            }, 200);
+        },
+        onComplete: function (file, response) {
+            response = $.parseJSON(response);
+            if(response.r == 0){
+                var imgstr = "<img src='"+response.msg+"' alt='身份证反面'>";
+                $(".person-type .identify_f").html("").append(imgstr);
+                $('#upload_identify_f').html("上传成功");
+                $('#upload_identify_f').remove();
+            }else{
+                alert(response.msg);
+            }
+
+        }
+    });
+    new AjaxUpload(license, {
+        action: "{:U('user/my/upload_identify?act=l')}",
+        name: 'file',
+        onSubmit: function (file, ext) {
+            if (fileType == "pic") {
+                if (ext && /^(jpg|png|jpeg|gif|JPG)$/.test(ext)) {
+                    this.setData({
+                        'info': '文件类型为图片'
+                    });
+                } else {
+                    alert('文件格式错误，请上传格式为.png .jpg .jpeg 的图片');
+                    return false;
+                }
+            }
+
+            confirmdiv.text('文件上传中');
+
+            if (fileNum == 'one')
+                this.disable();
+
+            interval = window.setInterval(function () {
+                var text = confirmdiv.text();
+                if (text.length < 14) {
+                    confirmdiv.text(text + '.');
+                } else {
+                    confirmdiv.text('文件上传中');
+                }
+            }, 200);
+        },
+        onComplete: function (file, response) {
+            if(response.r == 0){
+                $(".license").eq(0).html('<img src="' + response.msg +'"');
+                $('#upload_license').html("上传成功");
+                $('#upload_license').remove();
+            }else{
+                alert(response.msg);
+            }
+
+        }
+    });
+
+</script>
+
+</body>
+</html>

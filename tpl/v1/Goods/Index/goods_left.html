@@ -1,0 +1,13 @@
+<div class="slider">
+	<div class="hd">
+		<ul class="sp-sliderbar">
+			<php>
+				$cates = sp_sql_cate( 24 ); 
+			</php>
+			<volist name='cates' id='vo'>		
+				<li <php> if( $vo['id'] == I('get.cid') ) echo 'class="active"';</php>>
+				<a href="{:U('goods/index/index', array( 'cid' => $vo['id'], 'cate' => $cate))}">{$vo.name}</a></li>
+			</volist>
+		</ul>
+	</div>	
+</div>

@@ -1,0 +1,93 @@
+		<nav class="nav-top">
+			<div class="head-block">
+				<ul class="fl navtop-left">
+					<if condition="$Think.session.user eq null">
+					<li>歡迎光臨hmv，請</li>
+					<li><a class="login" href="{:U('user/login/index')}">登錄</a></li>
+					<li class="v-line">|</li>
+					<li><a href="{:U('user/register/index')}">免費註冊</a></li>
+					<else/>
+					<li>欢迎光临,<a href="{:U('user/my/index')}">{$Think.session.user.user_login}</a>,<a href="{:U('user/index/logout')}">退出登陆</a></li>
+					</if>
+				</ul>
+				<ul class="fr navtop-right">
+					<li><a href="{:U('order/index/index')}">我的訂單</a></li>
+					<li class="v-line">|</li>
+					<li class="dropdown">
+						<a href="{:U('user/my/index')}">我的hmv<i class="drop-icon"></i></a>
+						<div class="drop-spacer">					
+						</div>
+						<div class="dropdown-layer">
+							<a class="fl u-img" href="">
+								<img class="img-circle" src="{$user.avatar_large|default='/tpl/v1/Public/images/page/details_r.jpg'}"/>
+							</a>
+							<strong>您好，{$user.user_login|default='請登錄！'}</strong>
+							<p class="links">
+								<a href="{:U('user/my/index')}">
+									賬戶資料
+								</a>
+								<a href="{:U('user/my/points')}">
+									我的hmv積分
+								</a>
+							</p>
+						</div>						
+					</li>
+					<li class="v-line">|</li>
+					<li class="dropdown">
+						<a href="{:U('user/my/index')}">手机hmv<i class="drop-icon"></i></a>
+						<div class="drop-spacer">					
+						</div>
+						<div class="dropdown-layer erweima">
+							<img src="/tpl/v1/Public/images/erweima.jpg"/>
+							<p>hmv客戶端下載</p>
+						</div>
+					</li>
+					<li class="v-line">|</li>
+					<li><a href="{:U('user/my/fav')}">收藏夾</a></li>
+					<li class="v-line">|</li>
+					<li><a href="{:U('portal/index/address')}">店鋪地址</a></li>
+					<li class="v-line">|</li>
+					<li class="lang"><a>English</a><a class="on">繁</a><a>簡</a></li>
+				</ul>
+			</div>
+		</nav>
+		<div class="head-logo">
+			<div class="head-block">
+				<a class="logo" href="/">
+					<img src="__TMPL__Public/images/logo.png"/>
+				</a>
+				<div class="search-header">
+					<form action='__APP__/search/index.html' method='get'>
+					<div class="search-box">
+						
+						<div class="search-icon-box">
+							<span class="search-icon"></span>
+						</div>
+						<div class="search-input">
+							<input type="text" name="keyword" id="" value="{$keyword}" placeholder="{$top_hot_search.0.ad_name}"/>
+							<input type="hidden" name="first" value="{$top_hot_search.0.ad_name}">
+						</div>
+						<div class="search-button">
+							<button type="submit">搜索</button>
+						</div>
+						
+					</div>
+					</form>
+					<div class="hot-words">
+						熱搜：
+						<volist name='top_hot_search' id='vo'>
+							<a href="<php>echo sp_ad_path( $vo['ad_cate'], $vo['ad_link'] )</php>" target="{$vo.ad_target}">{$vo.ad_name}</a>
+						</volist>
+						
+					</div>
+				</div>
+				<a href="{:U('order/cart/index')}" class="index-car">
+					<span class="cate-icon"></span>
+					我的購物車
+					<i class="hmv-icon"></i>
+					<div class="tips hmv-icon">
+						<span class="cont">{$cartNum}</span>
+					</div>
+				</a>
+			</div>
+		</div>

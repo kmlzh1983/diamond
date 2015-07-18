@@ -1,0 +1,40 @@
+<admintpl file="header" />
+<body class="J_scroll_fixed">
+	<div class="wrap J_check_wrap">
+		<ul class="nav nav-tabs">
+		     <li><a href="{:U('AdminSupplier/index')}">供应商列表</a></li>
+		     <li><a href="{:U('AdminSupplier/add')}">添加供应商</a></li>
+		     <li class="active"><a href="#">编辑供应商</a></li>
+		  </ul>
+		<form class="form-horizontal J_ajaxForm" name="myform" id="myform" action="{:u('AdminSupplier/edit_post')}" method="post">
+		 <input type="hidden" name="id" value="{$data.id}" />
+		 	<div class="tabbable">
+		        <div class="tab-content">
+		          <div class="tab-pane active">
+		          	<table cellpadding="2" cellspacing="2" width="100%">
+							<tbody>
+								
+								<tr>
+									<td width="140">名称:</td>
+									<td><input type="text" class="input" name="name" value="{$data.name}"><span class="must_red">*</span></td>
+								</tr>
+								<tr>
+									<td>描述:</td>
+									<td><textarea name="description" rows="5" cols="57">{$data.description}</textarea></td>
+								</tr>
+								
+								
+							</tbody>
+						</table>
+		          </div>
+	
+			
+		      <div class="form-actions">
+		           <button class="btn btn-primary btn_submit J_ajax_submit_btn"type="submit">提交</button>
+		      		<a class="btn" href="{:U('AdminSupplier/index')}">返回</a>
+		      </div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__ROOT__/statics/js/common.js"></script>
+</body>
+</html>

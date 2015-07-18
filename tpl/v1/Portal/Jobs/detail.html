@@ -1,0 +1,255 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>招聘页详情</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <link rel="shortcut icon" href="http://localhost/zp/favicon.ico" />
+    <meta name="author" content="XG人才招聘系统" />
+    <meta name="copyright" content="XG人才招聘系统" />
+
+    <link href="__TMPL__Public/zp/css/index.css" rel="stylesheet" type="text/css" />
+    <link href="__TMPL__Public/zp/css/jobs.css" rel="stylesheet" type="text/css" />
+    <script src="__TMPL__Public/js/jquery-1.11.1.min.js" type="text/javascript" language="javascript"></script>
+    <script src="__TMPL__Public/js/layer/layer.js" type="text/javascript" language="javascript"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=pOjKwgwxn0nlutaU2ppwIk8p"></script>
+</head>
+<body>
+<div class="wrap">
+    <!--头部start-->
+    <tc_include file='Public:header'/>
+    <!--头部end-->
+    <!--主体部分-->
+    <div id="main" class="main">
+        <div class="position">
+            <span class="red">当前位置:</span>
+            <a href="">首页</a>
+            <span> >> </span>
+            家政招聘
+        </div>
+        <div id="job" style="padding: 10px;margin-top: 20px;border:1px solid #ccc">
+            <div class="detail">
+                <div class="job-head">
+                    <div class="user fl">
+                        <div class="user-info fl">
+                            <div class="user-item">
+                                <span class="u-title">用户名：</span><span class="u-val red">
+                                <if condition="$user.user_realname neq ''">
+                                    {$user.user_realname}
+                                    <else />
+                                    {$user.user_nicename}
+                                </if>
+                                </span>
+                            </div>
+                            <div class="user-item">
+                                <span class="u-title">注册日期：</span><span class="u-val red">{$user.create_time|substr=0,10}</span>
+                             </div>
+                            <div class="user-item">
+                                <span class="u-title">安全认证：</span><span class="u-val red">已认证</span>
+                            </div>
+                            <div class="user-item">
+                                <span class="u-title">信息诚信协议签订状态：</span><span class="u-val red">已签</span>
+                            </div>
+                        </div>
+                        <div class="user-avatar fl">
+                            <div class="user-avatar-title">用户头像</div>
+                            <div class="avatar-img">
+                                <if condition="$user.avatar_small neq ''">
+                                    <img src="{$user.avatar_small}" alt="" style="border-radius:50%"/>
+                                    <else />
+                                    <div class="cccbg" style="width: 115px;height: 167px;background: #ccc">
+
+                                    </div>
+                                </if>
+
+                            </div>
+                        </div>
+                        <div class="c"></div>
+                    </div>
+                    <div class="job-desc fl">
+                        <div class="blank">
+
+                        </div>
+                        <div class="apply">
+                            <button id="apply" class="apply-btn">立即应聘</button>
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-item red">
+                                发布时间：{$job.addtime|date="Y-m-d",###}
+                            </span>
+                           <span class="publish-item red">
+                                浏览量：{$job.click} 次
+                            </span>
+                            <span class="publish-item red">
+                                当前应聘人数：{$applyNum} 人
+                            </span>
+                        </div>
+                    </div>
+                    <div class="c"></div>
+                </div>
+
+                <!--工作内容start-->
+                <div class="job-content">
+                    <div class="job_name">
+                        <h2>{$job.job_name}</h2>
+                    </div>
+                    <div class="cate">
+                         <div class="cate-item">
+                             <span>岗位类别：
+                             <if condition="$job.catid">
+                                 {$catname}
+                                 <else />
+                                 {$job.catname}
+                             </if>
+                             </span>
+                         </div>
+                        <div class="cate-item">
+                            <span>岗位性质：{$nature_name}</span>
+                        </div>
+                        <div class="cate-item">
+                            <span>工作内容：{$job.job_desc}</span>
+                        </div>
+                        <div class="cate-item">
+                            <span>招聘人数：{$job.person_num}人</span>
+                        </div>
+                    </div>
+                    <div class="c"></div>
+                    <div class="work-need">
+                        <div class="work-need-title">
+                            详细工作要求:
+                        </div>
+                        <div class="work-need-info">
+                           {$job.job_content}
+                        </div>
+                    </div>
+
+                    <div class="cate">
+                        <div class="cate-item">
+                            <span>工作日期：{$job.work_start_date|substr=0,10} 至 {$job.work_end_date|substr=0,10} </span>
+                        </div>
+                        <div class="cate-item">
+                            <span>具体工作时间：{$job.work_start_time} 点 - {$job.work_end_time} 点</span>
+                        </div>
+                        <div class="cate-item">
+                            <span>工作时长：{$job.work_total_date}小时</span>
+                        </div>
+                        <div class="cate-item">
+                            <span>工作待遇：{$job.work_pay}元/小时</span>
+                        </div>
+
+                        <div class="cate-item">
+                            <span>结算方式：
+                            <if condition="$job.pay_method">
+                                打卡
+                                <else />
+                                现金
+                            </if>
+                            </span>
+                        </div>
+                        <div class="cate-item">
+                            <span>结算日期：
+                            <if condition="$job.pay_date">
+                                日结
+                                <else />
+                                定期结
+                            </if>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="c"></div>
+                </div>
+                <!--工作内容end-->
+                <!--地图开始-->
+                <div class="map" style="width: 550px;margin: 0 auto">
+                    <div class="baiduMap" id="allmap" style="width: 550px;height: 300px;">
+
+                    </div>
+                    <div id="r-result" style="width: 550px;"></div>
+                        <div class="mylocation">
+                            <label>您的位置: </label><input type="text" name="mylocation" id="mylocation"/>
+                            <label> 至 </label>
+                            <input type="text" readonly disabled value="{$job.work_address}"/>
+                            <button id="search_way"> 搜索 </button>
+                            <div class="apply">
+                                <button id="apply" class="apply-btn">立即应聘</button>
+                            </div>
+                        </div>
+                    </div>
+                <!--地图end-->
+            </div>
+        </div>
+    </div>
+    <!--主体部分end-->
+    <!--底部start-->
+    <tc_include file='Public:footer'/>
+    <!--底部end-->
+    <div id="shadow">
+
+    </div>
+</div>
+
+<script>
+    var uid = "{$Think.session.user.id}";
+    $(".apply-btn").click(function () {
+        if(!uid){
+            window.location.href = "{:U('User/Login/index')}";
+        }else{
+            //判断简历个数
+            var resumeCount = "{$resumeCount}";
+            if(resumeCount>0){
+                layer.open({
+                    type: 2,
+                    title: '申请职位',
+                    maxmin: true,
+                    shadeClose: true, //点击遮罩关闭层
+                    area : ['470px' , '300px'],
+                    content: "{:U('Portal/jobs/apply')}&"+"id={$Think.get.id}"
+                });
+            }else{
+                //去新增简历
+                alert("您还没有简历，请先新建简历");
+                window.location.href = "{:U('User/Resume/aeresume')}";
+            }
+        }
+    });
+
+
+
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    var work_map_x = "{$job.work_map_x}";
+    var work_map_y = "{$job.work_map_y}";
+    work_map_x = parseFloat(work_map_x);
+    work_map_y = parseFloat(work_map_y);
+    map.centerAndZoom(new BMap.Point(work_map_x,work_map_y), 12);
+//    map.enableScrollWheelZoom();
+//    var start = "腾讯大厦" ,end = "百度大厦";
+//    var transit = new BMap.TransitRoute(map, {
+//        renderOptions: {map: map}
+//    });
+//    transit.search(start,end);
+//    var myIcon = new BMap.Icon("http://developer.baidu.com/map/jsdemo/img/location.gif", new BMap.Size(14,23));
+//    //设置起终点图标
+//    transit.setMarkersSetCallback(function(result){
+//        result[0].marker.setIcon(myIcon);
+//        result[1].marker.setIcon(myIcon);
+//    });
+    $("#search_way").click(function () {
+        var start = $("#mylocation").val() ;
+        if(start==''){
+            alert("请输入您的位置");
+            return false;
+        }
+        var end = "{$job.work_address}";
+        var transit = new BMap.TransitRoute(map, {
+            renderOptions: {map: map, panel: "r-result"}
+        });
+        transit.search(start, end);
+    });
+</script>
+
+</body>
+</html>

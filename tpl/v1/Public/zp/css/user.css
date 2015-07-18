@@ -1,0 +1,35 @@
+.verify_head{width: 330px;margin: 0px auto;font-size: 18px;margin-bottom: 10px;}
+.verify_head ul span{margin: 0 10px;color: #eee;}
+.verify .description{color: #ef1610;margin-top: 10px;}
+.verify .description p{height: 30px;line-height: 30px;}
+.verify .description .promise{font-size: 18px;height: 40px;line-height: 40px;}
+
+.verify .promise .danger-icon{width: 37px;height: 36px;display: inline-block;background: url("../images/danger_03.png") no-repeat}
+
+.verify .promise .danger-word{line-height: 20px;position: relative;top: -10px;}
+.verify .verify-info .yaoqiu{margin: 10px 0;}
+
+.verify .verify-info .box .item{height: 320px;}
+
+.verify .verify-info .box .item label{display: block;  float: left;margin-top: 64px;margin-right: 10px;}
+.verify .verify-info .box .item  .identify-info{margin-bottom: 20px;;}
+.verify .verify-info .box .item .identify_z{width: 303px;height: 128px;background: url("../images/zhengmianbg.png") no-repeat;cursor: pointer}
+.verify .verify-info .box .item .identify_f{width: 303px;height: 128px;background: url("../images/fanmianbg.png") no-repeat;
+    cursor: pointer;}
+
+.verify .verify-info .box .item  .license{width: 303px;height: 283px;background: url("../images/company_bg_03.png") no-repeat;cursor: pointer}
+
+.verify .verify-info .box  .jiantou{width: 136px;height: 333px;}
+.verify .verify-info .box  .jiantou-icon{background: url("../images/jiantou_11.png") no-repeat;width:82px;height: 28px;margin-top: 152px;margin-left: -10px;margin-right: 15px; }
+.verify .verify-info .box .btn-submit{width: 80px;height: 40px;background: url("../images/submit-id-bg_16.png") no-repeat;text-indent: -9999px;margin: 10px 0 0 47px;}
+.verify .verify-info .box .item  .identify-info img{width: 296px!important;height: 149px!important;  overflow: hidden;}
+.verify .verify-info .box .item  .identify-info img.company_img{width: 340px!important;height: 188px!important;}
+.verify .verify-info .company .item{height: 185px;}
+.verify .verify-info .company .btn-submit{margin-left: -37px!important;}
+
+
+
+
+
+
+

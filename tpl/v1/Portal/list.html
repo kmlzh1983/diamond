@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>{$name} {$seo_title} {$site_name}</title>
+	<meta name="keywords" content="{$seo_keywords}" />
+	<meta name="description" content="{$seo_description}">
+	<tc_include file='Public:head'/>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>	
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/special.css"/>
+</head>
+<body class="theme">	
+	
+	<tc_include file='Public:header'/>
+	
+	<div class="banner">
+		<div class="bannerBox" style="width: 100%;height: 449px; background-image: url(__TMPL__Public/images/banner/heijiao.jpg);background-position: center;background-repeat: no-repeat;">        
+            
+        </div>
+	</div>
+	<div class="wrapper">
+		<div class="wrap">
+			<section class="bg-white border-top3">
+				<div class="grid special-page border border-nt">
+					<tc_include file='Portal:news_left'/>
+					<div class="main grid-right">
+						<div class="news-head">
+							<i class="cate-icon"></i>{$name}
+						</div>
+						<ul class="news-lsit">
+							<php>
+								$lists = sp_sql_posts_paged("limit:16;order:post_date DESC;");
+							</php>
+							<volist name="lists['posts']" id="vo">
+							<li>
+								<a href="{:leuu('article/index',array('id'=>$vo['tid']))}">
+									<span class="info">
+										{$vo.post_title}
+									</span>
+									<div class="date">
+										{$vo.post_date}
+									</div>
+								</a>
+							</li>
+							</volist>
+						</ul>
+						{$lists['page']}
+					</div>
+				</div>
+			</section>
+			
+			
+		</div>		
+	</div>
+	
+	<tc_include file="Public:footer" />

@@ -1,0 +1,111 @@
+.shop-add .grid-l{
+	width: 190px;
+	float: left;
+}
+.shop-add .grid-l h5{
+	background-color: #e5006e;
+	height: 62px;
+	margin: -1px;
+	line-height: 62px;
+	color: #fff;
+	text-align: center;
+	font-weight: normal;
+}
+.shop-add .grid-l .sub-nav{
+	margin-top: 1px;
+}
+.shop-add .grid-l .sub-nav li{
+	height: 43px;
+	line-height: 43px;
+	padding-left: 52px;
+	border-bottom: 1px solid #F5F5F5;
+	cursor: pointer;
+}
+.shop-add .grid-l .sub-nav li.current,
+.shop-add .grid-l .sub-nav li:hover{
+	color: #e5006e;
+}
+
+
+
+.shop-add .grid-r{
+	margin-left: 190px;
+	border-left: 1px solid #E8E8E8;
+	padding: 20px;
+}
+.shop-add .grid-r .addr-list{
+	margin-right: -20px;
+	overflow: hidden;
+}
+.shop-add .grid-r .addr-list>ul>li{
+	border: 1px solid #E8E8E8;
+	margin-bottom: 16px;
+	margin-right: 18px;
+	float: left;
+}
+.shop-add .grid-r .addr-list>ul>li:last-child{
+	margin-bottom: 0;
+}
+.shop-add .grid-r .addr-list>ul>li:not(.full){
+	width: 465px;
+}
+.shop-add .grid-r .addr-list>ul>li.full{
+	width: 948px;
+}
+.shop-add .grid-r .addr-list>ul>li h4{
+	font-size: 22px;
+	line-height: 55px;
+	border-bottom: 1px dotted #E8E8E8;
+	margin: 0;
+	padding-left: 18px ;
+}
+.shop-add .grid-r .addr-list>ul>li .info{
+	padding: 10px;
+	position: relative;
+	overflow: hidden;
+}
+.shop-add .info-tb{
+	width: 440px;
+}
+.shop-add .info-tb th{
+	width: 36px;
+}
+.shop-add .info-tb th>span{
+	background-image: url(../images/add-icons.png);
+	width: 30px;
+	height: 30px;
+	display: block;
+}
+.shop-add .info-tb th>span.add-icon{
+	background-position: 0 0;
+}
+.shop-add .info-tb th>span.service-icon{
+	background-position: -30px 0;
+}
+.shop-add .info-tb th>span.tel-icon{
+	background-position: -60px 0;
+}
+.shop-add .info-tb th>span.fax-icon{
+	background-position: 0 -30px;
+}
+.shop-add .info-tb th>span.net-icon{
+	background-position: -30px -30px;
+}
+.shop-add .info-tb .link-map{
+	text-decoration: underline;
+	color: #535ef5;
+	margin-left: 10px;
+	display: inline-block;
+	*zoom: 1;
+}
+.shop-add .info-tb th,
+.shop-add .info-tb td{
+	vertical-align: middle;
+	padding: 3px;
+}
+.shop-add .MarinaShop .info-tb{
+	float: left;
+}
+.shop-add .MarinaShop .img-bd{
+	float: right;
+}

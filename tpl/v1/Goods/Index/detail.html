@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<title>{$detail.name}</title>
+	
+	<tc_include file='Public:head'/>
+	<script src="/statics/js/goods.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+</head>
+<body class="theme">	
+	
+	<tc_include file='Public:header'/>
+	
+	<div class="wrapper">
+		<div class="wrap">
+			<section class="bg-white">
+				<div class="details-info">
+					<div class="info-l">
+						<div class="pic-show">
+							<a href="#">
+								<img src="{$detail.img_url}"/>
+							</a>
+						</div>
+						<ul class="pic-list">
+							<volist name='pics' id='vo'>
+							<li>
+								<a href="javascript:void(0)">
+									<img src="{$vo.img_url}"/>
+								</a>
+							</li>
+							</volist>
+						</ul>
+						<div class="details-share">
+							<div class="share-box">
+								<!-- JiaThis Button BEGIN -->
+									<div class="jiathis_style">
+										<span class="jiathis_txt">分享到：</span>
+										<a class="jiathis_button_fb"></a>
+										<a class="jiathis_button_twitter"></a>
+										<a class="jiathis_button_tsina"></a>
+										<a class="jiathis_button_email"></a>
+										<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank">更多</a>
+										<a class="jiathis_counter_style"></a>
+									</div>
+									<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+								<!-- JiaThis Button END -->
+							</div>
+						</div>
+						
+					</div>
+					<div class="info-c">
+						<div class="info-intr">
+							<h4>{$detail.name}<i class="icon"></i></h4>
+							<p>{$detail.seo_title}</p>
+							<p class="tips">{$charge}</p>
+						</div>
+						<div class="info-data">
+							<div class="dl-hori">
+								<dl>
+									<dt>定　　　價：</dt>
+									<dd>HK$<font id="amount">{$detail.price}</font></dd>
+									<if condition="$detail.pricespe neq 0"><dd>特价HK${$detail.pricespe}</dd></if>
+								</dl>
+								<dl>
+									<dt>格　　　式：</dt>
+									<dd>{$format}</dd>
+								</dl>
+								<dl>
+									<dt>貨幣轉換器：</dt>
+									<dd>
+										<select name="">
+											<option value="">美元</option>
+											<option value="">人民幣</option>
+										</select>
+									</dd>
+								</dl>
+								<dl>
+									<dt>購&nbsp;買&nbsp;數&nbsp;量：</dt>
+									<dd>
+										<div class="count-box">
+											<span class="down" data-id="0">-</span>
+											<input class="buy_count" type="text" name='number' id='number' value="1" />
+											<span class="up" data-id="1">+</span>
+										</div>
+										
+									</dd>
+								</dl>							
+								 <!-- {* 开始循环所有可选属性 *} -->
+								<volist name='specification' id='spec' key='spec_key' >	
+								<dl>
+									<dt>{$spec.name}：</dt>
+									<dd>
+									      <!-- {* 判断属性是复选还是单选 *} -->
+						                  <if condition="$spec.attr_type eq 1">
+							                  <ul class="attr-select select-single">
+						                        <volist name='spec.values' id='value' key='key' >
+						                        <li onclick="changePrice({$value.id}, {$value.price})">{$value.label}</li>
+						                        </volist>
+						                     </ul>  
+						                    <else />
+						                    <ul class="attr-select select-mul">
+						                      <volist name='spec.values' id='value' key='key' >
+						                     	<li onclick="changePrice({$value.id}, {$value.price})">{$value.label}</li>
+						                     </volist>
+						                     </ul>  
+						                   </if>									      
+									 </dd>
+								</dl>
+								 </volist>
+								<!-- {* 结束循环可选属性 *} -->
+								
+							</div>							
+						</div>
+						<div class="info-btns">
+							<button class="btn btn-lg buy">立即购买</button>
+							<button id='addCart' class="btn btn-lg">加入购物车</button>
+							<button class="btn btn-lg addFav">收藏</button>
+						</div>
+					</div>
+					<div class="info-r">
+						<div class="hd">
+							<h4>最近浏览</h4>
+						</div>
+						<div class="bd">
+							<div class="bd-box clearfix">
+								<ul class="lately-see">
+								<volist name="history" id="vo"> 
+									<php> if( $key %2 ==0 && $key != 0 ) echo '</ul><ul class="lately-see">';</php>
+									<li>
+										<a href="{:U('goods/index/detail', array( 'id' => $vo['id'] ) )}">
+											<img src="{$vo.smallimage}" width='137' />
+										</a>
+										<h5>{$vo.name}</h5>
+										<p class="color">HK${$vo.price}</p>
+									</li>
+								</volist>
+								</ul>
+								
+							</div>
+						</div>
+						<div class="foot">
+							<a href="javascript:void(0)" class="up" data-id="up">∧</a>
+							<a href="javascript:void(0)" class="down" data-id="down">∨</a>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="bg-white border-top3">
+				<div class="border border-nt">
+					<div class="slider fl">
+						<div class="slider-hd">
+							<h4>推荐商品</h4>
+						</div>
+						<div class="slider-bd">
+							<ul class="items">	
+								<volist name='recGoods' id='vo'>						
+								<li>
+									<div class="imgbox">
+										<a href="{:U('goods/index/detail', array( 'id' => $vo['id'] ) )}"><img src="{$vo.img_url}"/></a>
+									</div>
+									<div class="item-intr">
+										<h5><a href="{:U('goods/index/detail', array( 'id' => $vo['id'] ) )}">{$vo.name}</a></h5>
+										<p>HK${$vo.price}</p>
+									</div>
+								</li>
+								</volist> 
+							</ul>
+						</div>
+					</div>
+					
+					
+					<div class="main grid-right">					
+						<div class="details-wrap">
+							<ul class="tabbar clearfix">
+								<li class="active">
+									<a href="javascript:void(0)">商品详情</a>
+								</li>
+								<li>
+									<a href="javascript:void(0)">艺人其他作品</a>
+								</li>
+								<li>
+									<a href="javascript:void(0)">评价</a>
+								</li>
+							</ul>
+							<div class="tabs-cont">
+								<volist name='properties' id='vo'>
+									<div class="table-box">									
+										<div class="tag">
+											{$key}
+										</div>
+										<table class="table table-striped">	
+											<caption></caption>
+											<tr>
+											<volist name='vo' key='k' id='voli'>	
+												<php>if($k % 2 == 1 && $k != 1) echo '</tr><tr>';</php>									
+												<td>{$voli.name}：{$voli.value}</td>
+											</volist>
+											</tr>										
+										</table>
+									</div>
+								</volist>
+								<div class="table-box">
+									<div class="tag">
+										專輯介紹
+									</div>
+									<div class="cont">									
+	  									{$detail.content}
+	  								</div>									
+								</div>				
+							</div>
+							<div class="tabs-cont hide">
+								<div class="other-works">
+									<div class="work-item">
+										<a class="imgbox" href="">
+											<img src="/data/upload/2015-06-03/556e646ca4ff8.jpg"/>
+										</a>
+										<div class="work-info">
+											<h5>专辑《郑秀文世界巡回演唱会》</h5>
+											<p><span class="price">HK$119.00</span><span class="format">[DVD版本]</span></p>
+											<p><a class="btn btn-lg" href="">加入购物车</a></p>
+										</div>
+									</div>
+									<div class="work-item">
+										<a class="imgbox" href="">
+											<img src="/data/upload/2015-06-03/556e646ca4ff8.jpg"/>
+										</a>
+										<div class="work-info">
+											<h5>专辑《郑秀文世界巡回演唱会》</h5>
+											<p><span class="price">HK$119.00</span><span class="format">[DVD版本]</span></p>
+											<p><a class="btn btn-lg" href="">加入购物车</a></p>
+										</div>
+									</div>
+									<div class="work-item">
+										<a class="imgbox" href="">
+											<img src="/data/upload/2015-06-03/556e646ca4ff8.jpg"/>
+										</a>
+										<div class="work-info">
+											<h5>专辑《郑秀文世界巡回演唱会》</h5>
+											<p><span class="price">HK$119.00</span><span class="format">[DVD版本]</span></p>
+											<p><a class="btn btn-lg" href="">加入购物车</a></p>
+										</div>
+									</div>
+									<div class="work-item">
+										<a class="imgbox" href="">
+											<img src="/data/upload/2015-06-03/556e646ca4ff8.jpg"/>
+										</a>
+										<div class="work-info">
+											<h5>专辑《郑秀文世界巡回演唱会》</h5>
+											<p><span class="price">HK$119.00</span><span class="format">[DVD版本]</span></p>
+											<p><a class="btn btn-lg" href="">加入购物车</a></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tabs-cont hide">
+								<div class="detail-jugde">								
+									<table class="j-table">
+										<notempty name="comments_all">
+										<thead>
+											<tr>
+												<th>
+													评价
+												</th>
+												<th>
+													购买时间
+												</th>
+												<th>
+													评论者
+												</th>
+											</tr>
+										</thead>
+										</notempty>
+										<tbody>	
+											<empty name="comments_all">
+												<tr>
+													<td>
+														暂无评价~~~
+													</td>
+												</tr>
+											<else/>							
+												<volist name="comments_all" id="comments">
+												<tr>
+													<td class="cont-td">	
+														<volist name="comments" id="vo">
+															<if condition="$vo.type eq 1">												
+																<div class="cont">
+																	<div class="cont-num">
+																		初次评价：
+																	</div>
+																	<div class="cont-main">
+																		<div class="cont-info">
+																			{$vo.content}
+																			<span class="info-time">{$vo.createtime}</span>
+																		</div>
+																		<notempty name="vo.img">
+																			<ul class="cont-imgs">
+		
+																					<volist name="vo.img" id="rs">
+																						<li>
+																							<img src="{$rs.small}" class="{$rs.big}"/>
+																							<b class="img-arrow"></b>
+																						</li>
+																					</volist>																		
+																			</ul>
+																			<div class="cont-img">
+																				<img src=""/>
+																			</div>
+																		</notempty>
+																	</div>
+																</div>	
+															<else/>												
+																<div class="cont">
+																	<div class="cont-num">
+																		追加评价：
+																	</div>
+																	<div class="cont-main">
+																		<div class="cont-info">
+																			{$vo.content}
+																			<span class="info-time">{$vo.createtime}</span>
+																		</div><!--	
+																		<notempty name="vo.img">
+																			<ul class="cont-imgs">
+		
+																					<volist name="vo.img" id="rs">
+																						<li>
+																							<img src="{$rs.small}" class="{$rs.big}"/>
+																							<b class="img-arrow"></b>
+																						</li>
+																					</volist>																		
+																			</ul>
+																			<div class="cont-img">
+																				<img src=""/>
+																			</div>
+																		</notempty>												
+																	--></div>
+																</div>
+															</if>
+														</volist>
+													</td>
+													<td class="j-time">
+														{$comments.0.order_id|sp_get_order_time}
+													</td>
+													<td class="j-buyer">
+														<a class="buyer" href="">
+															<img src="{$comments.0.uid|sp_get_user_avatar_url_byID}"/>
+														</a>
+														<p>{$comments.0.username}</p>
+													</td>
+												</tr>
+												</volist>
+											</empty>
+										</tbody>
+									</table>
+								</div>
+								
+							</div>
+						</div>
+						
+						<div class="tuijian">
+							<div class="tj-hd">
+								<h4>
+									猜你喜歡
+								</h4>
+							</div>
+							<div class="tj-bd">
+								<div class="scrollLeft">									
+									<ul class="clearfix">
+										<volist name='recGoods' id='vo'>						
+											<li>
+												<a href="{:U('goods/index/detail', array( 'id' => $vo['id'] ) )}"><img src="{$vo.img_url}"/></a>
+												<h5>{$vo.name}</h5>
+												<p class="tips">HK${$vo.price}</p>
+											</li>
+										</volist> 
+									</ul>
+								</div>
+								<!--<div class="scroll-btn">
+									<div class="l-btn">
+										<
+									</div>
+									<div class="r-btn">
+										>
+									</div>
+								</div>-->
+							</div>
+						</div>
+					</div>					
+					
+				</div>
+			</section>
+			
+			
+		</div>		
+	</div>
+	<tc_include file='Public:footer'/>
+<script type="text/javascript">
+	var price = {$detail.price};
+	var totalPrice = {$detail.price};
+	var attr_ids = [];
+	$(function(){		
+		$('.tabbar li').click(function(){
+				$(this).siblings().removeClass('active');
+				$(this).addClass('active');
+				$('.tabs-cont').eq($(this).index()).siblings('.tabs-cont').hide();
+				$('.tabs-cont').eq($(this).index()).show();
+			});
+		
+		
+		// 评价内容图片放大缩小 Js
+		$('.cont-imgs li').click(function(){
+			if($(this).hasClass('current')){
+				$(this).removeClass('current');
+				$(this).parents('.cont-main').find('.cont-img').css('display','none');
+			}else{
+				$(this).addClass('current').siblings('li').removeClass('current');
+				$(this).parents('.cont-main').find('.cont-img').css('display','inline-block').find('img').attr('src',$(this).find('img').attr('class'));
+			}
+		});
+		
+		//	详情属性选择 Js
+		$('.info-c .select-single li').click(function(){
+			if($(this).hasClass('selected')){
+				$(this).removeClass('selected');
+			}else{
+				$(this).addClass('selected').siblings().removeClass('selected');
+			}
+		});
+		$('.info-c .select-mul li').click(function(){
+			if($(this).hasClass('selected')){
+				$(this).removeClass('selected');
+			}else{
+				$(this).addClass('selected');
+			}
+		});
+		
+		
+	});
+		
+	
+		$('#addCart').click(function(){
+			var num = $(".buy_count").val();
+			addCart( {$detail.id} , num, "{:U('Order/cart/addCart')}" , '{:U("order/cart/getCartNum")}' , attr_ids );
+		})
+		
+		$("button.addFav").click(function(){
+			AddFav( {$detail.id}, '{:U("user/my/addFav")}' );
+		})
+		$("button.buy").click(function(){
+			var num = $(".buy_count").val();
+			addCart( {$detail.id} , num, "{:U('Order/cart/addCart')}" , '{:U("order/cart/getCartNum")}' , attr_ids );
+			location.href="{:U('order/cart/index')}";
+		})
+	</script>
+</body>	
+</html>

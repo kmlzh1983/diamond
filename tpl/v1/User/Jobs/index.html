@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <title>发布历史</title>
+
+    <tc_include file='Public:head'/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/order.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/main.css"/>
+
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/js/layer/skin/layer.css"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/js/layer/skin/layer.ext.css"/>
+
+    <script src="__TMPL__Public/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        #jobPos {padding: 20px;}
+        #jobPos .desc{}
+    </style>
+
+</head>
+<body class="theme foot-white-bg">
+<tc_include file='Public:header'/>
+
+<div class="wrapper order-wrap">
+    <div class="wrap">
+        <div class="grid address-page">
+            <tc_include file='User:My:leftside'/>
+            <div class="grid-r">
+                <div class="order-main">
+                    <div class="hd">
+                        <div class="tips">
+                            发布历史-- <a href="{:U('user/jobs/aejobs')}" onclick="check_auth();return false" style="color: mediumvioletred">发布职位</a>
+                        </div>
+                    </div>
+                    <div class="bd">
+                        <div class="margin-out">
+
+                            <table class="f-table">
+                                <thead>
+                                <tr>
+                                    <td width="14%">发布日期</td>
+                                    <td width="10%">岗位名称</td>
+                                    <td>收到的简历数</td>
+                                    <td>刷新时间</td>
+                                    <td width="16%">状态</td>
+                                    <td width="16%">操作</td>
+
+                                </tr>
+                                </thead>
+                                <tbody class="dot-line">
+                                <tr>
+                                    <td colspan="6"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6"></td>
+                                </tr>
+                                </tbody>
+                                <volist name='jobs' id='vo'>
+                                    <tbody>
+                                    <tr>
+                                        <td>{$vo.addtime|date="Y-m-d H:i:s",###}</td>
+                                        <td>
+                                            <p>{$vo.job_name}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{:U('resume/receive_group')}&job_id={$vo.id}" title="点击查看">{$vo.rcount}</a>
+                                        </td>
+                                        <td>
+                                            {$vo.refreshtime|date="Y-m-d H:i:s",###}
+                                        </td>
+                                        <td>
+                                        <if condition="$vo['status'] eq 0 ">
+                                            待审核
+
+                                            <elseif condition="$vo['status'] eq 2" />
+                                            显示中
+                                            <elseif condition="$vo['status'] eq 3" />
+                                            审核不通过
+                                            <elseif condition="$vo['status'] eq 4" />
+                                            已下架
+
+                                        </if>
+                                        </td>
+                                        <td>
+                                            <a data-id='{$vo.id}'  href="javascript:void(0)" class="viewJob">查看</a>
+                                            |
+                                            <a data-id='{$vo.id}'  href="javascript:void(0)" class="editJob">编辑</a>
+                                            |
+                                            <if condition="$vo['status'] eq 2 ">
+                                            <a data-id='{$vo.id}' class='offline_job' href="javascript:void(0)">下架</a>
+                                            |
+                                            <a class='refreshJob' data-id='{$vo.id}' href="javascript:void(0)">刷新</a>
+                                            |
+
+                                            <a class='recommendJob' data-id='{$vo.id}' href="{:U('jobs/job_pos')}&id={$vo.id}&type=recommend">置顶</a>
+                                            |
+                                            <a class='highlightJob' data-id='{$vo.id}' href="{:U('jobs/job_pos')}&id={$vo.id}&type=highlight">高亮</a>
+                                            |
+                                            <a class='emergencyJob' data-id='{$vo.id}' href="{:U('jobs/job_pos')}&id={$vo.id}&type=emergency">加急</a>
+                                            </if>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                    <tbody class="dot-line">
+                                    <tr>
+                                        <td colspan="6"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"></td>
+                                    </tr>
+                                    </tbody>
+                                </volist>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="bd">
+                        {$show}
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<tc_include file='Public:footer'/>
+<script>
+
+    //编辑工作
+    $(".editJob").click(function () {
+        var rid = $(this).attr("data-id");
+        var url = "{:U('user/jobs/aejobs?jid=')}"+rid;
+        location.href = url;
+    })
+
+
+    //下架
+    $(".offline_job").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"{:U('user/jobs/offline_job')}",
+            dataType:'json',
+            data:{id:$(this).attr('data-id')},
+            success:function(data){
+                alert(data.msg);
+                if(data.r==0){
+                    location.reload();
+                }
+            }
+
+        });
+    });
+
+    $(".refreshJob").click(function(){
+        $.ajax({
+            type:"POST",
+            url:"{:U('user/jobs/refresh_job')}",
+            dataType:'json',
+            data:{id:$(this).attr('data-id')},
+            success:function(data){
+
+                alert(data.msg);
+                if(data.r==0)
+                    location.reload();
+            }
+
+        });
+    });
+    function check_auth(){
+        var html =
+                '<div class="no-verify" style="padding: 20px"><p class="title1">对不起您的身份还未认证，请先认证</p><p class="verifyss"><a href="{:U('User/my/user_verify')}" class="red">现在去认证</a></p></div>';
+
+        $.ajax({
+            url:"{:U('jobs/publish_auth')}",
+            dataType:'text',
+            type:"POST",
+            data:{},
+            success: function (data) {
+                if(data==1){
+                    location.href="{:U('Jobs/aejobs')}"
+                }else{
+                    layer.open({
+                        type: 1,
+                        title: '认证身份',
+                        maxmin: true,
+                        shadeClose: true, //点击遮罩关闭层
+                        area : ['330px' , '140px'],
+                        content: html
+                });
+                }
+            }
+
+        });
+        return false;
+    }
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>招聘页列表</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <link rel="shortcut icon" href="http://localhost/zp/favicon.ico" />
+    <meta name="author" content="XG人才招聘系统" />
+    <meta name="copyright" content="XG人才招聘系统" />
+
+    <link href="__TMPL__Public/zp/css/index.css" rel="stylesheet" type="text/css" />
+    <link href="__TMPL__Public/zp/css/jobs.css" rel="stylesheet" type="text/css" />
+
+    <script src="__ROOT__/statics/js/Util.js"></script>
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- HTML5 shim for IE8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <![endif]-->
+
+
+    <link href="__ROOT__/statics/simpleboot/font-awesome/4.2.0/css/font-awesome.min.css"  rel="stylesheet" type="text/css">
+    <style>
+        .length_3{width: 180px;}
+        form .input-order{margin-bottom: 0px;padding:3px;width:40px;}
+    </style>
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="__ROOT__/statics/simpleboot/font-awesome/4.2.0/css/font-awesome-ie7.min.css">
+
+    <![endif]-->
+
+    <script type="text/javascript">
+        //全局变量
+        var GV = {
+            DIMAUB: "__ROOT__/",
+            JS_ROOT: "statics/js/",
+            TOKEN: ""
+        };
+    </script>
+    <!-- Le javascript
+        ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="__ROOT__/statics/js/jquery.js"></script>
+    <script src="__ROOT__/statics/js/wind.js"></script>
+    <script src="__ROOT__/statics/simpleboot/bootstrap/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+
+<div class="wrap">
+    <!--头部start-->
+    <tc_include file='Public:header'/>
+    <!--头部end-->
+    <!--主体部分-->
+    <div id="main" class="main">
+        <div class="position">
+            <span class="red">当前位置:</span>
+            <a href="">首页</a>
+            <span> >> </span>
+            家政招聘
+        </div>
+        <div id="job">
+            <div class="lists">
+                <form action="" method="post" id="search-form">
+                <div class="search">
+                    <div class="search-item search-area">
+                        <span class="title">区域：</span>
+                        <ul class="flul">
+                            <li data-id="0">不限</li>
+                            <volist name="region" id="vo">
+                                <li data-id="{$vo.id}">{$vo.name}</li>
+                            </volist>
+                            <input type="hidden" name="area_id" id="area_id" />
+                        </ul>
+                        <div class="c"></div>
+                    </div>
+                    <div class="c"></div>
+                    <div class="search-item search-date">
+                        <span class="title">日期：</span>
+                        <ul class="flul">
+                            <li data-id="0">不限</li>
+                            <li data-id="1">今天</li>
+                            <li data-id="2">明天</li>
+                            <li class="noactive">
+                                <span>自定义：</span>
+                                <input type="text" name="start-date" id="start-date" class="input length_2 J_date"/><span> 至 </span>
+                                <input type="text" name="end-date" id="end-date" class="input length_2 J_date"/>
+                            </li>
+                            <input type="hidden" id="date_id" name="date_id" />
+                            <input type="hidden" id="work_start_date" name="start_date" />
+                            <input type="hidden" id="work_end_date" name="end_date"/>
+                        </ul>
+                    </div>
+                    <div class="c"></div>
+                    <div class="search-item search-cate">
+                        <span class="title">兼职类型：</span>
+                        <ul class="flul">
+                            <li class="noactive">
+                                <select name="cate-1" id="cate-1">
+                                    <option value="0">不限</option>
+                                    <volist name="cate" id="vo">
+                                        <option value="{$vo.id}">{$vo.name}</option>
+                                    </volist>
+                                </select>
+                            </li>
+                            <input type="hidden" id="cate_url" value="{:U('jobs/get_son_cate')}"/>
+                            <li class="noactive">
+                                <span class="title">兼职行业：</span>
+                                <select name="cate-2" id="cate-2">
+                                    <option value="0">不限</option>
+                                </select>
+                            </li>
+                            <li class="noactive">
+                                <span class="title">岗位名称：</span>
+                                <select name="cate-3" id="cate-3">
+                                    <option value="0">不限</option>
+                                </select>
+                            </li>
+                            <input type="hidden" id="catid" name="catid"/>
+
+                        </ul>
+                    </div>
+                    <div class="c"></div>
+                    <div class="search-item search-pay">
+                        <span class="title">兼职待遇：</span>
+                        <ul class="flul">
+                            <li data-id="0">
+                                不限
+                            </li>
+                            <li data-id="1">15元以下/小时</li>
+                            <li data-id="2">15-20元/小时</li>
+                            <li data-id="3">20元以上/小时</li>
+                            <input type="hidden" id="pay_id" name="pay_id"/>
+                        </ul>
+                    </div>
+                    <div class="c"></div>
+                    <div class="search-item search-time">
+                        <span class="title">工作时长：</span>
+                        <ul class="flul">
+                            <li data-id="0">
+                                不限
+                            </li>
+                            <li data-id="1">1小时以下</li>
+                            <li data-id="2">1-2小时</li>
+                            <li data-id="3">2-3小时</li>
+                            <li data-id="4">3-4小时</li>
+                            <li data-id="5">4小时以上</li>
+                            <input type="hidden" name="time_id" id="time_id"/>
+                        </ul>
+                    </div>
+                    <div class="c"></div>
+                    <div class="search-btn">
+                        <button id="search">搜索</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+
+
+
+        <div class="job-list">
+            <volist name="jobs" id="v">
+                <a href="{:U('Jobs/detail')}&id={$v.id}">
+                <div class="item fl">
+                    <div class="item-body">
+                        <ul>
+                            <li>岗位名称：{$v.job_name}</li>
+                            <li>工作内容：{$v.job_desc}</li>
+                            <li>工作时间：{$v.work_start_date|substr=5,5}</li>
+                            <li>岗位类别：{$v.catname}</li>
+                        </ul>
+                    </div>
+                    <div class="item-bottom">
+                        <ul class="flul">
+                            <li>地点：{$v.cityName}</li>
+                            <li>{$v.work_pay}元/小时</li>
+                            <li>联系</li>
+                            <div class="c"></div>
+                        </ul>
+
+                    </div>
+                    <div class="c"></div>
+                </div>
+                </a>
+            </volist>
+
+            <div class="c"></div>
+        </div>
+    <div class="page">
+        {$show}
+    </div>
+    </div>
+    <!--主体部分end-->
+
+    <!--底部start-->
+    <tc_include file='Public:footer'/>
+    <!--底部end-->
+</div>
+<script>
+
+
+</script>
+<script src="__ROOT__/statics/js/common.js"></script>
+<script src="__TMPL__Public/zp/js/job.js" type="text/javascript" language="javascript"></script>
+</body>
+</html>

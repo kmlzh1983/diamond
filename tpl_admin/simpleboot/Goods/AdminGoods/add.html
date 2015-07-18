@@ -1,0 +1,410 @@
+<admintpl file="header"/>
+<script src="__ROOT__/statics/js/utils.js"></script>
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+  <ul class="nav nav-tabs">
+     <!-- 
+	     <li><a href="{:U('AdminGoods/index')}">所有商品</a></li>
+	     <li class="active"><a href="{:U('AdminGoods/add',array('term'=>empty($term['term_id'])?'':$term['term_id']))}"  target="_self">添加商品</a></li>
+      -->
+      <li class="active"><a href="#A" data-toggle="tab">基本属性</a></li>
+      <li><a href="#B" data-toggle="tab">详细描述</a></li>
+      <li><a href="#F" data-toggle="tab">其他属性</a></li>
+      <li><a href="#C" data-toggle="tab">商品属性</a></li>
+      <li><a href="#D" data-toggle="tab">商品相册</a></li>
+      <li><a href="#E" data-toggle="tab">SEO设置</a></li>
+      <!-- <li><a href="#F" data-toggle="tab">关联商品</a></li>
+      <li><a href="#G" data-toggle="tab">关联文章</a></li> -->      
+  </ul>
+  <form name="myform" id="myform" action="{:u('AdminGoods/add_post')}" method="post" class="form-horizontal J_ajaxForms" enctype="multipart/form-data">
+  <div class="tabbable">
+     <div class="tab-content">
+       <div class="tab-pane active" id="A">
+		  <table cellpadding="2" cellspacing="2" width="100%">
+			<tbody>
+				<tr>
+					<th style="width:90px;">名称:</th>
+						<td>
+							<input type="text" style="width:400px;" name="post[name]" required value="" style="color:" class="input input_hd J_title_color" placeholder="请输入商品名称" onkeyup="strlen_verify(this, 'title_len', 160)" />
+              				<span class="must_red">*</span>
+						</td>
+				</tr>
+				<tr>
+					<th style="width:90px;">标题:</th>
+						<td>
+							<input type="text" style="width:400px;" name="post[title]" value="" style="color:" class="input input_hd J_title_color" placeholder="请输入标题" onkeyup="strlen_verify(this, 'title_len', 160)" />
+						</td>
+				</tr>
+                    <tr>
+						<th>货号:</td>
+						<td><input type="text" name="post[serial]"  class='input'  value="" />如果您不输入商品货号，系统将自动生成一个唯一的货号。</td>
+					</tr>
+                    <tr>
+						<th>价格:</th>
+						<td><input type="text" name="post[price]"  class='input'  value="" /></td>
+					</tr>
+                    <tr>
+						<th>特价:</th>
+						<td><input type="text" name="post[pricespe]"  class='input'  value="" /></td>
+					</tr>
+					  <tr>
+						<th>成本价:</th>
+						<td><input type="text" name="post[costprice]"  class='input'  value="" /></td>
+					</tr>
+                    <tr>
+						<th>供应商:</th>
+						<td>
+							<select name="post[supplier_id]"  class='normal_select'  >
+	                        <option value="0">请选择</option>
+	                        <volist name="supplier" id="vo">
+	                        	<option value="{$vo['id']}">{$vo.name}</option>
+	                        </volist>
+                        </select>
+                        </td>
+					</tr>
+					
+                    <tr>
+						<th>赠送积分:</th>
+						<td><input type="text" name="post[points]"  class='input'  value="0" /></td>
+					</tr>
+                    <tr>
+						<th>产品分类:</th>
+						<td>
+							<select name="post[cate_id]" class="normal_select">
+								<option value="0">请选择</option>
+								<foreach name="cate" item="vo">
+						        	<option value="{$vo.id}">{$vo.spacer}{$vo.name}</option>
+								</foreach>
+							</select>
+						</td>
+					</tr>
+                     <tr>
+						<th>品牌:</th>
+						<td>
+                        <select name="post[brand_id]"  class='normal_select'  >
+	                        <option value="0">请选择</option>
+	                        <volist name="brand" id="vo">
+	                        	<option value="{$vo['id']}">{$vo.name}</option>
+	                        </volist>
+                        </select>
+                        </td>
+					</tr>
+					 <tr>
+						<th>格式:</th>
+						<td>
+                        <select name="post[format]"  class='normal_select'  >
+	                        <option value="0">请选择</option>
+	                        <volist name="format" id="vo">
+	                        	<option value="{$key}">{$vo}</option>
+	                        </volist>
+                        </select>
+                        </td>
+					</tr> 
+                     <tr>
+						<th>付運預計時間:</th>
+						<td>
+                        <select name="post[availability]"  class='normal_select'  >
+	                        <option value="0">请选择</option>
+	                        <volist name="availability" id="vo">
+	                        	<option value="{$key}">{$vo}</option>
+	                        </volist>
+                        </select>
+                        </td>
+					</tr> 
+					 <tr>
+						<th>邮费分类:</th>
+						<td>
+                        <select name="post[charge]"  class='normal_select'  >
+	                        <option value="0">请选择</option>
+	                        <volist name="charge" id="vo">
+	                        	<option value="{$key}">{$vo}</option>
+	                        </volist>
+                        </select>
+                        </td>
+					</tr>
+			</tbody>
+		</table>
+  		</div>
+		<div class="tab-pane" id="F">
+		  <table cellpadding="2" cellspacing="2" width="100%">
+			<tbody> 
+					<tr>
+						<th style="width:90px;">重量(KG):</th>
+						<td><input type="text" name="post[weight]"  class='input'  value="" /></td>
+					</tr>  
+					<tr>
+						<th>库存:</th>
+						<td><input type="text" name="post[stock]"  class='input'  value="" /></td>
+					</tr>  	
+					 <tr style="height:30px;">
+						<th>预售产品:</th>
+						<td><input type="radio" value="1"  name="post[preorder]"  class='input' />是 
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[preorder]"  class='input' checked/>否</td>
+					</tr>			 
+                    <tr style="height:30px;">
+						<th>最新产品:</th>
+						<td><input type="radio" value="1"  name="post[isnew]"  class='input'   />是 
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[isnew]"  class='input'   checked/>否</td>
+					</tr>
+                    <tr style="height:30px;">
+						<th>热卖产品:</th>
+						<td><input type="radio" value="1"  name="post[ishot]"  class='input'   />是
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[ishot]"  class='input'   checked/>否</td>
+					</tr>
+                    <tr style="height:30px;">
+						<th>推荐产品:</th>
+						<td><input type="radio" value="1"  name="post[isrec]"  class='input'   />是
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[isrec]"  class='input'   checked/>否</td>
+					</tr>
+                    <tr style="height:30px;">
+						<th>特价产品:</th>
+						<td><input type="radio" value="1"  name="post[isprice]"  class='input'   />是
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[isprice]"  class='input'   checked/>否</td>
+					</tr>
+                   <tr style="height:30px;">
+						<th>上架:</th>
+						<td><input type="radio" value="1"  name="post[isdown]"  class='input'   />是
+						&nbsp;&nbsp;
+						<input type="radio" value="0"  name="post[isdown]"  class='input'   checked/>否</td>
+					</tr>
+                   
+			</tbody>
+		</table>
+  		</div>
+		  <div class="tab-pane" id="B">
+		       <table width="98%">
+				<tbody>
+					<tr>
+		              <td><div id='content_tip'></div>
+		              <script type="text/plain" id="content" name="post[content]" style="height:500px"></script>
+		                <script type="text/javascript">
+		                //编辑器路径定义
+		                var editorURL = GV.DIMAUB;
+		                </script>
+		                <script type="text/javascript"  src="__ROOT__/statics/js/ueditor/ueditor.config.js"></script>
+		                <script type="text/javascript"  src="__ROOT__/statics/js/ueditor/ueditor.all.min.js"></script>
+						</td>
+		            </tr>
+				</tbody>
+			</table>
+		   </div>
+		   
+		   <div class="tab-pane" id="C">
+		       <table width="98%">
+				<tbody>
+					<tr>
+		              <th width="80">商品类型</th>
+		              <td>
+							<select name="post[type_id]"  class='input' id="type_id">
+	                        <option value="0">请选择</option>
+	                        <volist name="types" id="vo">
+	                        	<option value="{$vo['id']}">{$vo.name}</option>
+	                        </volist>
+                        </select>
+					  </td>
+		            </tr>		             
+					<tr>
+			            <td id="tbody-goodsAttr" colspan="2" style="padding:0">{$goods_attr_html}</td>
+			        </tr>
+				</tbody>
+			</table>
+		   </div>
+		   
+		   <div class="tab-pane" id="D">
+		       <table width="98%">
+				<tbody>
+					<tr>
+		              <td>
+						<fieldset class="blue pad-10">
+				        <legend>图片列表</legend>
+				        <ul id="goods_photos" class="picList"></ul>
+						</fieldset>
+						<div class="bk10"></div>
+						&nbsp;&nbsp;<a href='javascript:void(0);' onclick="javascript:flashupload('albums_images', '图片上传','goods_photos',change_images,'10,gif|jpg|jpeg|png|bmp,0','','','', 0)" class="btn">选择图片 </a> </td>
+		            </tr>
+				</tbody>
+			</table>
+		   </div>
+		   
+		    <div class="tab-pane" id="E">
+          		<table cellpadding="2" cellspacing="2" width="100%">
+					<tbody>
+						<tr>
+							<th width="80">SEO标题:</th>
+							<td><input type="text" class="input" name="post[seo_title]" value=""></td>
+						</tr>
+						<tr>
+							<th>SEO关键字:</th>
+							<td><input type="text" class="input" name="post[seo_keywords]" value=""></td>
+						</tr>
+						<tr>
+							<th>SEO描述:</th>
+							<td><textarea name="post[seo_description]" rows="5" cols="57"></textarea></td>
+						</tr>
+					</tbody>
+				</table>
+          </div>
+                 
+	 </div>
+  </div>	          
+  
+  <div class="form-actions">
+        <button class="btn btn-primary btn_submit J_ajax_submit_btn"type="submit">提交</button>
+        <a class="btn" href="<php> echo Cookie('__forward__')</php>">返回</a>
+  </div>
+ </form>
+</div>
+<script type="text/javascript" src="__ROOT__/statics/js/common.js"></script>
+<script type="text/javascript" src="__ROOT__/statics/js/content_addtop.js"></script>
+<script type="text/javascript"> 
+$(function () {
+	//setInterval(function(){public_lock_renewal();}, 10000);
+	$(".J_ajax_close_btn").on('click', function (e) {
+	    e.preventDefault();
+	    Wind.use("artDialog", function () {
+	        art.dialog({
+	            id: "question",
+	            icon: "question",
+	            fixed: true,
+	            lock: true,
+	            background: "#CCCCCC",
+	            opacity: 0,
+	            content: "您确定需要关闭当前页面嘛？",
+	            ok:function(){
+					setCookie("refersh_time",1);
+					window.close();
+					return true;
+				}
+	        });
+	    });
+	});
+	/////---------------------
+	 Wind.use('validate', 'ajaxForm', 'artDialog', function () {
+			//javascript
+	            //编辑器
+	            editorcontent = new baidu.editor.ui.Editor();
+	            editorcontent.render( 'content' );
+	            try{editorcontent.sync();}catch(err){};
+	            //增加编辑器验证规则
+	            jQuery.validator.addMethod('editorcontent',function(){
+	                try{editorcontent.sync();}catch(err){};
+	                return editorcontent.hasContents();
+	            });
+	            var form = $('form.J_ajaxForms');
+	        //ie处理placeholder提交问题
+	        if ($.browser.msie) {
+	            form.find('[placeholder]').each(function () {
+	                var input = $(this);
+	                if (input.val() == input.attr('placeholder')) {
+	                    input.val('');
+	                }
+	            });
+	        }
+	        //表单验证开始
+	        form.validate({
+				//是否在获取焦点时验证
+				onfocusout:false,
+				//是否在敲击键盘时验证
+				onkeyup:false,
+				//当鼠标掉级时验证
+				onclick: false,
+	            //验证错误
+	            showErrors: function (errorMap, errorArr) {
+					//errorMap {'name':'错误信息'}
+					//errorArr [{'message':'错误信息',element:({})}]
+					try{
+						$(errorArr[0].element).focus();
+						art.dialog({
+							id:'error',
+							icon: 'error',
+							lock: true,
+							fixed: true,
+							background:"#CCCCCC",
+							opacity:0,
+							content: errorArr[0].message,
+							cancelVal: '确定',
+							cancel: function(){
+								$(errorArr[0].element).focus();
+							}
+						});
+					}catch(err){
+					}
+	            },
+	            //验证规则
+	            rules: {'post[name]':{required:1},'post[content]':{editorcontent:true}},
+	            //验证未通过提示消息
+	            messages: {'post[name]':{required:'请输入商品名称'},'post[content]':{editorcontent:'内容不能为空'}},
+	            //给未通过验证的元素加效果,闪烁等
+	            highlight: false,
+	            //是否在获取焦点时验证
+	            onfocusout: false,
+	            //验证通过，提交表单
+	            submitHandler: function (forms) {
+	                $(forms).ajaxSubmit({
+	                    url: form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+	                    dataType: 'json',
+	                    beforeSubmit: function (arr, $form, options) {
+	                        
+	                    },
+	                    success: function (data, statusText, xhr, $form) {
+	                        if(data.status){
+								setCookie("refersh_time",1);
+								//添加成功
+								Wind.use("artDialog", function () {
+								    art.dialog({
+								        id: "succeed",
+								        icon: "succeed",
+								        fixed: true,
+								        lock: true,
+								        background: "#CCCCCC",
+								        opacity: 0,
+								        content: data.info,
+										button:[
+											{
+												name: '继续添加？',
+												callback:function(){
+													reloadPage(window);
+													return true;
+												},
+												focus: true
+											},{
+												name: '返回列表页',
+												callback:function(){
+													location='{:U('AdminGoods/index')}';
+													return true;
+												}
+											}
+										]
+								    });
+								});
+							}else{
+								isalert(data.info);
+							}
+	                    }
+	                });
+	            }
+	        });
+	    });
+	////-------------------------
+	$("#type_id").change(function(){ 
+		$.getJSON( "{:u('AdminGoods/getGoodsTypeAttrs')}", { type_id: this.value  }, function(data, textStatus, jqXHR){
+			if (data.state === 'success') {
+                $("#tbody-goodsAttr").html( data.content );
+            } else if (data.state === 'fail') {
+                //art.dialog.alert(data.info);
+            	alert(data.info);//暂时处理方案
+            }
+		} );
+		
+	})
+});
+
+</script>
+</body>
+</html>

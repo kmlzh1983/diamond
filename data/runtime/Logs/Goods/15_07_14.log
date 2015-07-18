@@ -1,0 +1,33 @@
+[ 2015-07-14T23:20:40+08:00 ] 127.0.0.1 /index.php?g=Goods&m=AdminCate&a=edit_post
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000321s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000326s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000959s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0012s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `sp_cate` [ RunTime:0.0013s ]
+SQL: UPDATE `sp_cate` SET `parent`='0',`name`='家政服务',`description`='',`seo_title`='',`seo_keywords`='',`seo_description`='' WHERE `id` = '126' [ RunTime:0.0003s ]
+SQL: UPDATE `sp_cate` SET `path`='0-126' WHERE ( id=126 ) [ RunTime:0.0001s ]
+
+[ 2015-07-14T23:20:58+08:00 ] 127.0.0.1 /index.php?g=Goods&m=AdminCate&a=edit_post
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000313s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000321s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000891s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0011s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0002s ]
+SQL: SHOW COLUMNS FROM `sp_cate` [ RunTime:0.0018s ]
+SQL: UPDATE `sp_cate` SET `parent`='0',`name`='文化生活',`description`='',`seo_title`='',`seo_keywords`='',`seo_description`='' WHERE `id` = '128' [ RunTime:0.0006s ]
+SQL: UPDATE `sp_cate` SET `path`='0-128' WHERE ( id=128 ) [ RunTime:0.0003s ]
+
+[ 2015-07-14T23:21:07+08:00 ] 127.0.0.1 /index.php?g=Goods&m=AdminCate&a=add_post
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000316s ]
+INFO: Run Behavior\CheckLangBehavior [ RunTime:0.000321s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000899s ]
+SQL: SHOW COLUMNS FROM `sp_users` [ RunTime:0.0015s ]
+SQL: SELECT * FROM `sp_users` WHERE ( id=1 ) LIMIT 1   [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `sp_cate` [ RunTime:0.0012s ]
+SQL: INSERT INTO `sp_cate` (`parent`,`name`,`description`,`seo_title`,`seo_keywords`,`seo_description`) VALUES ('0','社区综合','','','','') [ RunTime:0.0008s ]
+SQL: UPDATE `sp_cate` SET `path`='0-132' WHERE ( id=132 ) [ RunTime:0.0002s ]
+

@@ -1,0 +1,16 @@
+*{
+    padding: 0;margin: 0;
+}
+img{border: 0;}
+a{text-decoration: none;}
+body{font-family: "微软雅黑";font-size: 14px;color: #050405;}
+.flul li{ float: left;}
+ul {list-style-type: none;}
+.fl{float: left;}
+.fr{float: right;}
+.c{height: 0;width: 0;border: none;clear: both;}
+.btn{padding:6px;}
+.autow {width: 980px;margin: 0 auto;}
+.red{color: red;}
+
+.common-head{height: 40px;line-height: 40px;text-indent: 30px;font-weight: bold;font-size: 16px;background: #eee;}
